@@ -23,5 +23,4 @@ public class City {
     @Id
     @Column(name = "name")
     private String cityName;
-
 }

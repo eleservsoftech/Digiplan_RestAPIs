@@ -32,4 +32,10 @@ public interface UserService {
 
     ResponseEntity<Map> getDoctorsList();
 
+    public ResponseEntity<Map> doctorCases(String email);
+
+    public ResponseEntity<Map> getUserMobileList(Long phonenumber);
+
+    public ResponseEntity<Map> getUserByEmail(String email);
+
 }

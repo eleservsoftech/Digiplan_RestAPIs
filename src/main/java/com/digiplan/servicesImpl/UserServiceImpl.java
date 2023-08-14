@@ -1,6 +1,7 @@
 package com.digiplan.servicesImpl;
 
 import com.digiplan.entities.Logger;
+import com.digiplan.entities.MyDoctorCases;
 import com.digiplan.entities.User;
 import com.digiplan.repositories.LoggerRepository;
 import com.digiplan.repositories.UserRepository;
@@ -13,10 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -290,4 +288,84 @@ public class UserServiceImpl implements UserService {
         return new ResponseEntity<>(map, status);
     }
 
+    public ResponseEntity<Map> doctorCases(String email) {
+        Map map = new HashMap();
+        HttpStatus status = null;
+        List<MyDoctorCases> list = new ArrayList<>();
+
+        try {
+            list = userRepository.getDoctorCases(email);
+            if (!list.isEmpty()) {
+                map.put("status", 200);
+                map.put("message", "OK");
+                map.put("data", list);
+                status = HttpStatus.OK;
+            } else {
+                map.put("status", 404);
+                map.put("message", "Data not found");
+                status = HttpStatus.NOT_FOUND;
+            }
+        } catch (Exception exception) {
+            map.put("status", 500);
+            map.put("message", "Internal Server Error");
+            map.put("error", exception.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        return new ResponseEntity(map, status);
+    }
+
+
+    //
+    public ResponseEntity<Map> getUserMobileList(Long phonenumber) {
+        Map<String, Object> map = new HashMap();
+        HttpStatus status = null;
+        try {
+            List<User> userList = userRepository.getDoctorsByMobileList(phonenumber);
+            if (!userList.isEmpty()) {
+                status = HttpStatus.OK;
+                map.put("status", 200);
+                map.put("message", "Data Found!");
+                map.put("data", userList);
+            } else {
+                status = HttpStatus.NOT_FOUND;
+                map.put("status", 404);
+                map.put("message", "No Data Found");
+            }
+        } catch (Exception exception) {
+            System.out.println("@getDoctorsList Exception : " + exception);
+            Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "getUserMobileList{}", exception.getMessage(), exception.toString(), LocalDateTime.now());
+            loggerRepository.saveAndFlush(logger);
+            map.put("status", 500);
+            map.put("message", "Internal Server Error");
+            map.put("error", exception.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        return new ResponseEntity<>(map, status);
+    }
+
+    public ResponseEntity<Map> getUserByEmail(String email) {
+        Map<String, Object> map = new HashMap();
+        HttpStatus status = null;
+        try {
+            List<User> userEmail = userRepository.getUserByEmailId(email);
+            if (!userEmail.isEmpty()) {
+                status = HttpStatus.OK;
+                map.put("status", 200);
+                map.put("message", "Data Found!");
+                map.put("data", userEmail);
+            } else {
+                status = HttpStatus.NOT_FOUND;
+                map.put("status", 404);
+                map.put("message", "No Data Found");
+            }
+        } catch (Exception exception) {
+            Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "getUserByEmail{}", exception.getMessage(), exception.toString(), LocalDateTime.now());
+            loggerRepository.saveAndFlush(logger);
+            map.put("status", 500);
+            map.put("message", "Internal Server Error");
+            map.put("error", exception.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        return new ResponseEntity<>(map, status);
+    }
 }

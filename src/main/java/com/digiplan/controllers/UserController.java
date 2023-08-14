@@ -107,4 +107,16 @@ public class UserController {
         return userService.getDoctorsList();
     }
 
+    @GetMapping("/getDoctorActiveCases")
+    public ResponseEntity<Map> getDoctorCases(@RequestParam String email) {
+        return userService.doctorCases(email);
+    }
+    @GetMapping("/getUserByMobileNumber/{phoneNumber}")
+    public ResponseEntity<Map> getUserByMobileNumber(@PathVariable Long phoneNumber){
+        return userService.getUserMobileList(phoneNumber);
+    }
+    @GetMapping("/GetUserByEmailID/{email}")
+    public ResponseEntity<Map> getUserByEmailId(@PathVariable String email){
+        return userService.getUserByEmail(email);
+    }
 }

@@ -1,5 +1,6 @@
 package com.digiplan.repositories;
 
+import com.digiplan.entities.MyDoctorCases;
 import com.digiplan.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -26,4 +27,18 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query(value = "select * from alignwise_users where firstname like %:searchDoctor% or lastname like %:searchDoctor% limit 50", nativeQuery = true)
     List<User> getDoctorsListByDoctorname(@Param("searchDoctor") String searchDoctor);
+
+    @Query(value = "call GetMyCase(?)", nativeQuery = true)
+    List<MyDoctorCases> getDoctorCases(String email);
+
+
+    // getting user by mobile number
+    @Query(value = "select * from alignwise_users where phoneNumber=:phoneNumber ", nativeQuery = true)
+    List<User> getDoctorsByMobileList(@Param("phoneNumber")Long phoneNumber);
+
+    // get user data by Email address
+    @Query(value = "select * from alignwise_users where email=:email ", nativeQuery = true)
+    List<User> getUserByEmailId(@Param("email") String email);
+
+
 }
