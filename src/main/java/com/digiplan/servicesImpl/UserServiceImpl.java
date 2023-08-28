@@ -58,18 +58,32 @@ public class UserServiceImpl implements UserService {
         return usersList;
     }
 
-    @Override
-    public User addUser(User userData) {
-        User user = null;
-        try {
-            user = userRepository.saveAndFlush(userData);
-        } catch (Exception exception) {
-            System.out.println("@addUser Exception : " + exception);
-            Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "addUser", exception.getMessage(), exception.toString(), LocalDateTime.now());
-            loggerRepository.saveAndFlush(logger);
+@Override
+public ResponseEntity<Map> addUser(User addUser) {
+    Map<Object, Object> map = new HashMap<>();
+    HttpStatus status = null;
+    User  userObj = null;
+    try {
+        if(!addUser.getUsername().isEmpty() &&  !addUser.getPassword().isEmpty()) {
+            userObj = userRepository.save(addUser);
+            map.put("status_code", "201");
+            map.put("message", "Data saved successfully");
+            map.put("data", userObj);
+            status = HttpStatus.CREATED;
+        }else{
+            map.put("status_code", "400");
+            map.put("errorMessage", "blank User name and password not accepted!");
+            status = HttpStatus.BAD_REQUEST;
         }
-        return user;
+
+    } catch (Exception ex) {
+        map.put("status_code", "500");
+        map.put("message", ex.getMessage());
+        status = HttpStatus.INTERNAL_SERVER_ERROR;
     }
+    return new ResponseEntity(map, status);
+}
+
 
     @Override
     public User updateUser(Integer id, User userData) {

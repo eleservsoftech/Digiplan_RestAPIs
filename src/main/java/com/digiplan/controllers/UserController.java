@@ -48,13 +48,13 @@ public class UserController {
             map.put("status_code", "204");
             map.put("results", "No Content!");
             map.put("message", "Records Not Found!");
-            // return this.userService.getAllUsers();
         }
         return map;
     }
+
     @PostMapping("/addUser")
-    public ResponseEntity<User> addUser(@RequestBody User userData) {
-        return new ResponseEntity<User>(this.userService.addUser(userData), HttpStatus.CREATED);
+    public ResponseEntity<Map> createUser(@RequestBody User userData) {
+        return this.userService.addUser(userData);
     }
 
     @PutMapping("/updateUser/{id}")

@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @AllArgsConstructor
@@ -19,6 +21,8 @@ public class Cases {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @NotBlank(message = "Case Id is mandatory")
+    @Size(min = 10, max = 20)
     private String caseId;
     private String submittedOn = LocalDate.now().toString();
     private String treatmentLink;
@@ -33,5 +37,8 @@ public class Cases {
     @Column(name = "doctor_name")
     private String doctorName;
     private String groupId;
+
+    @Transient
+    private   byte[] Image;
 
 }
