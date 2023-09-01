@@ -47,19 +47,23 @@ public class CityController {
     }
 
     @PostMapping("/addCity")
-    public ResponseEntity<City> addCity(@RequestBody City cityData) {
-        return new ResponseEntity<City>(this.cityService.addCity(cityData), HttpStatus.CREATED);
+    public ResponseEntity<Map> addState(@RequestBody City cityData) {
+        return this.cityService.addCity(cityData);
     }
+
+//    @PutMapping("/updateCity/{cityName}")
+//    public ResponseEntity<City> updateCity(@PathVariable String cityName, @RequestBody City cityData) {
+//        City city = this.cityService.updateCity(cityName, cityData);
+//        if (city != null)
+//            return new ResponseEntity<City>(city, HttpStatus.OK);
+//        else
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//    }
 
     @PutMapping("/updateCity/{cityName}")
-    public ResponseEntity<City> updateCity(@PathVariable String cityName, @RequestBody City cityData) {
-        City city = this.cityService.updateCity(cityName, cityData);
-        if (city != null)
-            return new ResponseEntity<City>(city, HttpStatus.OK);
-        else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<Map> updateState(@PathVariable String cityName, @RequestBody City cityData) {
+        return this.cityService.updateCity(cityName,cityData);
     }
-
     @DeleteMapping("/deleteCity/{cityName}")
     public ResponseEntity<String> deleteCity(@PathVariable String cityName) {
         String status = this.cityService.deleteCity(cityName);

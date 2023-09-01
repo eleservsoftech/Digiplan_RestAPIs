@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
+
 @CrossOrigin(origins = {"*"})
 @RestController
 public class CaseController {
@@ -45,9 +47,14 @@ public class CaseController {
         return map;
     }
 
-    @PostMapping({"/savecase"})
-    public ResponseEntity<Cases> addCase(@RequestBody Cases casesData) {
-        return new ResponseEntity(this.caseService.addCase(casesData), HttpStatus.CREATED);
+//    @PostMapping({"/savecase"})
+//    public ResponseEntity<Cases> addCase(@Valid @RequestBody Cases casesData) {
+//        return new ResponseEntity(this.caseService.addCase(casesData), HttpStatus.CREATED);
+//    }
+
+    @PostMapping("/savecase")
+    public ResponseEntity<Map> addCase(@Valid @RequestBody Cases casesData) {
+        return this.caseService.addCase(casesData);
     }
 
     @PostMapping({"/mycase"})

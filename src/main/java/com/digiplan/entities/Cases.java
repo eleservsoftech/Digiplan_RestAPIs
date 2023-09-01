@@ -1,6 +1,8 @@
 package com.digiplan.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,12 +23,12 @@ public class Cases {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @NotBlank(message = "Case Id is mandatory")
-    @Size(min = 10, max = 20)
     private String caseId;
     private String submittedOn = LocalDate.now().toString();
     private String treatmentLink;
     private String downloadLink;
+    @JsonIgnore
+    @JsonProperty(value = "formdata")
     private String formData;
     private String submittedBy;
     private String remarks;
@@ -38,7 +40,7 @@ public class Cases {
     private String doctorName;
     private String groupId;
 
-    @Transient
-    private   byte[] Image;
+//    @Transient
+//    private byte[] Image;
 
 }

@@ -39,14 +39,14 @@ public class DoctorController {
 
     }
 
-    @PostMapping("/getAllDoctors")
+    @GetMapping("/getAllDoctors")
     public ResponseEntity<Map> getAllDoctors(@RequestParam String searchDoctor) {
         return this.doctorService.getAllDoctors(searchDoctor);
     }
 
     @PostMapping("/addDoctor")
-    public ResponseEntity<Doctor> addDoctor(@RequestBody Doctor doctorData) {
-        return new ResponseEntity<Doctor>(this.doctorService.addDoctor(doctorData), HttpStatus.CREATED);
+    public ResponseEntity<Map> addDoctor(@RequestBody Doctor doctorData) {
+        return this.doctorService.addDoctor(doctorData);
     }
 
     @PutMapping("/updateDoctor/{caseId}")

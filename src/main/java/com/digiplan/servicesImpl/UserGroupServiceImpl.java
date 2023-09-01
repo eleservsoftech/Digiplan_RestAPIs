@@ -6,10 +6,14 @@ import com.digiplan.repositories.LoggerRepository;
 import com.digiplan.repositories.UserGroupRepository;
 import com.digiplan.services.UserGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -52,18 +56,48 @@ public class UserGroupServiceImpl implements UserGroupService {
         return userGroupsList;
     }
 
-    @Override
-    public UserGroup addUserGroup(UserGroup userGroupData) {
-        UserGroup userGroup = null;
-        try {
-            userGroup = userGroupRepository.saveAndFlush(userGroupData);
-        } catch (Exception exception) {
-            System.out.println("@addUserGroup Exception : " + exception);
-            Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "addUserGroup", exception.getMessage(), exception.toString(), LocalDateTime.now());
-            loggerRepository.saveAndFlush(logger);
+//    @Override
+//    public UserGroup addUserGroup(UserGroup userGroupData) {
+//        UserGroup userGroup = null;
+//        try {
+//            if(!userGroupData.getGroupId().isEmpty() && !userGroup.getGroupName().isEmpty()){
+//            userGroup = userGroupRepository.saveAndFlush(userGroupData);
+//            }else{
+//
+//            }
+//        } catch (Exception exception) {
+//            System.out.println("@addUserGroup Exception : " + exception);
+//            Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "addUserGroup", exception.getMessage(), exception.toString(), LocalDateTime.now());
+//            loggerRepository.saveAndFlush(logger);
+//        }
+//        return userGroup;
+//    }
+@Override
+public ResponseEntity<Map> addUserGroup(UserGroup addUserGroup) {
+    Map<Object, Object> map = new HashMap<>();
+    HttpStatus status = null;
+    try {
+
+        if(!addUserGroup.getGroupId().isEmpty() && !addUserGroup.getGroupName().isEmpty())
+        {
+            UserGroup  UserGroupObj = userGroupRepository.save(addUserGroup);
+            map.put("status_code", "201");
+            map.put("message", "Data saved successfully");
+            map.put("data", UserGroupObj);
+            status = HttpStatus.CREATED;
+        }else {
+            map.put("status_code", "400");
+            map.put("message", "Either Group id is blank or Group name!");
+            map.put("data", "Data not saved");
+            status = HttpStatus.BAD_REQUEST;
         }
-        return userGroup;
+    } catch (Exception ex) {
+        map.put("status_code", "500");
+        map.put("message", ex.getMessage());
+        status = HttpStatus.INTERNAL_SERVER_ERROR;
     }
+    return new ResponseEntity(map, status);
+}
 
     @Override
     public UserGroup updateUserGroup(String groupId, UserGroup userGroupData) {

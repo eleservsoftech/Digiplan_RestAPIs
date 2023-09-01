@@ -37,6 +37,8 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
+
 @Service
 @Slf4j
 public class CaseServiceImpl implements CaseService {
@@ -76,55 +78,78 @@ public class CaseServiceImpl implements CaseService {
         return casesList;
     }
 
-    public Cases addCase(Cases casesData) {
-        Cases cases = null;
+//    public Cases addCase(Cases casesData) {
+//        Cases cases =  null;
+//        try {
+//
+//            cases = (Cases)this.caseRepository.saveAndFlush(casesData);
+//        } catch (Exception exception) {
+//            System.out.println("@addCase Exception : " + exception);
+//            Logger logger = new Logger(this.utilityService.getLoggerCorrelationId(), "addCase", exception.getMessage(), exception.toString(), LocalDateTime.now());
+//            this.loggerRepository.saveAndFlush(logger);
+//        }
+//        return cases;
+//    }
+
+    public ResponseEntity<Map> addCase(Cases casesData) {
+        Map<Object, Object> map = new HashMap<>();
+        HttpStatus status = null;
+        Cases casesEntity = new Cases();
         try {
-            cases = (Cases)this.caseRepository.saveAndFlush(casesData);
-        } catch (Exception exception) {
-            System.out.println("@addCase Exception : " + exception);
-            Logger logger = new Logger(this.utilityService.getLoggerCorrelationId(), "addCase", exception.getMessage(), exception.toString(), LocalDateTime.now());
-            this.loggerRepository.saveAndFlush(logger);
+            casesEntity = new Cases();
+            if (casesData.getCaseId()!=null && !casesData.getCaseId().isEmpty()){
+            casesEntity.setId(casesData.getId());
+            casesEntity.setCaseId(casesData.getCaseId());
+            casesEntity.setSubmittedOn(casesData.getSubmittedOn());
+            casesEntity.setTreatmentLink(casesData.getTreatmentLink());
+            casesEntity.setDownloadLink(casesData.getDownloadLink());
+            casesEntity.setFormData(casesData.getFormData());
+            casesEntity.setSubmittedBy(casesData.getSubmittedBy());
+            casesEntity.setRemarks(casesData.getRemarks());
+            casesEntity.setPlanStatus(casesData.getPlanStatus());
+            casesEntity.setTermConditionStatus(casesData.getTermConditionStatus());
+            casesEntity.setDoctorName(casesData.getDoctorName());
+            casesEntity.setGroupId(casesData.getGroupId());
+            this.caseRepository.saveAndFlush(casesEntity);
+            map.put("status_code", "201");
+            map.put("message", "Data saved successfully");
+            map.put("data", casesEntity);
+            status = HttpStatus.CREATED;
+            }else{
+                map.put("status_code", "400");
+                map.put("message", "Case Id is mandatory");
+                status = HttpStatus.BAD_REQUEST;
+            }
+        }catch (Exception ex) {
+            ex.printStackTrace();
+            map.put("status_code", "500");
+            map.put("message", ex.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+            log.info("service log  addUsers{} " + ex.getMessage());
         }
-        return cases;
+        return new ResponseEntity(map, status);
     }
 
     public ResponseEntity<Map> myCases(String username) {
         Map<Object, Object> map = new HashMap<>();
         HttpStatus status = null;
-        List<String> userList_username = new ArrayList<>();
         JSONParser jsonParser = new JSONParser();
-        JSONArray jsonArray = new JSONArray();
-        Boolean doctorAdminCheck = Boolean.valueOf(false);
+        JSONObject extractedData;
         try {
-            List<User> userList = this.userRepository.findAllUsersList(username);
-            List<Cases> casesList = this.caseRepository.findAll();
-            if (!userList.isEmpty() || userList != null)
-                doctorAdminCheck = Boolean.valueOf(true);
-            for (User user : userList)
-                userList_username.add(user.getUsername());
+            List<Cases> casesList = this.caseRepository.getCasesByUserName(username);
             for (Cases cases : casesList) {
-                if (cases.getFormData() != null && cases.getFormData() != "") {
-                    JSONObject jsonObject = new JSONObject();
-                    JSONObject extractedData = (JSONObject)jsonParser.parse(cases.getFormData());
-                    String casesList_username = extractedData.get("user").toString();
-                    if (casesList_username != null && (casesList_username.equals(username) || (doctorAdminCheck.booleanValue() && userList_username.contains(casesList_username)))) {
-                        jsonObject.put("patientName", extractedData.get("PatientName"));
-                        jsonObject.put("serialNumber", extractedData.get("serialnumber"));
-                        jsonObject.put("dob", extractedData.get("DOB"));
-                        jsonObject.put("date", extractedData.get("date"));
-                        jsonObject.put("data", extractedData);
-                        jsonArray.add(jsonObject);
-                    }
+                if (cases.getFormData() != null && !cases.getFormData().isEmpty()) {
+                    extractedData = (JSONObject) jsonParser.parse(cases.getFormData());
                 }
             }
-            if (jsonArray.isEmpty()) {
-                map.put("status", Integer.valueOf(404));
+            if (casesList.isEmpty()) {
+                map.put("status", 404);
                 map.put("message", "No data found");
                 status = HttpStatus.NOT_FOUND;
             } else {
-                map.put("status", Integer.valueOf(200));
+                map.put("status", 200);
                 map.put("message", "OK");
-                map.put("data", jsonArray);
+                map.put("data", casesList);
                 status = HttpStatus.OK;
             }
         } catch (Exception exception) {
@@ -351,17 +376,19 @@ public class CaseServiceImpl implements CaseService {
         JSONParser jsonParser = new JSONParser();
         JSONObject extractedData;
         String baseURL = this.environment.getProperty("patient.profile.photo");
+
+
         try {
             List<Cases> casesList = this.caseRepository.getCasesByUserName(userId);
             for (Cases cases : casesList) {
                 try {
                     //this piece of code will invoking QRCodeGenerator api to get the latest photo of a particular patient,assuming that case is mapped in Digiplan.
-                    ResponseEntity<byte[]> imageResponse = restTemplate.getForEntity(baseURL + cases.getCaseId(), byte[].class);
-                   //ResponseEntity<byte[]> imageResponse = restTemplate.getForEntity(baseURL+"5000000000" , byte[].class); // this is for testing purpose,it's working
-                    if (imageResponse.getStatusCode() == HttpStatus.OK) {
-                        byte[] imageBytes = imageResponse.getBody();
-                        cases.setImage(imageBytes);
-                    }
+//                    ResponseEntity<byte[]> imageResponse = restTemplate.getForEntity(baseURL + cases.getCaseId(), byte[].class);
+//                   //ResponseEntity<byte[]> imageResponse = restTemplate.getForEntity(baseURL+"5000000000" , byte[].class); // this is for testing purpose,it's working
+//                    if (imageResponse.getStatusCode() == HttpStatus.OK) {
+//                        byte[] imageBytes = imageResponse.getBody();
+//                        cases.setImage(imageBytes);
+//                    }
                     extractedData = (JSONObject) jsonParser.parse(cases.getFormData());
                 } catch (HttpServerErrorException.InternalServerError e) {
                     log.info("Server encountered an internal error: " + e.getMessage());

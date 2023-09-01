@@ -43,15 +43,6 @@ public class PatientController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);*/
     }
 
-/*    @GetMapping("/getPatient/{caseId}")
-    public ResponseEntity<Patient> getPatient(@PathVariable String caseId) {
-        Patient patient = this.patientService.getPatient(caseId);
-        if (patient != null)
-            return new ResponseEntity<Patient>(patient, HttpStatus.OK);
-        else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }*/
-
     @GetMapping("/getAllPatients")
     public Map<String,Object> getAllPatients() {
         Map<String, Object> map = new HashMap<>();
@@ -74,8 +65,8 @@ public class PatientController {
     }
 
     @PostMapping("/addPatient")
-    public ResponseEntity<Patient> addPatient(@RequestBody Patient patientData) {
-        return new ResponseEntity<Patient>(this.patientService.addPatient(patientData), HttpStatus.CREATED);
+    public ResponseEntity<Map> addPatient(@RequestBody Patient patientData) {
+        return this.patientService.addPatient(patientData);
     }
 
     @PutMapping("/updatePatient/{caseId}")

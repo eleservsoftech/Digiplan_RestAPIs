@@ -9,9 +9,13 @@ import org.springframework.web.multipart.MultipartFile;
 public interface CaseService {
     List<Cases> getAllCases();
 
-    Cases addCase(Cases paramCases);
+   // Cases addCase(Cases paramCases);
+
+    public ResponseEntity<Map> addCase(Cases casesData);
 
     ResponseEntity<Map> myCases(String paramString);
+
+
 
     ResponseEntity<Object> downloadReport(String paramString);
 

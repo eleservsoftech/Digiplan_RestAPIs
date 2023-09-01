@@ -61,10 +61,9 @@ public class UserGroupController {
        }
        return map;
     }
-
     @PostMapping("/addUserGroup")
-    public ResponseEntity<UserGroup> addUserGroup(@RequestBody UserGroup userGroupData) {
-        return new ResponseEntity<UserGroup>(this.userGroupService.addUserGroup(userGroupData), HttpStatus.CREATED);
+    public ResponseEntity<Map> addState(@RequestBody  UserGroup userGroupData) {
+        return this.userGroupService.addUserGroup(userGroupData);
     }
 
     @PutMapping("/updateUserGroup/{groupId}")

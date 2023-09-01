@@ -16,7 +16,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     User findByUsername(String username);
 
-    @Query(value = "select * from alignwise_users where groupid=(select groupid from alignwise_users where username=:username and typeofuser='DoctorAdmin')", nativeQuery = true)
+    //@Query(value = "select * from alignwise_users where groupid=(select groupid from alignwise_users where username=:username and typeofuser='DoctorAdmin')", nativeQuery = true)
+    @Query(value = "select * from alignwise_users where groupid=(select groupid from alignwise_users where username=:username)", nativeQuery = true)
     List<User> findAllUsersList(@Param("username") String username);
 
     @Query(value = "select * from alignwise_users where typeofuser='Doctor'", nativeQuery = true)
@@ -30,7 +31,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query(value = "call GetMyCase(?)", nativeQuery = true)
     List<MyDoctorCases> getDoctorCases(String email);
-
 
     // getting user by mobile number
     @Query(value = "select * from alignwise_users where phoneNumber=:phoneNumber ", nativeQuery = true)

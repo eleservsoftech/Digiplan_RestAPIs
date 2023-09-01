@@ -50,11 +50,7 @@ public class DoctorServiceImpl implements DoctorService {
         HttpStatus status = null;
         try {
             List<User> userList = new ArrayList<>();
-            if (searchDoctor.equals("") || searchDoctor.equals(null))
-                userList = userRepository.getDoctorsListByLimit();
-            else
                 userList = userRepository.getDoctorsListByDoctorname(searchDoctor);
-
             if (userList != null) {
                 map.put("status", 200);
                 map.put("messgae", "OK");
@@ -79,16 +75,30 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public Doctor addDoctor(Doctor doctorData) {
-        Doctor doctor = null;
+    public ResponseEntity<Map> addDoctor(Doctor addDoctor) {
+        Map<Object, Object> map = new HashMap<>();
+        HttpStatus status = null;
         try {
-            doctor = doctorRepository.saveAndFlush(doctorData);
-        } catch (Exception exception) {
-            System.out.println("@addDoctor Exception : " + exception);
-            Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "addDoctor", exception.getMessage(), exception.toString(), LocalDateTime.now());
-            loggerRepository.saveAndFlush(logger);
+
+            if(!addDoctor.getCaseId().isEmpty())
+            {
+                Doctor  doctorObj = doctorRepository.saveAndFlush(addDoctor);
+                map.put("status_code", "201");
+                map.put("message", "Doctor data saved successfully");
+                map.put("data", doctorObj);
+                status = HttpStatus.CREATED;
+            }else {
+                map.put("status_code", "400");
+                map.put("message", "Case id cannot be blank!");
+                map.put("data", "Doctor data not saved");
+                status = HttpStatus.BAD_REQUEST;
+            }
+        } catch (Exception ex) {
+            map.put("status_code", "500");
+            map.put("message", ex.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return doctor;
+        return new ResponseEntity(map, status);
     }
 
     @Override
