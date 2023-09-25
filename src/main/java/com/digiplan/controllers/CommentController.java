@@ -27,6 +27,13 @@ public class CommentController {
         return this.commentService.getAllComments();
     }
 
+    @GetMapping("/getComment")
+    public List<Comment> getAllComment() {
+        return this.commentService.getAllComments();
+    }
+
+
+
     @PostMapping("/addComment/{commentType}")
     public ResponseEntity<Map> addComment(@RequestBody Comment commentData, @PathVariable String commentType) {
         return this.commentService.addComment(commentData, commentType);

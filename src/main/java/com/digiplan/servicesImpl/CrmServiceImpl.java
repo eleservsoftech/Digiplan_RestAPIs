@@ -64,4 +64,29 @@ public class CrmServiceImpl implements CrmService {
         }
         return  new ResponseEntity<>(map,status);
     }
+
+    @Override
+    public  ResponseEntity<Map> getCrmByName(String crmName){
+        HttpStatus status =null;
+        Map<Object,Object>  map = new HashMap<>();
+        try {
+            Crm result = this.crmRepository.getCrmByName(crmName);
+            if (result!=null){
+                map.put("status_code", HttpStatus.OK.value());
+                map.put("results", result);
+                map.put("message", "Data Found");
+                status = HttpStatus.OK;
+            } else {
+                map.put("status_code",HttpStatus.NOT_FOUND.value() );
+                map.put("results", result);
+                map.put("errorMessage", "Data Not Found!");
+                status = HttpStatus.NOT_FOUND;
+            }
+        }catch (Exception e){
+            map.put("status_code", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            map.put("error", e.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        return  new ResponseEntity<>(map,status);
+    }
 }

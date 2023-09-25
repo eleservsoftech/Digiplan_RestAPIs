@@ -7,6 +7,9 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.geometry.Positions;
+
 import java.io.EOFException;
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +26,10 @@ public class Utils {
     private Environment env;
     //@Value( "${file.upload.location}" )
     //static String location;
-    public  void Directires(String case_id, MultipartFile main_Img, MultipartFile patient_properties, MultipartFile report_pdf,MultipartFile upper_ipr,MultipartFile lower_ipr,MultipartFile front_video,MultipartFile upper_video,MultipartFile lower_video,MultipartFile left_video,MultipartFile right_video) throws IOException {
+    public  void Directires(String case_id, MultipartFile main_Img, MultipartFile patient_properties, MultipartFile report_pdf,
+                            MultipartFile upper_ipr,MultipartFile lower_ipr,MultipartFile front_video,
+                            MultipartFile upper_video,MultipartFile lower_video,MultipartFile left_video,
+                            MultipartFile right_video) throws IOException {
 
         String path = env.getProperty("file.upload.location");
 
@@ -213,6 +219,76 @@ public class Utils {
 //        }
 //        // other dir
 //    }
-//
 
+// Mid scan add and update images
+/*    public void uploadMidScanPhotos(String folderName,MultipartFile photo1, MultipartFile photo2, MultipartFile photo3, MultipartFile photo4)
+    {
+        File fileupload = null;
+
+        System.out.println("utils uploadMidScanPhotos photo1: "+photo1);
+        try {
+            File file = new File(env.getProperty("file.midscan.location") +folderName);//add folder
+            if (!file.exists()) {
+                file.mkdir();
+                List<MultipartFile> list = Arrays.asList(photo1,photo2,photo3,photo4);
+                for (MultipartFile uploadedFile : list) {
+                    if (!uploadedFile.isEmpty()) {
+                        File mainUpload = new File(File.separator + file + File.separator + uploadedFile.getOriginalFilename());
+                        System.out.println("main-1:: " + mainUpload.getPath());
+                        uploadedFile.transferTo(mainUpload);
+                    }
+                }
+            }
+            else if (file.exists()) {
+                List<MultipartFile> list = Arrays.asList(photo1,photo2,photo3,photo4);
+                for (MultipartFile uploadedFile : list) {
+                    if (!uploadedFile.isEmpty()) {
+                        File mainUpload = new File(File.separator + file + File.separator + uploadedFile.getOriginalFilename());
+                        System.out.println("main-2:: " + mainUpload.getPath());
+                        uploadedFile.transferTo(mainUpload);
+                    }
+                }
+            }
+            else {
+                log.info("No Directory exist with!");
+            }
+        }catch (Exception e)
+        {
+            log.info("message: "+e.getMessage());
+        }
+    }*/
+
+    public void uploadMidScanPhotos(String folderName, MultipartFile photo1, MultipartFile photo2, MultipartFile photo3, MultipartFile photo4)
+    {
+        File fileupload = null;
+        try {
+            File file = new File(env.getProperty("file.midscan.location") + folderName);
+            if (!file.exists()) {
+                file.mkdir();
+                List<MultipartFile> photos = Arrays.asList(photo1, photo2, photo3, photo4);
+                for (MultipartFile uploadedFile : photos) {
+                    if (!uploadedFile.isEmpty()) {
+                        File mainUpload = new File(file.getAbsolutePath() + File.separator + uploadedFile.getOriginalFilename());
+                        Thumbnails.of(uploadedFile.getInputStream())
+                                .size(800, 800)
+                                .outputQuality(0.8)
+                                .toFile(mainUpload);
+                    }
+                }
+            }else{
+                List<MultipartFile> photos = Arrays.asList(photo1, photo2, photo3, photo4);
+                for (MultipartFile uploadedFile : photos) {
+                    if (!uploadedFile.isEmpty()) {
+                        File mainUpload = new File(file.getAbsolutePath() + File.separator + uploadedFile.getOriginalFilename());
+                        Thumbnails.of(uploadedFile.getInputStream())
+                                .size(800, 800)
+                                .outputQuality(0.8)
+                                .toFile(mainUpload);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            log.info("message: uploadMidScanPhotos{0} " + e.getMessage());
+        }
+    }
 }

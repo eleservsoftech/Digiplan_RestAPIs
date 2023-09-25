@@ -16,7 +16,6 @@ public interface CaseService {
     ResponseEntity<Map> myCases(String paramString);
 
 
-
     ResponseEntity<Object> downloadReport(String paramString);
 
     ResponseEntity<Map> getCaseDetails(String paramString);
@@ -27,5 +26,7 @@ public interface CaseService {
 
     ResponseEntity<Map> getVideos(String paramString, int paramInt);
 
-    ResponseEntity<Map> getUserData(String paramString);
+   // ResponseEntity<Map> getUserData(String paramString);
+
+    public  ResponseEntity<Map> getCaseId(String caseId);
 }

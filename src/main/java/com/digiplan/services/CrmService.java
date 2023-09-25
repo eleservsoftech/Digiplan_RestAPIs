@@ -10,5 +10,7 @@ public interface CrmService {
     public ResponseEntity<Map> getCrm(Long crmId);
     public  ResponseEntity<Map> getCrms(Crm crm);
 
+    public  ResponseEntity<Map> getCrmByName(String crmName);
+
 
 }

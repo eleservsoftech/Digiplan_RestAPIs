@@ -5,7 +5,6 @@ import com.digiplan.entities.BasicPatientInfo;
 import com.digiplan.entities.Cases;
 import com.digiplan.entities.IncompleteForm;
 import com.digiplan.entities.Logger;
-import com.digiplan.entities.User;
 import com.digiplan.repositories.BasicDoctorInfoRepository;
 import com.digiplan.repositories.BasicPatientInfoRepository;
 import com.digiplan.repositories.CaseRepository;
@@ -23,21 +22,23 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 import lombok.extern.slf4j.Slf4j;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.validation.Valid;
 
 @Service
 @Slf4j
@@ -66,6 +67,13 @@ public class CaseServiceImpl implements CaseService {
     @Autowired
     private LoggerRepository loggerRepository;
 
+    @Autowired
+    private RestTemplate restTemplate;
+    @Autowired
+    public String ApiService(RestTemplate restTemplate) {
+        return (this.restTemplate = restTemplate).toString();
+    }
+
     public List<Cases> getAllCases() {
         List<Cases> casesList = null;
         try {
@@ -77,6 +85,32 @@ public class CaseServiceImpl implements CaseService {
         }
         return casesList;
     }
+
+    public  ResponseEntity<Map> getCaseId(String caseId){
+        HttpStatus status =null;
+        Map<Object,Object>  map = new HashMap<>();
+        try {
+            Cases caseIdData = this.caseRepository.findByCaseId(caseId);
+            if (caseIdData!=null){
+                map.put("status_code", "200");
+                map.put("results", this.caseRepository.findByCaseId(caseId));
+                map.put("message", "Case Id "+caseId+" Found");
+                status = HttpStatus.OK;
+            } else {
+                map.put("status_code", "404");
+                map.put("results", this.caseRepository.findByCaseId(caseId));
+                map.put("errorMessage", "Case Id "+caseId+" Not Found!");
+                status = HttpStatus.NOT_FOUND;
+            }
+        }catch (Exception e){
+            map.put("status_code", "500");
+            map.put("error", e.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        return  new ResponseEntity<>(map,status);
+    }
+
+
 
 //    public Cases addCase(Cases casesData) {
 //        Cases cases =  null;
@@ -167,12 +201,13 @@ public class CaseServiceImpl implements CaseService {
 
     public ResponseEntity<Object> downloadReport(String caseId) {
         ResponseEntity<Object> responseEntity = null;
+
         try {
             String reportPath = this.environment.getProperty("report.download.path") + caseId + "/Report.pdf";
             File file = new File(reportPath);
             if (file.exists()) {
                 InputStreamResource inputStreamResource = new InputStreamResource(new FileInputStream(file));
-                responseEntity = ((ResponseEntity.BodyBuilder)ResponseEntity.ok().header("Content-Disposition", new String[] { "attachment; filename=" + file.getName() + "" })).contentLength(file.length()).contentType(MediaType.APPLICATION_PDF).body(inputStreamResource);
+                responseEntity = ((ResponseEntity.BodyBuilder)ResponseEntity.ok().header("Content-Disposition", new String[] { "attachment; filename=" + caseId + "" })).contentLength(file.length()).contentType(MediaType.APPLICATION_PDF).body(inputStreamResource);
             } else {
                 responseEntity = ResponseEntity.status(HttpStatus.NOT_FOUND).body("file not found!");
             }
@@ -362,13 +397,6 @@ public class CaseServiceImpl implements CaseService {
         return new ResponseEntity(map, status);
     }
 
-    @Autowired
-    private  RestTemplate restTemplate;
-    @Autowired
-    public String ApiService(RestTemplate restTemplate) {
-       return (this.restTemplate = restTemplate).toString();
-    }
-
 
     public ResponseEntity<Map> getUserData(String userId) {
         Map<String, Object> map = new HashMap<>();
@@ -377,18 +405,27 @@ public class CaseServiceImpl implements CaseService {
         JSONObject extractedData;
         String baseURL = this.environment.getProperty("patient.profile.photo");
 
-
         try {
             List<Cases> casesList = this.caseRepository.getCasesByUserName(userId);
             for (Cases cases : casesList) {
                 try {
-                    //this piece of code will invoking QRCodeGenerator api to get the latest photo of a particular patient,assuming that case is mapped in Digiplan.
-//                    ResponseEntity<byte[]> imageResponse = restTemplate.getForEntity(baseURL + cases.getCaseId(), byte[].class);
-//                   //ResponseEntity<byte[]> imageResponse = restTemplate.getForEntity(baseURL+"5000000000" , byte[].class); // this is for testing purpose,it's working
-//                    if (imageResponse.getStatusCode() == HttpStatus.OK) {
-//                        byte[] imageBytes = imageResponse.getBody();
-//                        cases.setImage(imageBytes);
-//                    }
+                    String planstatus = cases.getPlanStatus();
+                    System.out.println("planstatus: "+planstatus);
+//                    //
+//                    String caseId = cases.getCaseId();
+//                    System.out.println("digi caseId: "+caseId);
+//                    // Assuming you have the caseId from some part of your logic
+//                    //String apiUrl = "http://localhost:9096/serveImage/" + caseId;
+//                    String apiUrl = "http://localhost:8080/serveImage/"+caseId;
+//                    System.out.println("digi api url: "+apiUrl);
+//                    ResponseEntity<Resource> responseEntity = restTemplate.exchange(
+//                            apiUrl,
+//                            HttpMethod.GET,
+//                            null,
+//                            new ParameterizedTypeReference<Resource>() {} // Use the appropriate type for Resource
+//                    );
+//                    cases.setPatientPhoto((MultipartFile) responseEntity);
+//                    //
                     extractedData = (JSONObject) jsonParser.parse(cases.getFormData());
                 } catch (HttpServerErrorException.InternalServerError e) {
                     log.info("Server encountered an internal error: " + e.getMessage());
@@ -407,6 +444,7 @@ public class CaseServiceImpl implements CaseService {
                 map.put("message", "No Data Found");
             }
         } catch (Exception exception) {
+            exception.printStackTrace();
             map.put("status", 500);
             map.put("message", "Internal Server Error");
             map.put("error", exception.getMessage());
@@ -414,4 +452,8 @@ public class CaseServiceImpl implements CaseService {
         }
         return new ResponseEntity<>(map, status);
     }
+
+
+    // Your corrected API
+
 }
