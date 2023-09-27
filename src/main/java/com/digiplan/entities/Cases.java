@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -40,7 +41,6 @@ public class Cases {
     private String doctorName;
     private String groupId;
 
-//    @Transient
-//    private byte[] Image;
-
+    @Transient
+    private MultipartFile  patientPhoto;
 }

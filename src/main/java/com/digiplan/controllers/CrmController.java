@@ -26,4 +26,9 @@ public class CrmController {
     public  ResponseEntity<Map> getCrms(Crm Crm)   {
         return this.crmService.getCrms(Crm);
     }
+
+    @GetMapping("/getCrmName/{crmName}")
+    public  ResponseEntity<Map> getCrmByName(@PathVariable String crmName)   {
+        return  this.crmService.getCrmByName(crmName);
+    }
 }

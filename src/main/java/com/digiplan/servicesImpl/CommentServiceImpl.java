@@ -79,12 +79,12 @@ public class CommentServiceImpl implements CommentService {
         Map<String, Object> map = new HashMap();
         HttpStatus status = null;
         try {
-            if (commentType.equals("Plan Approved")) {
-                Cases cases = caseRepository.getById(commentData.getCaseId());
-                cases.setPlanStatus(commentData.getStage());
-                cases.setTermConditionStatus(1);
-                caseRepository.saveAndFlush(cases);
-            }
+//            if (commentType.equals("Plan Approved")) {
+//                Cases cases = caseRepository.getById(commentData.getCaseId());
+//                cases.setPlanStatus(commentData.getStage());
+//                cases.setTermConditionStatus(1);
+//                caseRepository.saveAndFlush(cases);
+//            }
             comment = commentRepository.saveAndFlush(commentData);
             map.put("status", "201");
             map.put("message", "Data Saved");
