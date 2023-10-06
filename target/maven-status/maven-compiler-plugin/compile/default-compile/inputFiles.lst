@@ -69,6 +69,7 @@ D:\eleserv projects\new digiplan\Digiplan_RestAPIs\src\main\java\com\digiplan\se
 D:\eleserv projects\new digiplan\Digiplan_RestAPIs\src\main\java\com\digiplan\controllers\DiagnosisController.java
 D:\eleserv projects\new digiplan\Digiplan_RestAPIs\src\main\java\com\digiplan\controllers\PatientHistoryMasterController.java
 D:\eleserv projects\new digiplan\Digiplan_RestAPIs\src\main\java\com\digiplan\repositories\DemoRepository.java
+D:\eleserv projects\new digiplan\Digiplan_RestAPIs\src\main\java\com\digiplan\entities\UpdateAlignerSchedule.java
 D:\eleserv projects\new digiplan\Digiplan_RestAPIs\src\main\java\com\digiplan\services\PatientHistoryService.java
 D:\eleserv projects\new digiplan\Digiplan_RestAPIs\src\main\java\com\digiplan\servicesImpl\MidAssessmentServiceImpl.java
 D:\eleserv projects\new digiplan\Digiplan_RestAPIs\src\main\java\com\digiplan\repositories\AlignerWearingScheduleRepository.java
@@ -80,6 +81,7 @@ D:\eleserv projects\new digiplan\Digiplan_RestAPIs\src\main\java\com\digiplan\en
 D:\eleserv projects\new digiplan\Digiplan_RestAPIs\src\main\java\com\digiplan\controllers\DoctorController.java
 D:\eleserv projects\new digiplan\Digiplan_RestAPIs\src\main\java\com\digiplan\controllers\ImageController.java
 D:\eleserv projects\new digiplan\Digiplan_RestAPIs\src\main\java\com\digiplan\services\CityService.java
+D:\eleserv projects\new digiplan\Digiplan_RestAPIs\src\main\java\com\digiplan\entities\AlignerDispatchData.java
 D:\eleserv projects\new digiplan\Digiplan_RestAPIs\src\main\java\com\digiplan\services\CallbackRequestService.java
 D:\eleserv projects\new digiplan\Digiplan_RestAPIs\src\main\java\com\digiplan\entities\Logger.java
 D:\eleserv projects\new digiplan\Digiplan_RestAPIs\src\main\java\com\digiplan\controllers\CallbackRequestController.java

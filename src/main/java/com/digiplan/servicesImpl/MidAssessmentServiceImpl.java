@@ -266,4 +266,30 @@ public class MidAssessmentServiceImpl implements MidAssessmentService {
         }
         return new ResponseEntity<>(map, status);
     }
+
+    // mid all data
+    @Override
+    public ResponseEntity<Map> getMidAllData() {
+        HttpStatus status = null;
+        Map<Object, Object> map = new HashMap<>();
+        try {
+            if (!this.midRepo.findAll().isEmpty()) {
+                map.put("status_code", HttpStatus.OK.value());
+                map.put("results", this.midRepo.findAll());
+                map.put("message", "Data Found");
+                status = HttpStatus.OK;
+            } else {
+                map.put("status_code", HttpStatus.NOT_FOUND.value());
+                map.put("results", this.midRepo.findAll());
+                map.put("error", "Data Not Found!");
+                status = HttpStatus.NOT_FOUND;
+            }
+        } catch (Exception e) {
+            map.put("status_code", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            map.put("error", e.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+            log.info("service log getMidAllData{0} " + e.getMessage());
+        }
+        return new ResponseEntity<>(map, status);
+    }
 }

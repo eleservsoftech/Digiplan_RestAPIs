@@ -17,5 +17,9 @@ public interface AlignerWearingScheduleService {
 
     public ResponseEntity<Map> deleteAlignerWearingSchedule(Integer id);
 
+    public ResponseEntity<Map> GetAlignerDispatchData(String dispatchedId);
+
+    public ResponseEntity<Map> updateAlignerSchedule(String case_id,String dispatchedId,String aligner_no_u,String aligner_no_l,String actualDate,String remarks,String user);
+
 
 }

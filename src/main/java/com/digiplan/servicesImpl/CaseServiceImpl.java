@@ -201,13 +201,13 @@ public class CaseServiceImpl implements CaseService {
 
     public ResponseEntity<Object> downloadReport(String caseId) {
         ResponseEntity<Object> responseEntity = null;
-
+        String caseid = "32 Watts Plan-"+caseId;
         try {
             String reportPath = this.environment.getProperty("report.download.path") + caseId + "/Report.pdf";
             File file = new File(reportPath);
             if (file.exists()) {
                 InputStreamResource inputStreamResource = new InputStreamResource(new FileInputStream(file));
-                responseEntity = ((ResponseEntity.BodyBuilder)ResponseEntity.ok().header("Content-Disposition", new String[] { "attachment; filename=" + caseId + "" })).contentLength(file.length()).contentType(MediaType.APPLICATION_PDF).body(inputStreamResource);
+                responseEntity = ((ResponseEntity.BodyBuilder)ResponseEntity.ok().header("Content-Disposition", new String[] { "attachment; filename=" + caseid })).contentLength(file.length()).contentType(MediaType.APPLICATION_PDF).body(inputStreamResource);
             } else {
                 responseEntity = ResponseEntity.status(HttpStatus.NOT_FOUND).body("file not found!");
             }
@@ -452,8 +452,5 @@ public class CaseServiceImpl implements CaseService {
         }
         return new ResponseEntity<>(map, status);
     }
-
-
-    // Your corrected API
 
 }

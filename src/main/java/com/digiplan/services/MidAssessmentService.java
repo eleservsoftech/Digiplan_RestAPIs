@@ -25,4 +25,6 @@ public interface MidAssessmentService {
             String watts32UserRemarks, String watts32User, String folderName) ;
     public ResponseEntity<Map<String, Object>> getMidAssessement(String requestId);
     public ResponseEntity<Map<String, Object>> getMidAssessements(MidAssessmentEntity midAssessmentEntity);
+    public ResponseEntity<Map> getMidAllData();
+
 }
