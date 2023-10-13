@@ -165,4 +165,8 @@ public class CaseController {
         return responseEntity;
     }
 
+    @GetMapping("/GetUserCasesStatus")
+    public ResponseEntity<Map> GetMyCaselist(@RequestParam String userName, @RequestParam String cases) {
+        return caseService.GetMyCaselist(userName,cases);
+    }
 }

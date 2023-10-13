@@ -18,7 +18,5 @@ public interface CallbackRequestService {
 
     public ResponseEntity<Map> deleteCallReq(Long regId);
 
-
-
 }
 

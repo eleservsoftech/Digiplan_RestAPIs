@@ -6,6 +6,10 @@ import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -18,21 +22,46 @@ public class AlignerWearingScheduleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "case_id")
-    private long caseId;
 
-    @Column(name = "aligner_no")
-    private String alignerNo;
+    @NotNull
+    @NotBlank
+    @Size(min = 10,max = 10,message = "Please add 10 digit valid Case Id")
+    @Column(name = "case_id")
+    private String caseId;
+
+    @Column(name = "dispatched_id")
+    private String dispatchedId;
+
+    @Column(name = "tracking_id")
+    private String trackingId;
+
+    @Column(name = "aligner_no_u")
+    private String alignerNoU;
+
+    @Column(name = "aligner_no_l")
+    private String alignerNoL;
 
     @Column(name = "planned_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date plannedDate;
 
-    @Column(name = "actual_date")
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "actual_date")
     private Date actualDate;
 
+    @Column(name = "remarks")
     private String remarks;
-    private String user;
+
+    @Column(name = "sign")
+    private String sign;
+
+    @Column(name = "total_aligner_u")
+    private String totalAlignerU;
+
+    @Column(name = "total_aligner_l")
+    private String totalAlignerL;
+
+
+
 
 }

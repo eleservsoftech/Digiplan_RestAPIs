@@ -110,8 +110,6 @@ public class CaseServiceImpl implements CaseService {
         return  new ResponseEntity<>(map,status);
     }
 
-
-
 //    public Cases addCase(Cases casesData) {
 //        Cases cases =  null;
 //        try {
@@ -201,13 +199,13 @@ public class CaseServiceImpl implements CaseService {
 
     public ResponseEntity<Object> downloadReport(String caseId) {
         ResponseEntity<Object> responseEntity = null;
-
+        String caseid = "32 Watts Plan-"+caseId;
         try {
             String reportPath = this.environment.getProperty("report.download.path") + caseId + "/Report.pdf";
             File file = new File(reportPath);
             if (file.exists()) {
                 InputStreamResource inputStreamResource = new InputStreamResource(new FileInputStream(file));
-                responseEntity = ((ResponseEntity.BodyBuilder)ResponseEntity.ok().header("Content-Disposition", new String[] { "attachment; filename=" + caseId + "" })).contentLength(file.length()).contentType(MediaType.APPLICATION_PDF).body(inputStreamResource);
+                responseEntity = ((ResponseEntity.BodyBuilder)ResponseEntity.ok().header("Content-Disposition", new String[] { "attachment; filename=" + caseid })).contentLength(file.length()).contentType(MediaType.APPLICATION_PDF).body(inputStreamResource);
             } else {
                 responseEntity = ResponseEntity.status(HttpStatus.NOT_FOUND).body("file not found!");
             }
@@ -453,7 +451,32 @@ public class CaseServiceImpl implements CaseService {
         return new ResponseEntity<>(map, status);
     }
 
-
-    // Your corrected API
+    @Override
+    public ResponseEntity<Map> GetMyCaselist( String userName, String activeCases) {
+        List activeCasesList = new ArrayList();
+        Map map = new HashMap();
+        HttpStatus status = null;
+        try {
+            activeCasesList = caseRepository.GetMyCaselist(userName,activeCases);
+            System.out.println("activeCasesList "+activeCasesList.toString());
+            if (activeCasesList!=null) {
+                map.put("status", 200);
+                map.put("message", "Data Found");
+                map.put("data", activeCasesList);
+                status = HttpStatus.OK;
+            } else {
+                map.put("status", 404);
+                map.put("errorMessage", "Data not found!");
+                status = HttpStatus.NOT_FOUND;
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            map.put("status", 500);
+            map.put("message", "Internal Server Error");
+            map.put("error", exception.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        return new ResponseEntity(map, status);
+    }
 
 }

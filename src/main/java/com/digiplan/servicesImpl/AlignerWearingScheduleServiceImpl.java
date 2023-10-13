@@ -4,14 +4,19 @@ import com.digiplan.entities.AlignerWearingScheduleEntity;
 import com.digiplan.repositories.AlignerWearingScheduleRepository;
 import com.digiplan.services.AlignerWearingScheduleService;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import javax.persistence.EntityManager;
+import javax.persistence.StoredProcedureQuery;
+import javax.transaction.Transactional;
+import java.sql.SQLException;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -19,6 +24,7 @@ public class AlignerWearingScheduleServiceImpl  implements AlignerWearingSchedul
 
     @Autowired
     private AlignerWearingScheduleRepository alignerWearingScheduleRepo;
+
     @Override
     public ResponseEntity<Map> addAlignerWearingSchedule(AlignerWearingScheduleEntity addAlignerWearingSchedule) {
         Map<Object, Object> map = new HashMap<>();
@@ -141,4 +147,60 @@ public class AlignerWearingScheduleServiceImpl  implements AlignerWearingSchedul
         }
         return new ResponseEntity<>(map, status);
     }
+
+    //This api will get data from aligner_wearing_schedule table
+
+    @Override
+    public ResponseEntity<Map> GetAlignerDispatchData(String dispatchedId) {
+        List alignerDispatchDataList = new ArrayList();
+        Map map = new HashMap();
+        HttpStatus status = null;
+        try {
+            alignerDispatchDataList = alignerWearingScheduleRepo.alignerDispatchData(dispatchedId);
+            if (!alignerDispatchDataList.isEmpty()) {
+                map.put("status", 200);
+                map.put("message", "Data Found");
+                map.put("data", alignerDispatchDataList);
+                status = HttpStatus.OK;
+            } else {
+                map.put("status", 404);
+                map.put("errorMessage", "No Dispatched Data not found!");
+                status = HttpStatus.NOT_FOUND;
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            map.put("status", 500);
+            map.put("message", "Internal Server Error");
+            map.put("error", exception.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        return new ResponseEntity(map, status);
+    }
+
+    @Override
+    public ResponseEntity<Map> updateAlignerSchedule(String case_id, String dispatchedId, String aligner_no_u, String aligner_no_l,
+                                                     String actualDate, String remarks, String user) {
+        Map map = new HashMap();
+        HttpStatus status = null;
+        try {
+            if ( this.alignerWearingScheduleRepo.findByCaseId(case_id) != null) {
+                alignerWearingScheduleRepo.UpdateAlignerSchedule(case_id, dispatchedId, aligner_no_u, aligner_no_l, actualDate, remarks, user);
+                map.put("status", HttpStatus.OK.value());
+                map.put("message", "Aligner Schedule Data Updated Successfully");
+                status = HttpStatus.OK;
+            } else {
+                map.put("status", HttpStatus.NOT_FOUND.value());
+                map.put("errorMessage", "No Data Updated found!");
+                status = HttpStatus.NOT_FOUND;
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            map.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            map.put("message", "Internal Server Error");
+            map.put("error", exception.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        return new ResponseEntity(map, status);
+    }
+
 }

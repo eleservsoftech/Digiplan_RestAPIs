@@ -104,13 +104,14 @@ public class MidAssessmentServiceImpl implements MidAssessmentService {
                 String alignerNoU, String alignerNoL, String fittingOfAligner, String remarks, String user,
                 String watts32UserRemarks, String watts32User, String folderName) {
                 Map<String, Object> response = new HashMap<>();
-                HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR; // Default status
+                HttpStatus status = null;
+
                 try {
                 Optional<MidAssessmentEntity> optionalEntity = midRepo.findById(requestId);
                 if (optionalEntity.isPresent()) {
                     MidAssessmentEntity updateMidAssessment = optionalEntity.get();
-                    folderName = updateMidAssessment.getFolderName();
-                    System.out.println("update folderName: "+folderName);
+                    MidAssessmentEntity checkData = midRepo.findByImage(String.valueOf(requestId));
+                    folderName = checkData.getFolderName();
                     updateMidAssessment.setCaseId(caseId);
                     updateMidAssessment.setPatientName(patientName);
                     updateMidAssessment.setDoctorName(doctorName);
@@ -138,9 +139,7 @@ public class MidAssessmentServiceImpl implements MidAssessmentService {
                     if (photo4 != null) {
                         updateMidAssessment.setPhoto4(photo4.getOriginalFilename());
                     }
-
-                    midRepo.save(updateMidAssessment); // Save the updated entity
-
+                    midRepo.save(updateMidAssessment);
                     response.put("status_code", HttpStatus.OK.toString());
                     response.put("message", "Data Updated successfully");
                     status = HttpStatus.OK;
@@ -263,6 +262,32 @@ public class MidAssessmentServiceImpl implements MidAssessmentService {
             map.put("status_code", HttpStatus.INTERNAL_SERVER_ERROR.toString());
             map.put("message", "Internal Server Error");
             map.put("error", exception.getMessage());
+        }
+        return new ResponseEntity<>(map, status);
+    }
+
+    // mid all data
+    @Override
+    public ResponseEntity<Map> getMidAllData() {
+        HttpStatus status = null;
+        Map<Object, Object> map = new HashMap<>();
+        try {
+            if (!this.midRepo.findAll().isEmpty()) {
+                map.put("status_code", HttpStatus.OK.value());
+                map.put("results", this.midRepo.findAll());
+                map.put("message", "Data Found");
+                status = HttpStatus.OK;
+            } else {
+                map.put("status_code", HttpStatus.NOT_FOUND.value());
+                map.put("results", this.midRepo.findAll());
+                map.put("error", "Data Not Found!");
+                status = HttpStatus.NOT_FOUND;
+            }
+        } catch (Exception e) {
+            map.put("status_code", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            map.put("error", e.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+            log.info("service log getMidAllData{0} " + e.getMessage());
         }
         return new ResponseEntity<>(map, status);
     }
