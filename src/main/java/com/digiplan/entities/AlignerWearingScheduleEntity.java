@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -60,8 +59,6 @@ public class AlignerWearingScheduleEntity {
 
     @Column(name = "total_aligner_l")
     private String totalAlignerL;
-
-
 
 
 }

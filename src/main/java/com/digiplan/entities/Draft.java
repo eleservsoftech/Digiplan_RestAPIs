@@ -2,11 +2,7 @@ package com.digiplan.entities;
 
 import java.time.LocalDate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -29,5 +25,25 @@ public class Draft {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(name = "image1", length = 100)
+    private String image1;
+    @Column(name = "image2", length = 100)
+    private String image2;
+    @Column(name = "image3", length = 100)
+    private String image3;
+    @Column(name = "image4", length = 100)
+    private String image4;
+    @Column(name = "image5", length = 100)
+    private String image5;
+    @Column(name = "image6", length = 100)
+    private String image6;
+    @Column(name = "image7", length = 100)
+    private String image7;
+    @Column(name = "image8", length = 100)
+    private String image8;
+    @Column(name = "pdf1", length = 100)
+    private String pdf1;
+    @Column(name = "file_path", length = 250)
+    private String file_path;
 
 }

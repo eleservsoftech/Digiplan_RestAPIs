@@ -164,7 +164,6 @@ public class CaseController {
         ResponseEntity<Resource> responseEntity = this.restTemplate.getForEntity(baseURL + caseId, Resource.class, new Object[0]);
         return responseEntity;
     }
-
     @GetMapping("/GetUserCasesStatus")
     public ResponseEntity<Map> GetMyCaselist(@RequestParam String userName, @RequestParam String cases) {
         return caseService.GetMyCaselist(userName,cases);

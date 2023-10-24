@@ -13,7 +13,6 @@ import java.util.List;
 
 @Repository
 public interface AlignerWearingScheduleRepository extends JpaRepository<AlignerWearingScheduleEntity,Integer> {
-
     @Query(value = " Call get_aligner_schedule(?1) ", nativeQuery = true)
     List<AlignerDispatchData> alignerDispatchData(String dispatchedId);
 

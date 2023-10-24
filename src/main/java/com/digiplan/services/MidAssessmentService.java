@@ -23,8 +23,18 @@ public interface MidAssessmentService {
             MultipartFile photo1, MultipartFile photo2, MultipartFile photo3, MultipartFile photo4,
             String alignerNoU, String alignerNoL, String fittingOfAligner, String remarks, String user,
             String watts32UserRemarks, String watts32User, String folderName) ;
-    public ResponseEntity<Map<String, Object>> getMidAssessement(String requestId);
-    public ResponseEntity<Map<String, Object>> getMidAssessements(MidAssessmentEntity midAssessmentEntity);
-    public ResponseEntity<Map> getMidAllData();
+
+    // real
+
+//    public ResponseEntity<Map<String, Object>> getMidAssessement(String requestId);
+
+    // real
+    ResponseEntity<?> getMidAssessment(Long requestId);
+
+    ResponseEntity<Map<String, Object>> getAllMidAssessments();
+
+
+//    public ResponseEntity<Map<String, Object>> getMidAssessements(MidAssessmentEntity midAssessmentEntity);
+
 
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -30,20 +31,352 @@ public class ImageServiceImpl implements ImageService {
 
     @Autowired
     private LoggerRepository loggerRepository;
+    @Autowired
+    private Environment env;
+
+//    @Override
+//    public Image getImage(Integer id) {
+//        Image image = null;
+//        try {
+//            Optional<Image> check = imageRepository.findById(id);
+//            if (check.isPresent())
+//                image = imageRepository.getById(id);
+//        } catch (Exception exception) {
+//            System.out.println("@getImage Exception : " + exception);
+//            Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "getImage", exception.getMessage(), exception.toString(), LocalDateTime.now());
+//            loggerRepository.saveAndFlush(logger);
+//        }
+//        return image;
+//    }
+
 
     @Override
-    public Image getImage(Integer id) {
-        Image image = null;
+    public ResponseEntity<Map<String, Object>> getImage(Integer id) {
+        Map<String, Object> map = new HashMap<>();
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+
         try {
-            Optional<Image> check = imageRepository.findById(id);
-            if (check.isPresent())
-                image = imageRepository.getById(id);
+            Optional<Image> imageOptional = imageRepository.findById(id);
+
+            if (imageOptional.isPresent()) {
+                Image imagedata = imageOptional.get();
+                Map<String, Object> imageDetailsData = new LinkedHashMap<>();
+
+                imageDetailsData.put("id", imagedata.getId());
+                imageDetailsData.put("draftId", imagedata.getDraftId());
+                imageDetailsData.put("formId", imagedata.getFormId());
+                imageDetailsData.put("folderName", imagedata.getFolderName());
+                imageDetailsData.put("stage", imagedata.getStage());
+                imageDetailsData.put("side", imagedata.getSide());
+                imageDetailsData.put("front", imagedata.getFront());
+                imageDetailsData.put("frontSmiling", imagedata.getFrontSmiling());
+                imageDetailsData.put("rightBuccal", imagedata.getRightBuccal());
+                imageDetailsData.put("leftBuccal", imagedata.getLeftBuccal());
+                imageDetailsData.put("upperOcclusial", imagedata.getUpperOcclusial());
+                imageDetailsData.put("lowerOcclusial", imagedata.getLowerOcclusial());
+                imageDetailsData.put("frontal", imagedata.getFrontal());
+                imageDetailsData.put("opg", imagedata.getOpg());
+                imageDetailsData.put("lateralCeph", imagedata.getLateralCeph());
+                imageDetailsData.put("other", imagedata.getOther());
+                imageDetailsData.put("pdf1", imagedata.getPdf1());
+                imageDetailsData.put("pdf2", imagedata.getPdf2());
+                imageDetailsData.put("caseId", imagedata.getCaseId());
+
+                String folderName = imagedata.getFolderName();
+                String phase1 = imagedata.getStage();
+                String folderPath = env.getProperty("file.uploads.location") + folderName + "/phase1";
+                System.out.println("folderPath: " + folderPath);
+
+                File folder = new File(folderPath);
+
+                if (folder.exists() && folder.isDirectory()) {
+                    File[] photosList = folder.listFiles();
+                    if (photosList != null) {
+                        List<Map<String, Object>> imageList = new ArrayList<>();
+
+                        for (File photo : photosList) {
+                            if (photo.isFile()) {
+                                byte[] arr = Files.readAllBytes(photo.toPath());
+                                Map<String, Object> imageData = new HashMap<>();
+                                imageData.put("filename", photo.getName());
+                                imageData.put("contentType", "image/jpeg");
+                                imageData.put("data", Base64.getEncoder().encodeToString(arr));
+                                imageList.add(imageData);
+                            }
+                        }
+
+                        imageDetailsData.put("images", imageList);
+                    }
+                }
+
+                map.put("status_code", HttpStatus.OK.toString());
+                map.put("message", "OK");
+                map.put("data", imageDetailsData);
+                status = HttpStatus.OK;
+            } else {
+                map.put("status_code", HttpStatus.NOT_FOUND.toString());
+                map.put("message", "No CaseBookingUploadDetails record found for the specified case_booking_id");
+                status = HttpStatus.NOT_FOUND;
+            }
         } catch (Exception exception) {
-            System.out.println("@getImage Exception : " + exception);
-            Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "getImage", exception.getMessage(), exception.toString(), LocalDateTime.now());
-            loggerRepository.saveAndFlush(logger);
+            map.put("status_code", HttpStatus.INTERNAL_SERVER_ERROR.toString());
+            map.put("message", "Internal Server Error");
+            map.put("error", exception.getMessage());
         }
-        return image;
+
+        return new ResponseEntity<>(map, status);
+    }
+
+    @Override
+    public ResponseEntity<Map<String, Object>> getImagebyDraftId(Integer draftId) {
+        Map<String, Object> map = new HashMap<>();
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+
+        try {
+            Optional<Image> imageOptional = Optional.ofNullable(imageRepository.findByDraftId(draftId));
+
+
+            if (imageOptional.isPresent()) {
+                Image imagedata = imageOptional.get();
+                Map<String, Object> imageDetailsData = new LinkedHashMap<>();
+
+                imageDetailsData.put("id", imagedata.getId());
+                imageDetailsData.put("draftId", imagedata.getDraftId());
+                imageDetailsData.put("formId", imagedata.getFormId());
+                imageDetailsData.put("folderName", imagedata.getFolderName());
+                imageDetailsData.put("stage", imagedata.getStage());
+                imageDetailsData.put("side", imagedata.getSide());
+                imageDetailsData.put("front", imagedata.getFront());
+                imageDetailsData.put("frontSmiling", imagedata.getFrontSmiling());
+                imageDetailsData.put("rightBuccal", imagedata.getRightBuccal());
+                imageDetailsData.put("leftBuccal", imagedata.getLeftBuccal());
+                imageDetailsData.put("upperOcclusial", imagedata.getUpperOcclusial());
+                imageDetailsData.put("lowerOcclusial", imagedata.getLowerOcclusial());
+                imageDetailsData.put("frontal", imagedata.getFrontal());
+                imageDetailsData.put("opg", imagedata.getOpg());
+                imageDetailsData.put("lateralCeph", imagedata.getLateralCeph());
+                imageDetailsData.put("other", imagedata.getOther());
+                imageDetailsData.put("pdf1", imagedata.getPdf1());
+                imageDetailsData.put("pdf2", imagedata.getPdf2());
+                imageDetailsData.put("caseId", imagedata.getCaseId());
+
+                String folderName = imagedata.getFolderName();
+                String phase1 = imagedata.getStage();
+                String folderPath = env.getProperty("file.uploads.location") + folderName + "/phase1";
+                System.out.println("folderPath: " + folderPath);
+
+                File folder = new File(folderPath);
+
+                if (folder.exists() && folder.isDirectory()) {
+//                    System.out.println("if1");
+                    File[] photosList = folder.listFiles();
+                    if (photosList != null) {
+
+                        List<Map<String, Object>> imageList = new ArrayList<>();
+
+                        for (File photo : photosList) {
+
+                            if (photo.isFile()) {
+
+                                byte[] arr = Files.readAllBytes(photo.toPath());
+
+                                Map<String, Object> imageData = new HashMap<>();
+
+                                imageData.put("filename", photo.getName());
+                                imageData.put("contentType", "image/jpeg");
+                                imageData.put("data", Base64.getEncoder().encodeToString(arr));
+                                imageList.add(imageData);
+                            }
+                        }
+
+                        imageDetailsData.put("images", imageList);
+                    }
+                }
+
+                map.put("status_code", HttpStatus.OK.toString());
+                map.put("message", "OK");
+                map.put("data", imageDetailsData);
+                status = HttpStatus.OK;
+            } else {
+                map.put("status_code", HttpStatus.NOT_FOUND.toString());
+                map.put("message", "No CaseBookingUploadDetails record found for the specified case_booking_id");
+                status = HttpStatus.NOT_FOUND;
+            }
+        } catch (Exception exception) {
+            map.put("status_code", HttpStatus.INTERNAL_SERVER_ERROR.toString());
+            map.put("message", "Internal Server Error");
+            map.put("error", exception.getMessage());
+        }
+
+        return new ResponseEntity<>(map, status);
+    }
+
+    @Override
+    public ResponseEntity<Map<String, Object>> getImagebyFormId(Integer formId) {
+        Map<String, Object> map = new HashMap<>();
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+
+        try {
+            Optional<Image> imageOptional = Optional.ofNullable(imageRepository.findByFormId(formId));
+
+
+            if (imageOptional.isPresent()) {
+                Image imagedata = imageOptional.get();
+                Map<String, Object> imageDetailsData = new LinkedHashMap<>();
+
+                imageDetailsData.put("id", imagedata.getId());
+                imageDetailsData.put("draftId", imagedata.getDraftId());
+                imageDetailsData.put("formId", imagedata.getFormId());
+                imageDetailsData.put("folderName", imagedata.getFolderName());
+                imageDetailsData.put("stage", imagedata.getStage());
+                imageDetailsData.put("side", imagedata.getSide());
+                imageDetailsData.put("front", imagedata.getFront());
+                imageDetailsData.put("frontSmiling", imagedata.getFrontSmiling());
+                imageDetailsData.put("rightBuccal", imagedata.getRightBuccal());
+                imageDetailsData.put("leftBuccal", imagedata.getLeftBuccal());
+                imageDetailsData.put("upperOcclusial", imagedata.getUpperOcclusial());
+                imageDetailsData.put("lowerOcclusial", imagedata.getLowerOcclusial());
+                imageDetailsData.put("frontal", imagedata.getFrontal());
+                imageDetailsData.put("opg", imagedata.getOpg());
+                imageDetailsData.put("lateralCeph", imagedata.getLateralCeph());
+                imageDetailsData.put("other", imagedata.getOther());
+                imageDetailsData.put("pdf1", imagedata.getPdf1());
+                imageDetailsData.put("pdf2", imagedata.getPdf2());
+                imageDetailsData.put("caseId", imagedata.getCaseId());
+
+                String folderName = imagedata.getFolderName();
+                String phase1 = imagedata.getStage();
+                String folderPath = env.getProperty("file.uploads.location") + folderName + "/phase1";
+                System.out.println("folderPath: " + folderPath);
+
+                File folder = new File(folderPath);
+
+                if (folder.exists() && folder.isDirectory()) {
+//                    System.out.println("if1");
+                    File[] photosList = folder.listFiles();
+                    if (photosList != null) {
+
+                        List<Map<String, Object>> imageList = new ArrayList<>();
+
+                        for (File photo : photosList) {
+
+                            if (photo.isFile()) {
+
+                                byte[] arr = Files.readAllBytes(photo.toPath());
+
+                                Map<String, Object> imageData = new HashMap<>();
+
+                                imageData.put("filename", photo.getName());
+                                imageData.put("contentType", "image/jpeg");
+                                imageData.put("data", Base64.getEncoder().encodeToString(arr));
+                                imageList.add(imageData);
+                            }
+                        }
+
+                        imageDetailsData.put("images", imageList);
+                    }
+                }
+
+                map.put("status_code", HttpStatus.OK.toString());
+                map.put("message", "OK");
+                map.put("data", imageDetailsData);
+                status = HttpStatus.OK;
+            } else {
+                map.put("status_code", HttpStatus.NOT_FOUND.toString());
+                map.put("message", "No CaseBookingUploadDetails record found for the specified case_booking_id");
+                status = HttpStatus.NOT_FOUND;
+            }
+        } catch (Exception exception) {
+            map.put("status_code", HttpStatus.INTERNAL_SERVER_ERROR.toString());
+            map.put("message", "Internal Server Error");
+            map.put("error", exception.getMessage());
+        }
+
+        return new ResponseEntity<>(map, status);
+    }
+
+    @Override
+    public ResponseEntity<Map<String, Object>> getImagebyCaseId(String caseId, Integer id) {
+        Map<String, Object> map = new HashMap<>();
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+
+        try {
+            Optional<Image> imageOptional = Optional.ofNullable(imageRepository.findByCaseIdAndId(caseId,id));
+
+
+            if (imageOptional.isPresent()) {
+                Image imagedata = imageOptional.get();
+                Map<String, Object> imageDetailsData = new LinkedHashMap<>();
+
+                imageDetailsData.put("id", imagedata.getId());
+                imageDetailsData.put("draftId", imagedata.getDraftId());
+                imageDetailsData.put("formId", imagedata.getFormId());
+                imageDetailsData.put("folderName", imagedata.getFolderName());
+                imageDetailsData.put("stage", imagedata.getStage());
+                imageDetailsData.put("side", imagedata.getSide());
+                imageDetailsData.put("front", imagedata.getFront());
+                imageDetailsData.put("frontSmiling", imagedata.getFrontSmiling());
+                imageDetailsData.put("rightBuccal", imagedata.getRightBuccal());
+                imageDetailsData.put("leftBuccal", imagedata.getLeftBuccal());
+                imageDetailsData.put("upperOcclusial", imagedata.getUpperOcclusial());
+                imageDetailsData.put("lowerOcclusial", imagedata.getLowerOcclusial());
+                imageDetailsData.put("frontal", imagedata.getFrontal());
+                imageDetailsData.put("opg", imagedata.getOpg());
+                imageDetailsData.put("lateralCeph", imagedata.getLateralCeph());
+                imageDetailsData.put("other", imagedata.getOther());
+                imageDetailsData.put("pdf1", imagedata.getPdf1());
+                imageDetailsData.put("pdf2", imagedata.getPdf2());
+                imageDetailsData.put("caseId", imagedata.getCaseId());
+
+                String folderName = imagedata.getFolderName();
+                String phase1 = imagedata.getStage();
+                String folderPath = env.getProperty("file.uploads.location") + folderName + "/phase1";
+                System.out.println("folderPath: " + folderPath);
+
+                File folder = new File(folderPath);
+
+                if (folder.exists() && folder.isDirectory()) {
+//                    System.out.println("if1");
+                    File[] photosList = folder.listFiles();
+                    if (photosList != null) {
+
+                        List<Map<String, Object>> imageList = new ArrayList<>();
+
+                        for (File photo : photosList) {
+
+                            if (photo.isFile()) {
+
+                                byte[] arr = Files.readAllBytes(photo.toPath());
+
+                                Map<String, Object> imageData = new HashMap<>();
+
+                                imageData.put("filename", photo.getName());
+                                imageData.put("contentType", "image/jpeg");
+                                imageData.put("data", Base64.getEncoder().encodeToString(arr));
+                                imageList.add(imageData);
+                            }
+                        }
+
+                        imageDetailsData.put("images", imageList);
+                    }
+                }
+
+                map.put("status_code", HttpStatus.OK.toString());
+                map.put("message", "OK");
+                map.put("data", imageDetailsData);
+                status = HttpStatus.OK;
+            } else {
+                map.put("status_code", HttpStatus.NOT_FOUND.toString());
+                map.put("message", "No CaseBookingUploadDetails record found for the specified case_booking_id");
+                status = HttpStatus.NOT_FOUND;
+            }
+        } catch (Exception exception) {
+            map.put("status_code", HttpStatus.INTERNAL_SERVER_ERROR.toString());
+            map.put("message", "Internal Server Error");
+            map.put("error", exception.getMessage());
+        }
+
+        return new ResponseEntity<>(map, status);
     }
 
     @Override
@@ -65,7 +398,7 @@ public class ImageServiceImpl implements ImageService {
         HttpStatus status = null;
         try {
             Image image = imageRepository.saveAndFlush(imageData);
-            if(image!=null){
+            if (image != null) {
                 map.put("status", 200);
                 map.put("message", "OK");
                 map.put("data", image);
@@ -129,7 +462,7 @@ public class ImageServiceImpl implements ImageService {
             file1.mkdir();
 
             List<MultipartFile> filesList = Arrays.asList(side, front, frontSmiling, rightBuccal, leftBuccal, upperOcclusial,
-                    lowerOcclusial, frontal, lateralCeph, other, pdf1, pdf2);
+                    lowerOcclusial, frontal, lateralCeph,opg, other, pdf1, pdf2);
 
             for (MultipartFile uploadedFile : filesList) {
                 if (uploadedFile.isEmpty() == false && uploadedFile.getSize() != 0) {

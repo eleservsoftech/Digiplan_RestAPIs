@@ -12,4 +12,8 @@ public interface MidAssessmentRepository extends JpaRepository<MidAssessmentEnti
 
     @Query(value = " SELECT * FROM mid_assessment where request_id =:request_id", nativeQuery = true)
     MidAssessmentEntity findByImage(@Param("request_id") String request_id);
+
+    MidAssessmentEntity findByRequestId(Long requestId);
+
+
 }

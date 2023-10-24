@@ -10,5 +10,4 @@ public interface GetMyCaselistEntity {
     String getcrm_name();
     String getDoctor_Name();
     String getWorkflow_Status();
-
 }

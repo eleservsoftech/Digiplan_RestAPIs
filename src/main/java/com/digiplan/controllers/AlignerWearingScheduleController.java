@@ -2,14 +2,11 @@ package com.digiplan.controllers;
 
 import com.digiplan.entities.AlignerWearingScheduleEntity;
 import com.digiplan.services.AlignerWearingScheduleService;
-import com.digiplan.servicesImpl.AlignerWearingScheduleServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.Date;
 import java.util.Map;
 
 @CrossOrigin(origins = {"*"})
@@ -19,11 +16,11 @@ public class AlignerWearingScheduleController {
     @Autowired
     private AlignerWearingScheduleService aignerWearingScheduleService;
     @PostMapping("/addAlignerWearingSchedule")
-    public ResponseEntity<Map> addAlignerWearingSchedule(@RequestBody @Valid AlignerWearingScheduleEntity alignerWearingSchedule) {
+    public ResponseEntity<Map> addAlignerWearingSchedule(@RequestBody AlignerWearingScheduleEntity alignerWearingSchedule) {
         return this.aignerWearingScheduleService.addAlignerWearingSchedule(alignerWearingSchedule);
     }
     @PutMapping("/updateAlignerWearingSchedule/{id}")
-    public ResponseEntity<Map> updateAlignerWearingSchedule(@PathVariable Integer id, @RequestBody @Valid AlignerWearingScheduleEntity AlignerWearingSchedule) {
+    public ResponseEntity<Map> updateAlignerWearingSchedule(@PathVariable Integer id, @RequestBody AlignerWearingScheduleEntity AlignerWearingSchedule) {
         return this.aignerWearingScheduleService.updateAlignerWearingSchedule(id,AlignerWearingSchedule);
     }
     @GetMapping("/getAlignerWearingSchedule/{id}")
@@ -38,7 +35,6 @@ public class AlignerWearingScheduleController {
     public  ResponseEntity<Map> deleteAlignerWearingSchedule(@PathVariable Integer id)   {
         return  this.aignerWearingScheduleService.deleteAlignerWearingSchedule(id);
     }
-
     @GetMapping("/getAlignerDispatchedData/{dispatchedId}")
     public ResponseEntity<Map> GetAlignerDispatchData(@PathVariable String dispatchedId) {
         return aignerWearingScheduleService.GetAlignerDispatchData(dispatchedId);
@@ -57,5 +53,4 @@ public class AlignerWearingScheduleController {
         return aignerWearingScheduleService.updateAlignerSchedule(case_id,dispatchedId,aligner_no_u,
                 aligner_no_l,actualDate,remarks,user);
     }
-
 }

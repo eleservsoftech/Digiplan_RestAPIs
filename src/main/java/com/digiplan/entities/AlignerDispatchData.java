@@ -1,7 +1,6 @@
 package com.digiplan.entities;
 
 public interface AlignerDispatchData {
-
     String  getdispatched_id();
     String  getAligner_no();
     String  getPlanned_date();
@@ -11,9 +10,4 @@ public interface AlignerDispatchData {
     String  getCase_id();
     String  getTotal_aligner_l();
     String  getTotal_aligner_u();
-
-
-
-
-
 }
