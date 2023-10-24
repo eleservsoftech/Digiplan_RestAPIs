@@ -21,7 +21,6 @@ public class CallbackRequestController {
 
     @Autowired
     private CallbackRequestService callbackRequestService;
-
     @PostMapping("/callBackReq/create")
     public ResponseEntity<Map> addCallbackRequest(@RequestBody @Valid CallbackRequestEntity callbackRequest) {
         return this.callbackRequestService.createCallbackRequest(callbackRequest);

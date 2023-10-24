@@ -368,4 +368,85 @@ public class MidAssessmentServiceImpl implements MidAssessmentService {
         }
         return new ResponseEntity<>(map, status);
     }
+
+    // get all records
+    public ResponseEntity<Map<String, Object>> getMidAssessements(MidAssessmentEntity midAssessmentEntity) {
+        Map<String, Object> map = new HashMap<>();
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR; // Default status
+        try {
+            if(!this.midRepo.findAll().isEmpty()) {
+                List<MidAssessmentEntity> midAssess = this.midRepo.findAll();
+                String folderName = midAssessmentEntity.getFolderName();
+                String fileName = midAssessmentEntity.getFolderName();
+
+                //List<String> stringList = Arrays.asList(midAssessmentEntity.getPhoto1(), midAssessmentEntity.getPhoto2(), midAssessmentEntity.getPhoto3(),midAssessmentEntity.getPhoto4());
+
+
+                String folderPath = env.getProperty("file.midscan.location") + folderName;
+                File folder = new File(folderPath);
+                if (folder.exists() && folder.isDirectory()) {
+                    File[] photosList = folder.listFiles();
+                    if (photosList != null) {
+                        List<Map<String, Object>> imageList = new ArrayList<>();
+                        for (File photo : photosList) {
+                            if (photo.isFile()) {
+                                byte[] arr = Files.readAllBytes(photo.toPath());
+                                Map<String, Object> imageData = new HashMap<>();
+                                imageData.put("filename", photo.getName());
+                                imageData.put("byteArray", arr);
+                                imageList.add(imageData);
+                            }
+                        }
+                        map.put("status_code", HttpStatus.OK.toString());
+                        map.put("message", "OK");
+                        map.put("data", imageList);
+                        status = HttpStatus.OK;
+                    } else {
+                        map.put("status_code", HttpStatus.NOT_FOUND.toString());
+                        map.put("message", "No photos found in the folder");
+                        status = HttpStatus.NOT_FOUND;
+                    }
+                } else {
+                    map.put("status_code", HttpStatus.NOT_FOUND.toString());
+                    map.put("message", "Folder is not present");
+                    status = HttpStatus.NOT_FOUND;
+                }
+            } else {
+                map.put("status_code", HttpStatus.NOT_FOUND.toString());
+                map.put("message", "Request ID not found");
+                status = HttpStatus.NOT_FOUND;
+            }
+        } catch (Exception exception) {
+            map.put("status_code", HttpStatus.INTERNAL_SERVER_ERROR.toString());
+            map.put("message", "Internal Server Error");
+            map.put("error", exception.getMessage());
+        }
+        return new ResponseEntity<>(map, status);
+    }
+
+    // mid all data
+    @Override
+    public ResponseEntity<Map> getMidAllData() {
+        HttpStatus status = null;
+        Map<Object, Object> map = new HashMap<>();
+        try {
+            if (!this.midRepo.findAll().isEmpty()) {
+                map.put("status_code", HttpStatus.OK.value());
+                map.put("results", this.midRepo.findAll());
+                map.put("message", "Data Found");
+                status = HttpStatus.OK;
+            } else {
+                map.put("status_code", HttpStatus.NOT_FOUND.value());
+                map.put("results", this.midRepo.findAll());
+                map.put("error", "Data Not Found!");
+                status = HttpStatus.NOT_FOUND;
+            }
+        } catch (Exception e) {
+            map.put("status_code", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            map.put("error", e.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+            log.info("service log getMidAllData{0} " + e.getMessage());
+        }
+        return new ResponseEntity<>(map, status);
+    }
 }

@@ -201,7 +201,6 @@ public class CaseServiceImpl implements CaseService {
 
     public ResponseEntity<Object> downloadReport(String caseId) {
         ResponseEntity<Object> responseEntity = null;
-
         try {
             String reportPath = this.environment.getProperty("report.download.path") + caseId + "/Report.pdf";
             File file = new File(reportPath);

@@ -50,4 +50,9 @@ public class IncompleteFormController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping("/UserPendingCases/{submittedby}")
+    public ResponseEntity<Map> addIncompleteForm(@PathVariable String submittedby) {
+        return this.incompleteFormService.getUserPendingCases(submittedby);
+    }
+
 }

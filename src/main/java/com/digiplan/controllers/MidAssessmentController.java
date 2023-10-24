@@ -115,4 +115,10 @@ public class MidAssessmentController {
         return fileName.endsWith(".jpg") || fileName.endsWith(".png") || fileName.endsWith(".jpeg");
     }
 
+
+    @GetMapping("/getMidAllData")
+    public  ResponseEntity<Map> getAlignerWearingSchedules()   {
+        return this.midAssessmentService.getMidAllData();
+    }
+
 }

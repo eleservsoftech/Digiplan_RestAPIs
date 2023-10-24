@@ -168,5 +168,4 @@ public class CaseController {
     public ResponseEntity<Map> GetMyCaselist(@RequestParam String userName, @RequestParam String cases) {
         return caseService.GetMyCaselist(userName,cases);
     }
-
 }
