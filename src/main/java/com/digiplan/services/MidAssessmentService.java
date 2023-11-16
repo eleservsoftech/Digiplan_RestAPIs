@@ -33,6 +33,8 @@ public interface MidAssessmentService {
 
     ResponseEntity<Map<String, Object>> getAllMidAssessments();
 
+    ResponseEntity<Map> getMidAllData();
+
 
 //    public ResponseEntity<Map<String, Object>> getMidAssessements(MidAssessmentEntity midAssessmentEntity);
 

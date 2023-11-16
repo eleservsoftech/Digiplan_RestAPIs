@@ -1,0 +1,24 @@
+package com.digiplan.services;
+
+import com.digiplan.entities.PatientDoctorMapping;
+import org.springframework.http.ResponseEntity;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface PatientDoctorMappingService {
+    List<PatientDoctorMapping> getAllMappings();
+
+//    List<PatientDoctorMapping> getAllMappingsByDoctorId(String id);
+
+    PatientDoctorMapping getMappingById(String id);
+
+    PatientDoctorMapping updateMapping(String id, PatientDoctorMapping updatedMapping);
+
+    void deleteMappingById(String id);
+
+    PatientDoctorMapping createMapping(PatientDoctorMapping newMapping);
+    List<PatientDoctorMapping> getMappingsByMobileOrEmail(String mobileOrEmail);
+
+
+}
