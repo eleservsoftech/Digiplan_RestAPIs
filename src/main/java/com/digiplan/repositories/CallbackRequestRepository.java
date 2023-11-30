@@ -16,4 +16,6 @@ public interface CallbackRequestRepository  extends JpaRepository<CallbackReques
     @Modifying
     @Query(value = " UPDATE callback_requests set isdelete = 1 where requestId =:reqId ", nativeQuery = true)
     int deleteCallBackReg(@Param("reqId") Long reqId);
+
+
 }

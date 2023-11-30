@@ -1,6 +1,7 @@
 package com.digiplan.repositories;
 
 import com.digiplan.entities.Cases;
+import com.digiplan.entities.GetMyCaselistEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,5 +17,9 @@ public interface CaseRepository extends JpaRepository<Cases, String> {
 
     @Query(value = "SELECT * FROM alignwise_cases WHERE caseid = :caseId ORDER BY id DESC LIMIT 1", nativeQuery = true)
     Cases findByCaseId(@Param("caseId") String caseId);
+
+
+    @Query(value = " Call GetMyCaselist(?1,?2) ", nativeQuery = true)
+    List<GetMyCaselistEntity> GetMyCaselist(String UserName, String activeCases);
 
 }

@@ -110,8 +110,6 @@ public class CaseServiceImpl implements CaseService {
         return  new ResponseEntity<>(map,status);
     }
 
-
-
 //    public Cases addCase(Cases casesData) {
 //        Cases cases =  null;
 //        try {
@@ -451,6 +449,34 @@ public class CaseServiceImpl implements CaseService {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
         return new ResponseEntity<>(map, status);
+    }
+
+    @Override
+    public ResponseEntity<Map> GetMyCaselist( String userName, String activeCases) {
+        List activeCasesList = new ArrayList();
+        Map map = new HashMap();
+        HttpStatus status = null;
+        try {
+            activeCasesList = caseRepository.GetMyCaselist(userName,activeCases);
+            System.out.println("activeCasesList "+activeCasesList.toString());
+            if (activeCasesList!=null) {
+                map.put("status", 200);
+                map.put("message", "Data Found");
+                map.put("data", activeCasesList);
+                status = HttpStatus.OK;
+            } else {
+                map.put("status", 404);
+                map.put("errorMessage", "Data not found!");
+                status = HttpStatus.NOT_FOUND;
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            map.put("status", 500);
+            map.put("message", "Internal Server Error");
+            map.put("error", exception.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        return new ResponseEntity(map, status);
     }
 
 }

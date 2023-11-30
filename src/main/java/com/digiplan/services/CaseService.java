@@ -29,4 +29,6 @@ public interface CaseService {
    // ResponseEntity<Map> getUserData(String paramString);
 
     public  ResponseEntity<Map> getCaseId(String caseId);
+
+    public ResponseEntity<Map> GetMyCaselist( String userName, String activeCases);
 }

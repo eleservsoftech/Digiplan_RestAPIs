@@ -33,7 +33,8 @@ import java.util.*;
 
 @Service
 @Log
-public class MidAssessmentServiceImpl implements MidAssessmentService {
+public class
+MidAssessmentServiceImpl implements MidAssessmentService {
 
     @Autowired
     private MidAssessmentRepository midRepo;
@@ -140,7 +141,6 @@ public class MidAssessmentServiceImpl implements MidAssessmentService {
                         updateMidAssessment.setPhoto4(photo4.getOriginalFilename());
                     }
                     midRepo.save(updateMidAssessment);
-
                     response.put("status_code", HttpStatus.OK.toString());
                     response.put("message", "Data Updated successfully");
                     status = HttpStatus.OK;
