@@ -42,7 +42,11 @@ public class MidAssessmentController {
                 watts32User,folderName);//,filePath
     }
 
+<<<<<<< HEAD
     @PutMapping(value = {"/updateMidScan/{requestId}"}, consumes = {"multipart/form-data"})
+=======
+    @PostMapping(value = {"/updateMidScan/{requestId}"}, consumes = {"multipart/form-data"})
+>>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
     public ResponseEntity<Map<String, Object>> updateMidScanReg(Long requestId , String caseId, String patientName, String doctorName,
                                                                 @RequestParam(required = true) MultipartFile photo1 , @RequestParam(required = false) MultipartFile photo2 ,
                                                                 @RequestParam(required = false) MultipartFile photo3 , @RequestParam(required = false) MultipartFile photo4
@@ -58,6 +62,7 @@ public class MidAssessmentController {
 
     @Autowired
     private MidAssessmentRepository midRepo;
+<<<<<<< HEAD
 
     @GetMapping("/getMidScan/{requestId}")
     public ResponseEntity<Map<String, Object>> getMidCaseScan(@PathVariable String requestId) {
@@ -97,6 +102,59 @@ public class MidAssessmentController {
 //        }
 //    }
 
+=======
+// real
+//    @GetMapping("/getMidScan/{requestId}")
+//    public ResponseEntity<Map<String, Object>> getMidCaseScan(@PathVariable String requestId) {
+//        return midAssessmentService.getMidAssessement(requestId);
+//    }
+// real
+
+    @GetMapping("/getMidScan/{requestId}")
+    public ResponseEntity<?> getMidCaseScan(@PathVariable Long requestId) {
+        return midAssessmentService.getMidAssessment(requestId);
+
+    }
+//    @GetMapping("/getMidScans")
+//    public ResponseEntity<Map<String, Object>> getMidCaseScans(MidAssessmentEntity midAssessment) {
+//        return midAssessmentService.getMidAssessements( midAssessment);
+//    }
+
+
+    @GetMapping("/getAllMidScan")
+    public ResponseEntity<Map<String, Object>> getAllMidAssessments() {
+        return midAssessmentService.getAllMidAssessments();
+    }
+
+
+
+    @GetMapping("/list")
+    public ResponseEntity<List<String>> getImageList() {
+        // Specify the directory path where your images are stored
+        String directoryPath = "D:/usr/digiplan/midscan/1234444_23.09.2023.20.07.13";
+        File directory = new File(directoryPath);
+        List<String> imageFileNames = new ArrayList<>();
+
+        if (directory.isDirectory()) {
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isFile() && isImageFile(file.getName())) {
+                        imageFileNames.add(file.getName());
+                    }
+                }
+            }
+        }
+
+        // Check if any images were found
+        if (imageFileNames.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(imageFileNames);
+        }
+    }
+
+>>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
     private boolean isImageFile(String fileName) {
         // Add logic to check if a file is an image based on its extension
         // You can customize this logic based on your file naming conventions

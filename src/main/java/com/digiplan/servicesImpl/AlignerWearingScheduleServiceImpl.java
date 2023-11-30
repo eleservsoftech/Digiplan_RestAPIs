@@ -4,6 +4,7 @@ import com.digiplan.entities.AlignerWearingScheduleEntity;
 import com.digiplan.repositories.AlignerWearingScheduleRepository;
 import com.digiplan.services.AlignerWearingScheduleService;
 import lombok.extern.slf4j.Slf4j;
+<<<<<<< HEAD
 import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -16,6 +17,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.StoredProcedureQuery;
 import javax.transaction.Transactional;
 import java.sql.SQLException;
+=======
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+>>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
 import java.util.*;
 
 @Service
@@ -24,7 +32,10 @@ public class AlignerWearingScheduleServiceImpl  implements AlignerWearingSchedul
 
     @Autowired
     private AlignerWearingScheduleRepository alignerWearingScheduleRepo;
+<<<<<<< HEAD
 
+=======
+>>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
     @Override
     public ResponseEntity<Map> addAlignerWearingSchedule(AlignerWearingScheduleEntity addAlignerWearingSchedule) {
         Map<Object, Object> map = new HashMap<>();
@@ -147,9 +158,12 @@ public class AlignerWearingScheduleServiceImpl  implements AlignerWearingSchedul
         }
         return new ResponseEntity<>(map, status);
     }
+<<<<<<< HEAD
 
     //This api will get data from aligner_wearing_schedule table
 
+=======
+>>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
     @Override
     public ResponseEntity<Map> GetAlignerDispatchData(String dispatchedId) {
         List alignerDispatchDataList = new ArrayList();

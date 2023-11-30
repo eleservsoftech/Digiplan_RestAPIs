@@ -9,7 +9,14 @@ import java.util.Map;
 
 public interface ImageService {
 
-    Image getImage(Integer id);
+//    Image getImage(Integer id);
+    ResponseEntity<Map<String, Object>> getImage(Integer id);
+    ResponseEntity<Map<String, Object>> getImagebyDraftId(Integer draftId);
+    ResponseEntity<Map<String, Object>> getImagebyFormId(Integer formId);
+    ResponseEntity<Map<String, Object>> getImagebyCaseId(String caseId , Integer id);
+
+
+
 
     List<Image> getAllImages();
 

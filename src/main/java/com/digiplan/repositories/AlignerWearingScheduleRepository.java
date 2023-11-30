@@ -13,7 +13,10 @@ import java.util.List;
 
 @Repository
 public interface AlignerWearingScheduleRepository extends JpaRepository<AlignerWearingScheduleEntity,Integer> {
+<<<<<<< HEAD
 
+=======
+>>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
     @Query(value = " Call get_aligner_schedule(?1) ", nativeQuery = true)
     List<AlignerDispatchData> alignerDispatchData(String dispatchedId);
 
@@ -24,4 +27,8 @@ public interface AlignerWearingScheduleRepository extends JpaRepository<AlignerW
     @Modifying
     @Query(value = " Call update_aligner_schedule(?1,?2,?3,?4,?5,?6,?7)", nativeQuery = true)
     void UpdateAlignerSchedule(String caseId, String dispatchedId, String alignerNoU, String alignerNoL, String actualDate, String remarks, String sign);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db

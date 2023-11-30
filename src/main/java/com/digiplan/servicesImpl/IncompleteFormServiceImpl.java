@@ -139,6 +139,7 @@ public class IncompleteFormServiceImpl implements IncompleteFormService {
         return status;
     }
 
+<<<<<<< HEAD
     /*@Override
     public  ResponseEntity<Map> getUserPendingCases(String submittedby){
         HttpStatus status =null;
@@ -198,4 +199,12 @@ public class IncompleteFormServiceImpl implements IncompleteFormService {
 
 
 
+=======
+    @Override
+    public ResponseEntity<Map> getUserPendingCases(String submittedby) {
+        return null;
+    }
+
+
+>>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
 }

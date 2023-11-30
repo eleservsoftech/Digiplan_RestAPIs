@@ -6,10 +6,15 @@ import com.digiplan.repositories.DraftRepository;
 import com.digiplan.repositories.LoggerRepository;
 import com.digiplan.services.DraftService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -24,6 +29,11 @@ public class DraftServiceImpl implements DraftService {
 
     @Autowired
     private LoggerRepository loggerRepository;
+
+//    @Value("${file.upload.dir}")
+//    private String uploadDir;
+//
+//    private final String baseDirectory = "D:\\DRAFTIMAGES";
 
     @Override
     public Draft getDraft(Integer id) {
@@ -65,6 +75,67 @@ public class DraftServiceImpl implements DraftService {
         }
         return draft;
     }
+
+    //testing aman
+//    @Override
+//    public Draft addDraft(Draft draftData, MultipartFile image1, MultipartFile image2, MultipartFile image3,
+//                          MultipartFile image4, MultipartFile image5, MultipartFile image6,  MultipartFile image7,  MultipartFile image8, MultipartFile pdf1, String file_path) {
+//        try {
+//            String basePath = baseDirectory + File.separator + draftData.getFile_path() + "_" + UUID.randomUUID();
+//
+//            // Save the 6 images
+//            String image1FileName = saveUploadedFile(image1, basePath, "Image1");
+//            String image2FileName = saveUploadedFile(image2, basePath, "Image2");
+//            String image3FileName = saveUploadedFile(image3, basePath, "Image3");
+//            String image4FileName = saveUploadedFile(image4, basePath, "Image4");
+//            String image5FileName = saveUploadedFile(image5, basePath, "Image5");
+//            String image6FileName = saveUploadedFile(image6, basePath, "Image6");
+//            String image7FileName = saveUploadedFile(image7, basePath, "Image7");
+//            String image8FileName = saveUploadedFile(image8, basePath, "Image8");
+//
+//            // Save the PDF
+//            String pdfFileName = saveUploadedFile(pdf1, basePath, "PDF");
+//
+//            draftData.setImage1(image1FileName);
+//            draftData.setImage2(image2FileName);
+//            draftData.setImage3(image3FileName);
+//            draftData.setImage4(image4FileName);
+//            draftData.setImage5(image5FileName);
+//            draftData.setImage6(image6FileName);
+    //        draftData.setImage7(image7FileName);
+//            draftData.setImage8(image8FileName);
+
+//            draftData.setPdf1(pdfFileName);
+//
+//            return draftRepository.save(draftData);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            throw new RuntimeException("Error while uploading and saving details: " + e.getMessage());
+//        }
+//    }
+//
+//    private String saveUploadedFile(MultipartFile file, String basePath, String fileNameOriginal) {
+//        if (file != null && !file.isEmpty()) {
+//            try {
+//                File f = new File(basePath);
+//                if (!f.exists()) {
+//                    f.mkdirs();
+//                }
+//                String fileName = UUID.randomUUID() + "_" + fileNameOriginal + "_" + file.getOriginalFilename();
+//                String filePath = Paths.get(basePath, fileName).toString();
+//
+//                file.transferTo(new File(filePath));
+//
+//                return fileName;
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                return null;
+//            }
+//        } else {
+//            return null;
+//        }
+//    }
+    //
 
     @Override
     public Draft updateDraft(Integer id, Draft draftData) {
