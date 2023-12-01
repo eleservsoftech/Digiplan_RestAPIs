@@ -1,3 +1,4 @@
+com\digiplan\entities\NotificationRequest.class
 com\digiplan\repositories\BasicDoctorInfoRepository.class
 com\digiplan\services\CommentService.class
 com\digiplan\services\PatientHistoryMasterService.class
@@ -16,10 +17,12 @@ com\digiplan\services\UserGroupService.class
 com\digiplan\servicesImpl\ForgeViewerServiceImpl.class
 com\digiplan\controllers\DemoController.class
 com\digiplan\controllers\CityController.class
+com\digiplan\services\VideoService.class
 com\digiplan\controllers\ImageController.class
 com\digiplan\servicesImpl\ImageServiceImpl.class
 com\digiplan\servicesImpl\CallbackRequestServicesImpl.class
 com\digiplan\controllers\PatientHistoryMasterController.class
+com\digiplan\entities\Video.class
 com\digiplan\entities\Logger.class
 com\digiplan\entities\PatientDoctorMapping.class
 com\digiplan\services\DemoService.class
@@ -29,6 +32,7 @@ com\digiplan\repositories\DraftRepository.class
 com\digiplan\repositories\PatientHistoryRepository.class
 com\digiplan\repositories\CaseUploadReopsitory.class
 com\digiplan\services\TreatmentMethodService.class
+com\digiplan\repositories\VideoRepository.class
 com\digiplan\repositories\PatientDoctorMappingRepository.class
 com\digiplan\servicesImpl\MidAssessmentServiceImpl.class
 com\digiplan\repositories\DealerRepository.class
@@ -63,18 +67,24 @@ com\digiplan\repositories\LoggerRepository.class
 com\digiplan\entities\Demo.class
 com\digiplan\repositories\AlignerWearingScheduleRepository.class
 com\digiplan\servicesImpl\UserGroupServiceImpl.class
+com\digiplan\entities\NotificationCall.class
 com\digiplan\entities\PatientHistoryMasterEntity.class
 com\digiplan\services\GalleryService.class
 com\digiplan\services\DoctorService.class
 com\digiplan\repositories\PatientRepository.class
 com\digiplan\services\IncompleteFormService.class
 com\digiplan\entities\AlignerDispatchData.class
+com\digiplan\repositories\NotificationRepository.class
+com\digiplan\services\NotificationService.class
 com\digiplan\entities\Image.class
+com\digiplan\entities\Notification.class
 com\digiplan\repositories\GalleryRepository.class
 com\digiplan\servicesImpl\CommentServiceImpl.class
+com\digiplan\servicesImpl\NotificationServiceImpl.class
 com\digiplan\entities\ForgeViewer.class
 com\digiplan\entities\Comment.class
 com\digiplan\entities\City.class
+com\digiplan\controllers\NotificationController.class
 com\digiplan\controllers\UserController.class
 com\digiplan\repositories\DoctorRepository.class
 com\digiplan\services\CaseService.class
@@ -89,6 +99,7 @@ com\digiplan\controllers\DiagnosisController.class
 com\digiplan\entities\BasicDoctorInfo.class
 com\digiplan\repositories\ImageRepository.class
 com\digiplan\entities\TreatmentMethod.class
+com\digiplan\controllers\VideoController.class
 com\digiplan\services\MidAssessmentService.class
 com\digiplan\controllers\QueryController.class
 com\digiplan\services\AlignerWearingScheduleService.class
@@ -101,6 +112,7 @@ com\digiplan\repositories\CaseRepository.class
 com\digiplan\services\ImageService.class
 com\digiplan\servicesImpl\CityServiceImpl.class
 com\digiplan\configuration\AppConfig.class
+com\digiplan\controllers\VideoController$VideoResponse.class
 com\digiplan\controllers\PatientController.class
 com\digiplan\entities\MyRequestData.class
 com\digiplan\controllers\CommentController.class
@@ -111,6 +123,7 @@ com\digiplan\repositories\PatientHistoryMasterRepository.class
 com\digiplan\servicesImpl\DraftServiceImpl.class
 com\digiplan\controllers\AlignerWearingScheduleController.class
 com\digiplan\services\ScanBookingPatientService.class
+com\digiplan\servicesImpl\VideoServiceImpl.class
 com\digiplan\controllers\DoctorController.class
 com\digiplan\repositories\UserRepository.class
 com\digiplan\entities\Dealer.class
