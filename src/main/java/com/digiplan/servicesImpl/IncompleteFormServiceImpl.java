@@ -138,9 +138,20 @@ public class IncompleteFormServiceImpl implements IncompleteFormService {
         return status;
     }
 
+//    @Override
+//    public ResponseEntity<Map> getUserPendingCases(String submittedby) {
+//        return null;
+//    }
+
     @Override
     public ResponseEntity<Map> getUserPendingCases(String submittedby) {
-        return null;
+        List<IncompleteForm> pendingCases = incompleteFormRepository.getUserPendingCases(submittedby);
+
+        // Convert the list to a Map or process it as needed
+        Map<String, Object> response = new HashMap<>();
+        response.put("pendingCases", pendingCases);
+
+        return ResponseEntity.ok(response);
     }
 
 

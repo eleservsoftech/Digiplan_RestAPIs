@@ -40,6 +40,11 @@ public class AlignerWearingScheduleController {
         return aignerWearingScheduleService.GetAlignerDispatchData(dispatchedId);
     }
 
+    @GetMapping("/getDrAllCases/{Doctor_Name}")
+    public ResponseEntity<Map> getDrAllCases(@PathVariable String Doctor_Name) {
+        return aignerWearingScheduleService.getDrAllCases(Doctor_Name);
+    }
+
     @PutMapping("/updateAlignerSchedule")
     public ResponseEntity<Map> updateAlignerSchedule(
             @RequestParam String case_id,

@@ -20,6 +20,7 @@ com\digiplan\controllers\CityController.class
 com\digiplan\services\VideoService.class
 com\digiplan\controllers\ImageController.class
 com\digiplan\servicesImpl\ImageServiceImpl.class
+com\digiplan\entities\Address.class
 com\digiplan\servicesImpl\CallbackRequestServicesImpl.class
 com\digiplan\controllers\PatientHistoryMasterController.class
 com\digiplan\entities\Video.class
@@ -58,6 +59,7 @@ com\digiplan\controllers\PatientDoctorMappingController.class
 com\digiplan\servicesImpl\DemoServiceImpl.class
 com\digiplan\entities\Patient.class
 com\digiplan\repositories\MidAssessmentRepository.class
+com\digiplan\repositories\AddressRepository.class
 com\digiplan\DigiplanApplication.class
 com\digiplan\servicesImpl\AlignerWearingScheduleServiceImpl.class
 com\digiplan\services\CityService.class
@@ -86,6 +88,7 @@ com\digiplan\entities\Comment.class
 com\digiplan\entities\City.class
 com\digiplan\controllers\NotificationController.class
 com\digiplan\controllers\UserController.class
+com\digiplan\services\AddressService.class
 com\digiplan\repositories\DoctorRepository.class
 com\digiplan\services\CaseService.class
 com\digiplan\services\CallbackRequestService.class
@@ -105,7 +108,9 @@ com\digiplan\controllers\QueryController.class
 com\digiplan\services\AlignerWearingScheduleService.class
 com\digiplan\entities\IncompleteForm.class
 com\digiplan\controllers\MidAssessmentController.class
+com\digiplan\servicesImpl\AddressServiceImpl.class
 com\digiplan\controllers\PatientHistoryController.class
+com\digiplan\controllers\AddressController.class
 com\digiplan\controllers\UserGroupController.class
 com\digiplan\entities\Crm.class
 com\digiplan\repositories\CaseRepository.class
@@ -137,6 +142,7 @@ com\digiplan\servicesImpl\DealerServiceImpl.class
 com\digiplan\entities\GetMyCaselistEntity.class
 com\digiplan\repositories\QueryRepository.class
 com\digiplan\entities\CallbackRequestEntity.class
+com\digiplan\entities\Getdrallcase.class
 com\digiplan\servicesImpl\DoctorServiceImpl.class
 com\digiplan\repositories\ScanBookingPatientRepository.class
 com\digiplan\controllers\CaseController.class

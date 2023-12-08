@@ -1,6 +1,7 @@
 package com.digiplan.servicesImpl;
 
 import com.digiplan.entities.AlignerWearingScheduleEntity;
+import com.digiplan.entities.Getdrallcase;
 import com.digiplan.repositories.AlignerWearingScheduleRepository;
 import com.digiplan.services.AlignerWearingScheduleService;
 import lombok.extern.slf4j.Slf4j;
@@ -163,6 +164,36 @@ public class AlignerWearingScheduleServiceImpl  implements AlignerWearingSchedul
             map.put("error", exception.getMessage());
             status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
+        return new ResponseEntity(map, status);
+    }
+
+    @Override
+    public ResponseEntity<Map> getDrAllCases(String Doctor_Name) {
+        List<Getdrallcase> getdrallcaseList = new ArrayList<>();
+        Map map = new HashMap();
+        HttpStatus status;
+
+        try {
+            getdrallcaseList = alignerWearingScheduleRepo.getdrallcase(Doctor_Name);
+
+            if (!getdrallcaseList.isEmpty()) {
+                map.put("status", 200);
+                map.put("message", "Data Found");
+                map.put("data", getdrallcaseList);
+                status = HttpStatus.OK;
+            } else {
+                map.put("status", 404);
+                map.put("errorMessage", "No cases found for the given dispatchedId!");
+                status = HttpStatus.NOT_FOUND;
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            map.put("status", 500);
+            map.put("message", "Internal Server Error");
+            map.put("error", exception.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
         return new ResponseEntity(map, status);
     }
 

@@ -2,6 +2,7 @@ package com.digiplan.repositories;
 
 import com.digiplan.entities.AlignerDispatchData;
 import com.digiplan.entities.AlignerWearingScheduleEntity;
+import com.digiplan.entities.Getdrallcase;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,6 +16,9 @@ import java.util.List;
 public interface AlignerWearingScheduleRepository extends JpaRepository<AlignerWearingScheduleEntity,Integer> {
     @Query(value = " Call get_aligner_schedule(?1) ", nativeQuery = true)
     List<AlignerDispatchData> alignerDispatchData(String dispatchedId);
+
+    @Query(value = " CALL Getdrallcase(?1) ", nativeQuery = true)
+    List<Getdrallcase> getdrallcase(String CaseId);
 
     @Query(value = "Select * from aligner_wearing_schedule where case_id=:caseId limit 1", nativeQuery = true)
     AlignerWearingScheduleEntity findByCaseId(@Param("caseId") String caseId);
