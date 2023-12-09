@@ -1,6 +1,7 @@
 //package com.digiplan.entities;
 //
 //public interface UpdateAlignerSchedule {
+//
 //    String getCase_id();
 //    String getDispatchedId();
 //    String getUpperAlignerNo();
@@ -10,4 +11,5 @@
 //    String getRemarks();
 //
 //    String getUser();
+//
 //}

@@ -10,4 +10,9 @@ public interface AlignerDispatchData {
     String  getCase_id();
     String  getTotal_aligner_l();
     String  getTotal_aligner_u();
+
+
+
+
+
 }

@@ -17,5 +17,5 @@ public interface IncompleteFormService {
 
     String deleteIncompleteForm(Integer id);
 
-    ResponseEntity<Map> getUserPendingCases(String submittedby);
+    public ResponseEntity<Map> getUserPendingCases(String submittedby) ;
 }

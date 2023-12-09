@@ -38,7 +38,6 @@ public class CaseController {
     @Autowired
     private CaseService caseService;
 
-
     @Autowired
     private Environment environment;
 

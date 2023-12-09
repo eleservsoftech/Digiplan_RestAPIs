@@ -2,11 +2,14 @@ package com.digiplan.controllers;
 
 import com.digiplan.entities.AlignerWearingScheduleEntity;
 import com.digiplan.services.AlignerWearingScheduleService;
+import com.digiplan.servicesImpl.AlignerWearingScheduleServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.Date;
 import java.util.Map;
 
 @CrossOrigin(origins = {"*"})
@@ -16,11 +19,11 @@ public class AlignerWearingScheduleController {
     @Autowired
     private AlignerWearingScheduleService aignerWearingScheduleService;
     @PostMapping("/addAlignerWearingSchedule")
-    public ResponseEntity<Map> addAlignerWearingSchedule(@RequestBody AlignerWearingScheduleEntity alignerWearingSchedule) {
+    public ResponseEntity<Map> addAlignerWearingSchedule(@RequestBody @Valid AlignerWearingScheduleEntity alignerWearingSchedule) {
         return this.aignerWearingScheduleService.addAlignerWearingSchedule(alignerWearingSchedule);
     }
     @PutMapping("/updateAlignerWearingSchedule/{id}")
-    public ResponseEntity<Map> updateAlignerWearingSchedule(@PathVariable Integer id, @RequestBody AlignerWearingScheduleEntity AlignerWearingSchedule) {
+    public ResponseEntity<Map> updateAlignerWearingSchedule(@PathVariable Integer id, @RequestBody @Valid AlignerWearingScheduleEntity AlignerWearingSchedule) {
         return this.aignerWearingScheduleService.updateAlignerWearingSchedule(id,AlignerWearingSchedule);
     }
     @GetMapping("/getAlignerWearingSchedule/{id}")
