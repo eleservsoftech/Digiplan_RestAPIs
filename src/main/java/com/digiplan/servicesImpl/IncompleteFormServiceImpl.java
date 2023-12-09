@@ -140,6 +140,13 @@ public class IncompleteFormServiceImpl implements IncompleteFormService {
     }
 
 <<<<<<< HEAD
+//    @Override
+//    public ResponseEntity<Map> getUserPendingCases(String submittedby) {
+//        return null;
+//    }
+
+=======
+<<<<<<< HEAD
     /*@Override
     public  ResponseEntity<Map> getUserPendingCases(String submittedby){
         HttpStatus status =null;
@@ -200,9 +207,16 @@ public class IncompleteFormServiceImpl implements IncompleteFormService {
 
 
 =======
+>>>>>>> 11e24c0e723697ed8c8cd6df84b2ded20f26db1c
     @Override
     public ResponseEntity<Map> getUserPendingCases(String submittedby) {
-        return null;
+        List<IncompleteForm> pendingCases = incompleteFormRepository.getUserPendingCases(submittedby);
+
+        // Convert the list to a Map or process it as needed
+        Map<String, Object> response = new HashMap<>();
+        response.put("pendingCases", pendingCases);
+
+        return ResponseEntity.ok(response);
     }
 
 

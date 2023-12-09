@@ -5,10 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @AllArgsConstructor
 @Data
@@ -17,15 +14,21 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Table(name = "case_connection_with_patient")
 public class PatientDoctorMapping {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private String id;
+    private Long id;
+
     @Column(name = "case_id")
     private String caseId;
+
     @Column(name = "patient_name")
     private String patientName;
+
     @Column(name = "mobile")
     private String mobile;
+
     @Column(name = "email")
     private String email;
 }

@@ -7,10 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-<<<<<<< HEAD
         <module name="digiplan" />
-=======
->>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
         <module name="Digiplan_RestAPIs" />
       </profile>
     </annotationProcessing>
@@ -18,10 +15,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Digiplan_RestAPIs" options="-parameters" />
-<<<<<<< HEAD
       <module name="digiplan" options="-parameters" />
-=======
->>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
     </option>
   </component>
 </project>

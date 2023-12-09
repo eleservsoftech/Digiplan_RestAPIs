@@ -110,11 +110,6 @@ public class CaseServiceImpl implements CaseService {
         return  new ResponseEntity<>(map,status);
     }
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
 //    public Cases addCase(Cases casesData) {
 //        Cases cases =  null;
 //        try {
@@ -210,11 +205,7 @@ public class CaseServiceImpl implements CaseService {
             File file = new File(reportPath);
             if (file.exists()) {
                 InputStreamResource inputStreamResource = new InputStreamResource(new FileInputStream(file));
-<<<<<<< HEAD
                 responseEntity = ((ResponseEntity.BodyBuilder)ResponseEntity.ok().header("Content-Disposition", new String[] { "attachment; filename=" + caseid })).contentLength(file.length()).contentType(MediaType.APPLICATION_PDF).body(inputStreamResource);
-=======
-                responseEntity = ((ResponseEntity.BodyBuilder)ResponseEntity.ok().header("Content-Disposition", new String[] { "attachment; filename=" + caseId + "" })).contentLength(file.length()).contentType(MediaType.APPLICATION_PDF).body(inputStreamResource);
->>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
             } else {
                 responseEntity = ResponseEntity.status(HttpStatus.NOT_FOUND).body("file not found!");
             }
@@ -487,9 +478,5 @@ public class CaseServiceImpl implements CaseService {
         }
         return new ResponseEntity(map, status);
     }
-<<<<<<< HEAD
-=======
-    // Your corrected API
->>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
 
 }

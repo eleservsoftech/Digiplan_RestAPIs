@@ -1,12 +1,6 @@
 package com.digiplan.servicesImpl;
 
-<<<<<<< HEAD
 import com.digiplan.entities.CallbackRequestEntity;
-=======
-import com.digiplan.entities.ActionOnMyRequest;
-import com.digiplan.entities.CallbackRequestEntity;
-import com.digiplan.entities.MyRequestData;
->>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
 import com.digiplan.repositories.CallbackRequestRepository;
 import com.digiplan.services.CallbackRequestService;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-<<<<<<< HEAD
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -22,10 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-=======
-
-import java.util.*;
->>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
 
 @Service
 @Slf4j
@@ -54,67 +43,6 @@ public class CallbackRequestServicesImpl  implements CallbackRequestService {
         return new ResponseEntity(map, status);
     }
 
-<<<<<<< HEAD
-=======
-    // aman testing
-//    @Override
-//    public List<MyRequestData> callMyRequest(String param1, String param2, String param3, String param4) {
-//         return callbackRequestRepo.callMyRequest(param1, param2, param3, param4);
-//
-//    }
-
-    @Override
-    public List<MyRequestData> callMyRequest(String param1, String param2, String param3, String param4) {
-        List<MyRequestData> requestData = callbackRequestRepo.callMyRequest(param1, param2, param3, param4);
-
-        if (requestData != null && !requestData.isEmpty()) {
-            return requestData;
-        }
-
-        return new ArrayList<>();
-    }
-
-
-    @Override
-    public List<Object[]> callActionOnMyRequest(String param1, String param2, String param3, String param4, String param5) {
-        return callbackRequestRepo.callActionOnMyRequest(param1, param2, param3, param4, param5);
-    }
-
-    @Override
-    public List<Object[]> callScanRequestAction(String param1, String param2, String param3, String param4, String param5, String param6, String param7, String param8) {
-        return callbackRequestRepo.callScanRequestAction(param1, param2, param3, param4, param5, param6, param7, param8);
-    }
-
-//    @Override
-//    public List<ActionOnMyRequest> callActionOnMyRequest(String request_id, String Request_type, String request_status, String wattsuser, String wattsuser_remarks) {
-//        Map<String, Object> responseMap = new HashMap<>();
-//        HttpStatus status = HttpStatus.OK;
-//
-//        try {
-//            ActionOnMyRequest result = (ActionOnMyRequest) callbackRequestRepo.callActionOnMyRequest(request_id, Request_type, request_status, wattsuser, wattsuser_remarks);
-//
-//            if (result != null) {
-//                responseMap.put("status", HttpStatus.OK.value());
-//                responseMap.put("message", "Request Action Data Updated Successfully");
-//            } else {
-//                responseMap.put("status", HttpStatus.NOT_FOUND.value());
-//                responseMap.put("message", "No Data Updated found!");
-//                status = HttpStatus.NOT_FOUND;
-//            }
-//        } catch (Exception exception) {
-//            exception.printStackTrace();
-//            responseMap.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
-//            responseMap.put("message", "Internal Server Error");
-//            responseMap.put("error", exception.getMessage());
-//            status = HttpStatus.INTERNAL_SERVER_ERROR;
-//        }
-//
-//        return (List<ActionOnMyRequest>) new ResponseEntity<>(responseMap, status);
-//    }
-
-
-
->>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
     @Override
     public ResponseEntity<Map> updateCallbackRequest(Long requestId, CallbackRequestEntity updateCallbackRequest) {
         Map<Object, Object> map = new HashMap<>();
@@ -244,9 +172,6 @@ public class CallbackRequestServicesImpl  implements CallbackRequestService {
             log.info("Error @updateCallbackRequest{} " + ex.getMessage());        }
         return new ResponseEntity<>(map,status);
     }
-<<<<<<< HEAD
 
     
-=======
->>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
 }

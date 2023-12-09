@@ -6,10 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-<<<<<<< HEAD
 import javax.validation.constraints.Email;
-=======
->>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -65,9 +62,6 @@ public class AlignerWearingScheduleEntity {
     private String totalAlignerL;
 
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
 }

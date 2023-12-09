@@ -2,20 +2,14 @@ package com.digiplan.controllers;
 
 import com.digiplan.entities.AlignerWearingScheduleEntity;
 import com.digiplan.services.AlignerWearingScheduleService;
-<<<<<<< HEAD
 import com.digiplan.servicesImpl.AlignerWearingScheduleServiceImpl;
-=======
->>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
-<<<<<<< HEAD
 import javax.validation.Valid;
 import java.util.Date;
-=======
->>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
 import java.util.Map;
 
 @CrossOrigin(origins = {"*"})
@@ -25,19 +19,11 @@ public class AlignerWearingScheduleController {
     @Autowired
     private AlignerWearingScheduleService aignerWearingScheduleService;
     @PostMapping("/addAlignerWearingSchedule")
-<<<<<<< HEAD
     public ResponseEntity<Map> addAlignerWearingSchedule(@RequestBody @Valid AlignerWearingScheduleEntity alignerWearingSchedule) {
         return this.aignerWearingScheduleService.addAlignerWearingSchedule(alignerWearingSchedule);
     }
     @PutMapping("/updateAlignerWearingSchedule/{id}")
     public ResponseEntity<Map> updateAlignerWearingSchedule(@PathVariable Integer id, @RequestBody @Valid AlignerWearingScheduleEntity AlignerWearingSchedule) {
-=======
-    public ResponseEntity<Map> addAlignerWearingSchedule(@RequestBody AlignerWearingScheduleEntity alignerWearingSchedule) {
-        return this.aignerWearingScheduleService.addAlignerWearingSchedule(alignerWearingSchedule);
-    }
-    @PutMapping("/updateAlignerWearingSchedule/{id}")
-    public ResponseEntity<Map> updateAlignerWearingSchedule(@PathVariable Integer id, @RequestBody AlignerWearingScheduleEntity AlignerWearingSchedule) {
->>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
         return this.aignerWearingScheduleService.updateAlignerWearingSchedule(id,AlignerWearingSchedule);
     }
     @GetMapping("/getAlignerWearingSchedule/{id}")
@@ -52,13 +38,14 @@ public class AlignerWearingScheduleController {
     public  ResponseEntity<Map> deleteAlignerWearingSchedule(@PathVariable Integer id)   {
         return  this.aignerWearingScheduleService.deleteAlignerWearingSchedule(id);
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
     @GetMapping("/getAlignerDispatchedData/{dispatchedId}")
     public ResponseEntity<Map> GetAlignerDispatchData(@PathVariable String dispatchedId) {
         return aignerWearingScheduleService.GetAlignerDispatchData(dispatchedId);
+    }
+
+    @GetMapping("/getDrAllCases/{Doctor_Name}")
+    public ResponseEntity<Map> getDrAllCases(@PathVariable String Doctor_Name) {
+        return aignerWearingScheduleService.getDrAllCases(Doctor_Name);
     }
 
     @PutMapping("/updateAlignerSchedule")
@@ -74,8 +61,4 @@ public class AlignerWearingScheduleController {
         return aignerWearingScheduleService.updateAlignerSchedule(case_id,dispatchedId,aligner_no_u,
                 aligner_no_l,actualDate,remarks,user);
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
 }

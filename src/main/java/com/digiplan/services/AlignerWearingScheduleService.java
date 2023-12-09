@@ -19,12 +19,10 @@ public interface AlignerWearingScheduleService {
 
     public ResponseEntity<Map> GetAlignerDispatchData(String dispatchedId);
 
-    public ResponseEntity<Map> updateAlignerSchedule(String case_id,String dispatchedId,String aligner_no_u,String aligner_no_l,String actualDate,String remarks,String user);
+
+    ResponseEntity<Map> getDrAllCases(String Doctor_Name);
+
+    public ResponseEntity<Map> updateAlignerSchedule(String case_id, String dispatchedId, String aligner_no_u, String aligner_no_l, String actualDate, String remarks, String user);
 
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
 }

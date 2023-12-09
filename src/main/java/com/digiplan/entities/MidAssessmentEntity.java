@@ -61,7 +61,6 @@ public class MidAssessmentEntity {
         @Column(name = "user", length = 80)
         private String user;
 
-<<<<<<< HEAD
         @Column(name = "32watts_user_remarks", length = 200)
         private String watts32UserRemarks;
 
@@ -70,18 +69,4 @@ public class MidAssessmentEntity {
 
         @Column(name = "file_path", length = 250)
         private String folderName;
-=======
-        @Column(name = "wattsuser_remarks", length = 200)
-        private String wattsuser_remarks;
-
-        @Column(name = "watts_user", length = 80)
-        private String watts_user;
-
-        @Column(name = "file_path", length = 250)
-        private String folderName;
-        @Column(name = "created_date", length = 250)
-        private String created_date;
-        @Column(name = "request_status", length = 250)
-        private String request_status;
->>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
  }

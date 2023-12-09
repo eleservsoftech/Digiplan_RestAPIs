@@ -38,7 +38,11 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     // get user data by Email address
     @Query(value = "select * from alignwise_users where email=:email ", nativeQuery = true)
+
     List<User> getUserByEmailId(@Param("email") String email);
+    User findByEmail(String email);
+    User findByPhoneNumber(Long phoneNumber);
 
-
+    long countUsersByPhoneNumber(Long phoneNumber);
+    long countUsersByEmail(String email);
 }

@@ -38,10 +38,6 @@ public class CaseController {
     @Autowired
     private CaseService caseService;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
     @Autowired
     private Environment environment;
 
@@ -168,10 +164,6 @@ public class CaseController {
         ResponseEntity<Resource> responseEntity = this.restTemplate.getForEntity(baseURL + caseId, Resource.class, new Object[0]);
         return responseEntity;
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
     @GetMapping("/GetUserCasesStatus")
     public ResponseEntity<Map> GetMyCaselist(@RequestParam String userName, @RequestParam String cases) {
         return caseService.GetMyCaselist(userName,cases);

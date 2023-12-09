@@ -20,8 +20,8 @@ public class CallbackRequestEntity {
     @Column(name = "requestId")
     private Long requestId;
 
-    @NotNull
-    @NotBlank
+//    @NotNull
+//    @NotBlank
     @Size(min = 10,max = 10,message = "Please add 10 digit valid Case Id")
     private String caseId;
 

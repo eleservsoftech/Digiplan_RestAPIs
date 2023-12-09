@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
+@CrossOrigin(origins = {"*"})
 @RestController
 @RequestMapping("/api")
 public class PatientDoctorMappingController {
@@ -33,9 +34,8 @@ public class PatientDoctorMappingController {
         }
     }
 
-
     @GetMapping("/doctor/{id}")
-    public ResponseEntity<Map<String, Object>> getMappingById(@PathVariable String id) {
+    public ResponseEntity<Map<String, Object>> getMappingById(@PathVariable Long id) {
         try {
             PatientDoctorMapping mapping = patientDoctorMappingService.getMappingById(id);
             if (mapping != null) {
@@ -86,6 +86,32 @@ public class PatientDoctorMappingController {
         }
     }
 
+    @GetMapping("/doctor/caseid/{caseId}")
+    public ResponseEntity<Map<String, Object>> getMappingByCaseId(@PathVariable String caseId) {
+        try {
+            PatientDoctorMapping mapping = patientDoctorMappingService.getMappingByCaseId(caseId);
+            if (mapping != null) {
+                Map<String, Object> response = new HashMap<>();
+                response.put("data", mapping);
+                response.put("message", "Data retrieved successfully");
+                response.put("status", HttpStatus.OK.value());
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            } else {
+                Map<String, Object> response = new HashMap<>();
+                response.put("data", null);
+                response.put("message", "Data not found");
+                response.put("status", HttpStatus.NOT_FOUND.value());
+                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("data", null);
+            response.put("message", "Internal Server Error");
+            response.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, Object>> deleteMappingById(@PathVariable String id) {
         try {
@@ -105,7 +131,7 @@ public class PatientDoctorMappingController {
     }
 
 
-    @PostMapping
+    @PostMapping("/doctor")
     public ResponseEntity<Map<String, Object>> createMapping(@RequestBody PatientDoctorMapping newMapping) {
         try {
             PatientDoctorMapping createdMapping = patientDoctorMappingService.createMapping(newMapping);
@@ -115,6 +141,7 @@ public class PatientDoctorMappingController {
             response.put("status", HttpStatus.CREATED.value());
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (Exception e) {
+            e.printStackTrace();
             Map<String, Object> response = new HashMap<>();
             response.put("data", null);
             response.put("message", "Internal Server Error");
@@ -122,7 +149,6 @@ public class PatientDoctorMappingController {
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
     @GetMapping("/search")
     public ResponseEntity<Map<String, Object>> getMappingsByMobileOrEmail(

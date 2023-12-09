@@ -108,13 +108,36 @@ public class ImageController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+//    @PostMapping(value = "/uploadPPFFiles", consumes = "multipart/form-data")
+//    public ResponseEntity<Map> uploadPPFFiles(@RequestParam(required = false) Integer draftId, @RequestParam(required = false) Integer formId, @RequestParam(required = false) MultipartFile side, @RequestParam(required = false) MultipartFile front,
+//                                              @RequestParam(required = false) MultipartFile frontSmiling, @RequestParam(required = false) MultipartFile rightBuccal, @RequestParam(required = false) MultipartFile leftBuccal,
+//                                              @RequestParam(required = false) MultipartFile upperOcclusial, @RequestParam(required = false) MultipartFile lowerOcclusial, @RequestParam(required = false) MultipartFile frontal,
+//                                              @RequestParam(required = false) MultipartFile opg, @RequestParam(required = false) MultipartFile lateralCeph, @RequestParam(required = false) MultipartFile other,
+//                                              @RequestParam(required = false) MultipartFile pdf1, @RequestParam(required = false) MultipartFile pdf2, @RequestParam(required = false) String caseId, @RequestParam String patientName) {
+//        return this.imageService.uploadPPFFiles(draftId, formId, side, front, frontSmiling, rightBuccal, leftBuccal,
+//                upperOcclusial, lowerOcclusial, frontal, opg, lateralCeph, other, pdf1, pdf2, caseId, patientName);
+//    }
+
+
     @PostMapping(value = "/uploadPPFFiles", consumes = "multipart/form-data")
-    public ResponseEntity<Map> uploadPPFFiles(@RequestParam(required = false) Integer draftId, @RequestParam(required = false) Integer formId, @RequestParam(required = false) MultipartFile side, @RequestParam(required = false) MultipartFile front,
-                                              @RequestParam(required = false) MultipartFile frontSmiling, @RequestParam(required = false) MultipartFile rightBuccal, @RequestParam(required = false) MultipartFile leftBuccal,
-                                              @RequestParam(required = false) MultipartFile upperOcclusial, @RequestParam(required = false) MultipartFile lowerOcclusial, @RequestParam(required = false) MultipartFile frontal,
-                                              @RequestParam(required = false) MultipartFile opg, @RequestParam(required = false) MultipartFile lateralCeph, @RequestParam(required = false) MultipartFile other,
-                                              @RequestParam(required = false) MultipartFile pdf1, @RequestParam(required = false) MultipartFile pdf2, @RequestParam(required = false) String caseId, @RequestParam String patientName) {
-        return this.imageService.uploadPPFFiles(draftId, formId, side, front, frontSmiling, rightBuccal, leftBuccal,
+    public ResponseEntity<Map> uploadPPFFiles(@RequestParam(required = false) Integer draftId,
+                                              @RequestParam(required = false) Integer formId,
+                                              @RequestParam(required = false) MultipartFile side,
+                                              @RequestParam(required = false) MultipartFile front,
+                                              @RequestParam(required = false) MultipartFile frontSmiling,
+                                              @RequestParam(required = false) MultipartFile rightBuccal,
+                                              @RequestParam(required = false) MultipartFile leftBuccal,
+                                              @RequestParam(required = false) MultipartFile upperOcclusial,
+                                              @RequestParam(required = false) MultipartFile lowerOcclusial,
+                                              @RequestParam(required = false) MultipartFile frontal,
+                                              @RequestParam(required = false) MultipartFile opg,
+                                              @RequestParam(required = false) MultipartFile lateralCeph,
+                                              @RequestParam(required = false) MultipartFile other,
+                                              @RequestParam(required = false) MultipartFile pdf1,
+                                              @RequestParam(required = false) MultipartFile pdf2,
+                                              @RequestParam(required = false) String caseId,
+                                              @RequestParam String patientName) {
+        return imageService.uploadPPFFiles(draftId, formId, side, front, frontSmiling, rightBuccal, leftBuccal,
                 upperOcclusial, lowerOcclusial, frontal, opg, lateralCeph, other, pdf1, pdf2, caseId, patientName);
     }
 

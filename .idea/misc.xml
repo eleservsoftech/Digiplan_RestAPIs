@@ -11,9 +11,5 @@
       </list>
     </option>
   </component>
-<<<<<<< HEAD
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
-=======
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="18" project-jdk-type="JavaSDK" />
->>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
 </project>

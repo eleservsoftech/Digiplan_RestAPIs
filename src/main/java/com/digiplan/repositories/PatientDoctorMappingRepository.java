@@ -9,7 +9,9 @@ import java.util.Optional;
 
 @Repository
 public interface PatientDoctorMappingRepository extends JpaRepository<PatientDoctorMapping, String> {
-    Optional<PatientDoctorMapping> findById(String id);
+    Optional<PatientDoctorMapping> findById(Long id);
+
+    Optional<PatientDoctorMapping> findByCaseId(String caseId);
 
     List<PatientDoctorMapping> findByMobileOrEmail(String mobile, String email);
 

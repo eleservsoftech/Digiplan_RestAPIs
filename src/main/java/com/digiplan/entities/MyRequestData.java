@@ -1,10 +1,5 @@
 package com.digiplan.entities;
 
-<<<<<<< HEAD
-=======
-import java.sql.Timestamp;
-
->>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
 public interface MyRequestData {
      String getRequest_id();
 
@@ -29,10 +24,6 @@ public interface MyRequestData {
      String getRequest_Date();
      String getWorkflow_stage();
      String getTracking_id();
-<<<<<<< HEAD
-=======
-     String getLast_edited_date();
->>>>>>> dc1c60c32ce1e289ce60f7020d684461ad5179db
 
 
 }

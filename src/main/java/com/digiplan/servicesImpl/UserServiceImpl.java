@@ -58,31 +58,152 @@ public class UserServiceImpl implements UserService {
         return usersList;
     }
 
-@Override
-public ResponseEntity<Map> addUser(User addUser) {
-    Map<Object, Object> map = new HashMap<>();
-    HttpStatus status = null;
-    User  userObj = null;
-    try {
-        if(!addUser.getUsername().isEmpty() &&  !addUser.getPassword().isEmpty()) {
-            userObj = userRepository.save(addUser);
-            map.put("status_code", "201");
-            map.put("message", "Data saved successfully");
-            map.put("data", userObj);
-            status = HttpStatus.CREATED;
-        }else{
-            map.put("status_code", "400");
-            map.put("errorMessage", "blank User name and password not accepted!");
-            status = HttpStatus.BAD_REQUEST;
+    // vikas code
+//@Override
+//public ResponseEntity<Map> addUser(User addUser) {
+//    Map<Object, Object> map = new HashMap<>();
+//    HttpStatus status = null;
+//    User  userObj = null;
+//    try {
+//        if(!addUser.getUsername().isEmpty() &&  !addUser.getPassword().isEmpty()) {
+//            userObj = userRepository.save(addUser);
+//            map.put("status_code", "201");
+//            map.put("message", "Data saved successfully");
+//            map.put("data", userObj);
+//            status = HttpStatus.CREATED;
+//        }else{
+//            map.put("status_code", "400");
+//            map.put("errorMessage", "blank User name and password not accepted!");
+//            status = HttpStatus.BAD_REQUEST;
+//        }
+//
+//    } catch (Exception ex) {
+//        map.put("status_code", "500");
+//        map.put("message", ex.getMessage());
+//        status = HttpStatus.INTERNAL_SERVER_ERROR;
+//    }
+//    return new ResponseEntity(map, status);
+//}
+    // vikas code
+
+    //AMAN TESTING
+//    @Override
+//    public ResponseEntity<Map> addUser(User addUser) {
+//        Map<Object, Object> map = new HashMap<>();
+//        HttpStatus status = null;
+//        User userObj = null;
+//        try {
+//            // Check if the mobile number is already registered
+//            long existingUserCountByMobile = userRepository.countUsersByPhoneNumber(addUser.getPhoneNumber());
+//            if (existingUserCountByMobile > 0 && (addUser.getId() == null || existingUserCountByMobile > 1)) {
+//                map.put("status_code", "400");
+//                map.put("errorMessage", "Mobile number already registered!");
+//                status = HttpStatus.BAD_REQUEST;
+//                return new ResponseEntity<>(map, status);
+//            }
+//
+//            // Check if the email is already registered
+//            long existingUserCountByEmail = userRepository.countUsersByEmail(addUser.getEmail());
+//            if (existingUserCountByEmail > 0 && (addUser.getId() == null || existingUserCountByEmail > 1)) {
+//                map.put("status_code", "400");
+//                map.put("errorMessage", "Email already registered!");
+//                status = HttpStatus.BAD_REQUEST;
+//                return new ResponseEntity<>(map, status);
+//            }
+//
+//            // Continue with the user registration
+//            if (!addUser.getUsername().isEmpty() && !addUser.getPassword().isEmpty()) {
+//                userObj = userRepository.save(addUser);
+//                map.put("status_code", "201");
+//                map.put("message", "Data saved successfully");
+//                map.put("data", userObj);
+//                status = HttpStatus.CREATED;
+//            } else {
+//                map.put("status_code", "400");
+//                map.put("errorMessage", "Blank User name and password not accepted!");
+//                status = HttpStatus.BAD_REQUEST;
+//            }
+//
+//        } catch (Exception ex) {
+//            map.put("status_code", "500");
+//            map.put("message", ex.getMessage());
+//            status = HttpStatus.INTERNAL_SERVER_ERROR;
+//        }
+//        return new ResponseEntity<>(map, status);
+//    }
+    //AMAN TESTING
+
+
+    //aman 08-12-23
+    @Override
+    public ResponseEntity<Map> addUser(User addUser) {
+        Map<Object, Object> map = new HashMap<>();
+        HttpStatus status;
+
+        try {
+            // Check if the mobile number is already registered
+            long existingUserCountByMobile = userRepository.countUsersByPhoneNumber(addUser.getPhoneNumber());
+            if (existingUserCountByMobile > 0 && (addUser.getId() == null || existingUserCountByMobile > 1)) {
+                map.put("status_code", "400");
+                map.put("errorMessage", "Mobile number already registered!");
+                status = HttpStatus.BAD_REQUEST;
+                return new ResponseEntity<>(map, status);
+            }
+
+            // Check if the email is already registered
+            long existingUserCountByEmail = userRepository.countUsersByEmail(addUser.getEmail());
+            if (existingUserCountByEmail > 0 && (addUser.getId() == null || existingUserCountByEmail > 1)) {
+                map.put("status_code", "400");
+                map.put("errorMessage", "Email already registered!");
+                status = HttpStatus.BAD_REQUEST;
+                return new ResponseEntity<>(map, status);
+            }
+
+            // Generate a unique alphanumeric string for doctor_unique_no if not present
+            if (addUser.getDoctor_unique_no() == null || addUser.getDoctor_unique_no().isEmpty()) {
+                String uniqueString = generateUniqueString();
+                addUser.setDoctor_unique_no(uniqueString);
+            }
+
+            // Continue with the user registration
+            if (!addUser.getUsername().isEmpty() && !addUser.getPassword().isEmpty()) {
+                User userObj = userRepository.save(addUser);
+                map.put("status_code", "201");
+                map.put("message", "Data saved successfully");
+                map.put("data", userObj);
+                status = HttpStatus.CREATED;
+            } else {
+                map.put("status_code", "400");
+                map.put("errorMessage", "Blank User name and password not accepted!");
+                status = HttpStatus.BAD_REQUEST;
+            }
+
+        } catch (Exception ex) {
+            map.put("status_code", "500");
+            map.put("message", ex.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        return new ResponseEntity<>(map, status);
+    }
+
+    private String generateUniqueString() {
+        UUID uuid = UUID.randomUUID();
+        long leastSignificantBits = uuid.getLeastSignificantBits();
+
+        String hexString = Long.toHexString(leastSignificantBits);
+        hexString = hexString.substring(hexString.length() - 6);
+
+        char[] hexChars = hexString.toCharArray();
+        for (int i = 0; i < hexChars.length; i++) {
+            if (Character.isDigit(hexChars[i])) {
+                hexChars[i] = (char) ('A' + Integer.parseInt(String.valueOf(hexChars[i])));
+            }
         }
 
-    } catch (Exception ex) {
-        map.put("status_code", "500");
-        map.put("message", ex.getMessage());
-        status = HttpStatus.INTERNAL_SERVER_ERROR;
+        return new String(hexChars);
     }
-    return new ResponseEntity(map, status);
-}
+
+//    aman 8-12-23
 
 
     @Override
