@@ -18,5 +18,4 @@ public class DigiplanApplication extends SpringBootServletInitializer {
     public static void main(String[] args) {
         SpringApplication.run(DigiplanApplication.class, args);
     }
-
 }

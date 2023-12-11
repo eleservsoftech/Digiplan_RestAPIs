@@ -1,8 +1,10 @@
 package com.digiplan.services;
 
 import com.digiplan.entities.City;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CityService {
 
@@ -10,9 +12,10 @@ public interface CityService {
 
     List<City> getAllCities();
 
-    City addCity(City cityData);
+    public ResponseEntity<Map> addCity(City addCity);
 
-    City updateCity(String cityName, City cityData);
+    //City updateCity(String cityName, City cityData);
+    public ResponseEntity<Map> updateCity(String cityName, City cityData);
 
     String deleteCity(String cityName);
 }

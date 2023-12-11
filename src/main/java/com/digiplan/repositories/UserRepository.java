@@ -1,13 +1,18 @@
 package com.digiplan.repositories;
 
+import com.digiplan.entities.MyDoctorCases;
 import com.digiplan.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
+
+
 
     User findByUsernameAndPassword(String username, String password);
 
@@ -15,7 +20,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     User findByUsername(String username);
 
-    @Query(value = "select * from alignwise_users where groupid=(select groupid from alignwise_users where username=:username and typeofuser='DoctorAdmin')", nativeQuery = true)
+    //@Query(value = "select * from alignwise_users where groupid=(select groupid from alignwise_users where username=:username and typeofuser='DoctorAdmin')", nativeQuery = true)
+    @Query(value = "select * from alignwise_users where groupid=(select groupid from alignwise_users where username=:username)", nativeQuery = true)
     List<User> findAllUsersList(@Param("username") String username);
 
     @Query(value = "select * from alignwise_users where typeofuser='Doctor'", nativeQuery = true)
@@ -26,4 +32,29 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query(value = "select * from alignwise_users where firstname like %:searchDoctor% or lastname like %:searchDoctor% limit 50", nativeQuery = true)
     List<User> getDoctorsListByDoctorname(@Param("searchDoctor") String searchDoctor);
+
+    @Query(value = "call GetMyCase(?)", nativeQuery = true)
+    List<MyDoctorCases> getDoctorCases(String email);
+
+    // getting user by mobile number
+    @Query(value = "select * from alignwise_users where phoneNumber=:phoneNumber ", nativeQuery = true)
+    List<User> getDoctorsByMobileList(@Param("phoneNumber")Long phoneNumber);
+
+    // get user data by Email address
+    @Query(value = "select * from alignwise_users where email=:email ", nativeQuery = true)
+
+    List<User> getUserByEmailId(@Param("email") String email);
+    User findByEmail(String email);
+    User findByPhoneNumber(Long phoneNumber);
+
+    long countUsersByPhoneNumber(Long phoneNumber);
+    long countUsersByEmail(String email);
+
+    @Query(value = "call GetNewSignUp(?)", nativeQuery = true)
+    List<User> getNewSignUp(String email);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update  alignwise_users set isdisable=1  where username=?1", nativeQuery = true)
+    int doctorDisable(String username);
 }

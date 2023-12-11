@@ -1,11 +1,16 @@
 package com.digiplan.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @AllArgsConstructor
@@ -23,6 +28,8 @@ public class Cases {
     private String submittedOn = LocalDate.now().toString();
     private String treatmentLink;
     private String downloadLink;
+    @JsonIgnore
+    @JsonProperty(value = "formdata")
     private String formData;
     private String submittedBy;
     private String remarks;
@@ -34,4 +41,6 @@ public class Cases {
     private String doctorName;
     private String groupId;
 
+    @Transient
+    private MultipartFile  patientPhoto;
 }

@@ -13,8 +13,8 @@ public interface UserService {
 
     List<User> getAllUsers();
 
-    User addUser(User userData);
-
+   // User addUser(User userData);
+   public ResponseEntity<Map> addUser(User addUser);
     User updateUser(Integer id, User userData);
 
     String deleteUser(Integer id);
@@ -32,4 +32,11 @@ public interface UserService {
 
     ResponseEntity<Map> getDoctorsList();
 
+    public ResponseEntity<Map> doctorCases(String email);
+
+    public ResponseEntity<Map> getUserMobileList(Long phonenumber);
+
+    public ResponseEntity<Map> getUserByEmail(String email);
+    public ResponseEntity<Map> getNewSignUp(String date);
+    public ResponseEntity<Map> doctorDisable(String username);
 }

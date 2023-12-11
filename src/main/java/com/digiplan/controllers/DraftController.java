@@ -2,11 +2,13 @@ package com.digiplan.controllers;
 
 import com.digiplan.entities.Draft;
 import com.digiplan.services.DraftService;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -66,6 +68,39 @@ public class DraftController {
     public ResponseEntity<Draft> addDraft(@RequestBody Draft draftData) {
         return new ResponseEntity<Draft>(this.draftService.addDraft(draftData), HttpStatus.CREATED);
     }
+
+    // aman testing
+//    @PostMapping("/savedraft")
+//    public ResponseEntity<ApiResponse> addDraft(
+//            @RequestBody Draft draftData,
+//            @RequestParam("image1") MultipartFile image1,
+//            @RequestParam("image2") MultipartFile image2,
+//            @RequestParam("image3") MultipartFile image3,
+//            @RequestParam("image4") MultipartFile image4,
+//            @RequestParam("image5") MultipartFile image5,
+//            @RequestParam("image6") MultipartFile image6,
+    //        @RequestParam("image7") MultipartFile image7,
+    //        @RequestParam("image8") MultipartFile image8,
+//            @RequestParam("pdf1") MultipartFile pdf1) {
+//
+//        try {
+//            Draft draft = draftService.addDraft(draftData, image1, image2, image3, image4, image5, image6, image7, image8,pdf1, draftData.getFile_path());
+//
+//            if (draft != null) {
+//                ApiResponse apiResponse = new ApiResponse(HttpStatus.CREATED.value(), "Files uploaded successfully", true);
+//                return new ResponseEntity<>(apiResponse, HttpStatus.CREATED);
+//            } else {
+//                ApiResponse apiResponse = new ApiResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "File upload failed", false);
+//                return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            ApiResponse apiResponse = new ApiResponse(HttpStatus.BAD_REQUEST.value(), "File upload failed", false);
+//            return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
+//        }
+//    }
+
+    //
 
     @PutMapping("/updateDraft/{id}")
     public ResponseEntity<Draft> updateDraft(@PathVariable Integer id, @RequestBody Draft draftData) {

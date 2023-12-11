@@ -148,7 +148,8 @@ public class GalleryServiceImpl implements GalleryService {
             for (Gallery gallery : galleryList) {
                 JSONObject jsonObject = new JSONObject();
                 JSONObject extractedData = (JSONObject) jsonParser.parse(gallery.getFormData());
-                jsonObject.put("sno", count++);
+                jsonObject.put(
+                        "sno", count++);
                 jsonObject.put("patientName", extractedData.get("PatientName"));
                 jsonObject.put("caseId", gallery.getCaseId());
                 jsonObject.put("dob", extractedData.get("DOB"));

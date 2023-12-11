@@ -11,7 +11,9 @@ public interface DoctorService {
 
 	public ResponseEntity<Map> getAllDoctors(String searchDoctor);
 
-	public Doctor addDoctor(Doctor doctorData);
+	//public Doctor addDoctor(Doctor doctorData);
+
+	public ResponseEntity<Map> addDoctor(Doctor addDoctor);
 
 	public Doctor updateDoctor(String caseId, Doctor doctorData);
 

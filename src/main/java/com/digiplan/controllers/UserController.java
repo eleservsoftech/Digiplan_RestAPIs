@@ -15,6 +15,7 @@ import java.util.Map;
 @Slf4j
 @CrossOrigin(origins = "*")
 @RestController
+//@RequestMapping("/api")
 public class UserController {
 
     @Autowired
@@ -48,13 +49,13 @@ public class UserController {
             map.put("status_code", "204");
             map.put("results", "No Content!");
             map.put("message", "Records Not Found!");
-            // return this.userService.getAllUsers();
         }
         return map;
     }
+
     @PostMapping("/addUser")
-    public ResponseEntity<User> addUser(@RequestBody User userData) {
-        return new ResponseEntity<User>(this.userService.addUser(userData), HttpStatus.CREATED);
+    public ResponseEntity<Map> createUser(@RequestBody User userData) {
+        return this.userService.addUser(userData);
     }
 
     @PutMapping("/updateUser/{id}")
@@ -105,6 +106,29 @@ public class UserController {
     @GetMapping("/getDoctorsList")
     public ResponseEntity<Map> getDoctorsList(){
         return userService.getDoctorsList();
+    }
+
+    @GetMapping("/getDoctorActiveCases")
+    public ResponseEntity<Map> getDoctorCases(@RequestParam String email) {
+        return userService.doctorCases(email);
+    }
+    @GetMapping("/getUserByMobileNumber/{phoneNumber}")
+    public ResponseEntity<Map> getUserByMobileNumber(@PathVariable Long phoneNumber){
+        return userService.getUserMobileList(phoneNumber);
+    }
+    @GetMapping("/GetUserByEmailID/{email}")
+    public ResponseEntity<Map> getUserByEmailId(@PathVariable String email){
+        return userService.getUserByEmail(email);
+    }
+
+    @GetMapping("/GetNewSignUp/{date}")
+    public ResponseEntity<Map> getNewSignUp(@PathVariable String date){
+        return userService.getNewSignUp(date);
+    }
+
+    @PutMapping("/DisableDoctor/{username}")
+    public ResponseEntity<Map> isDisableDoctor(@PathVariable String username){
+        return userService.doctorDisable(username);
     }
 
 }
