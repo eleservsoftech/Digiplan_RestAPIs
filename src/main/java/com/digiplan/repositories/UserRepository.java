@@ -57,4 +57,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Modifying
     @Query(value = "update  alignwise_users set isdisable=1  where username=?1", nativeQuery = true)
     int doctorDisable(String username);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update  alignwise_users set isdisable=0  where username=?1", nativeQuery = true)
+    int doctorEnable(String username);
 }

@@ -39,4 +39,6 @@ public interface UserService {
     public ResponseEntity<Map> getUserByEmail(String email);
     public ResponseEntity<Map> getNewSignUp(String date);
     public ResponseEntity<Map> doctorDisable(String username);
+
+    public ResponseEntity<Map> doctorEnable(String username);
 }

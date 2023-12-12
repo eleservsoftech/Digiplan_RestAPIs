@@ -131,4 +131,9 @@ public class UserController {
         return userService.doctorDisable(username);
     }
 
+    @PutMapping("/EnableDoctor/{username}")
+    public ResponseEntity<Map> isEnableDoctor(@PathVariable String username){
+        return userService.doctorEnable(username);
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.digiplan.servicesImpl;
 
 import com.digiplan.entities.CallbackRequestEntity;
+import com.digiplan.entities.MyRequestData;
 import com.digiplan.repositories.CallbackRequestRepository;
 import com.digiplan.services.CallbackRequestService;
 import lombok.extern.slf4j.Slf4j;
@@ -11,10 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -173,5 +171,29 @@ public class CallbackRequestServicesImpl  implements CallbackRequestService {
         return new ResponseEntity<>(map,status);
     }
 
-    
+
+    @Override
+    public List<MyRequestData> callMyRequest(String param1, String param2, String param3, String param4) {
+        List<MyRequestData> requestData = callbackRequestRepo.callMyRequest(param1, param2, param3, param4);
+
+        if (requestData != null && !requestData.isEmpty()) {
+            return requestData;
+        }
+
+        return new ArrayList<>();
+    }
+
+
+    @Override
+    public List<Object[]> callActionOnMyRequest(String param1, String param2, String param3, String param4, String param5) {
+        return callbackRequestRepo.callActionOnMyRequest(param1, param2, param3, param4, param5);
+    }
+
+    @Override
+    public List<Object[]> callScanRequestAction(String param1, String param2, String param3, String param4, String param5, String param6, String param7, String param8) {
+        return callbackRequestRepo.callScanRequestAction(param1, param2, param3, param4, param5, param6, param7, param8);
+    }
+
+
+
 }

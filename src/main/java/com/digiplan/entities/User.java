@@ -88,4 +88,15 @@ public class User {
 
     private int isdisable;
 
+    private String Have_you_verified_users;
+
+    private  String Have_you_Helped_Dr_in_onboarding;
+
+    private String Remarks;
+
+    private String crm;
+    private String crm_name;
+    private String crm_mobile_no;
+
+
 }

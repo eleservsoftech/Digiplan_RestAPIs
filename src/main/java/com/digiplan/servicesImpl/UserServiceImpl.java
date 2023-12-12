@@ -565,4 +565,30 @@ public class UserServiceImpl implements UserService {
         }
         return new ResponseEntity<>(map, status);
     }
+
+    @Override
+    public ResponseEntity<Map> doctorEnable(String username) {
+        Map<String, Object> map = new HashMap();
+        HttpStatus status = null;
+        try {
+            int result = userRepository.doctorEnable(username);
+            if (result==1) {
+                status = HttpStatus.OK;
+                map.put("status", 200);
+                map.put("message", "Data Found!");
+            } else {
+                status = HttpStatus.NOT_FOUND;
+                map.put("status", 404);
+                map.put("message", "No Data Found");
+            }
+        } catch (Exception exception) {
+            Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "getUserByEmail{}", exception.getMessage(), exception.toString(), LocalDateTime.now());
+            loggerRepository.saveAndFlush(logger);
+            map.put("status", 500);
+            map.put("message", "Internal Server Error");
+            map.put("error", exception.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        return new ResponseEntity<>(map, status);
+    }
 }
