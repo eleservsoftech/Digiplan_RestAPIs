@@ -24,6 +24,6 @@ public interface MyRequestData {
      String getRequest_Date();
      String getWorkflow_stage();
      String getTracking_id();
-
+     String getLast_edited_date();
 
 }

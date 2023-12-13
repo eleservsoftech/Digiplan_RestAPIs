@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @AllArgsConstructor
 @Data
@@ -48,6 +49,7 @@ public class User {
     private String latitude;
     @Column(name = "longitude")
     private String longitude;
+
 
 
     public String getEmail() {
@@ -98,5 +100,6 @@ public class User {
     private String crm_name;
     private String crm_mobile_no;
 
+    private Date created_at;
 
 }
