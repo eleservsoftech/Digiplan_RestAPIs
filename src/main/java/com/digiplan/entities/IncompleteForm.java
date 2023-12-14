@@ -1,6 +1,8 @@
 package com.digiplan.entities;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,5 +38,17 @@ public class IncompleteForm {
     @Column(name = "doctor_name")
     private String doctorName;
     private String groupId;
+    @Column(name = "treatment_cost")
+    private BigDecimal treatmentCost;
+    private String duration;
+    @Column(name = "crm_status")
+    private String crmStatus;
+    @Column(name = "crm_decision")
+    private String crmDecision;
+    @Column(name = "crm_by")
+    private String crmBy;
+    @Column(name = "crm_decesion_at")
+    private LocalDateTime crmDecesionAt;
+
 
 }
