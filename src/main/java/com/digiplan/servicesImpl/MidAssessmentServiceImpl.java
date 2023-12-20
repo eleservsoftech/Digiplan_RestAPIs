@@ -57,7 +57,7 @@ MidAssessmentServiceImpl implements MidAssessmentService {
 
             try {
                 if (!caseId.isEmpty()){
-                    folderName = caseId+"_"+(new SimpleDateFormat("dd.MM.yyyy.HH.mm.ss")).format(new Date());
+                    folderName = caseId+"_"+(new SimpleDateFormat("dd_MM_yyyy_HH_mm_ss")).format(new Date());
                     midAssessmentEntity.setCaseId(caseId);
                     midAssessmentEntity.setPatientName(patientName);
                     midAssessmentEntity.setDoctorName(doctorName);
