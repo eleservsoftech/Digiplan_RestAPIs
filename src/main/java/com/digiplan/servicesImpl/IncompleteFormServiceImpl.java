@@ -64,7 +64,7 @@ public class IncompleteFormServiceImpl implements IncompleteFormService {
         Map map = new HashMap();
         HttpStatus status = null;
         try {
-            List<IncompleteForm> incompleteFormsList = incompleteFormRepository.findAll();
+            List<IncompleteForm> incompleteFormsList = incompleteFormRepository.getPendingCasesWhoseFlagisY();
             if (incompleteFormsList.isEmpty()) {
                 map.put("status", 404);
                 map.put("message", "Record Found!");

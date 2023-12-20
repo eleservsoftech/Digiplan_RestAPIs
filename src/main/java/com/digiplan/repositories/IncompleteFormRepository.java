@@ -14,6 +14,10 @@ public interface IncompleteFormRepository extends JpaRepository<IncompleteForm, 
     //@Query(value = "SELECT form_id,patientname,remarks,submittedby,submittedon FROM incompleteform where flag='Y' AND submittedby=:submittedby", nativeQuery = true)
     @Query(value = "SELECT * FROM incompleteform where flag='Y' AND submittedby=:submittedby", nativeQuery = true)
     List<IncompleteForm> getUserPendingCases(@Param("submittedby") String submittedby);
+
+    @Query(value = "SELECT * FROM incompleteform where flag='Y'", nativeQuery = true)
+    List<IncompleteForm> getPendingCasesWhoseFlagisY();
+
 }
 
 

@@ -61,10 +61,10 @@ public class MidAssessmentEntity {
         @Column(name = "user", length = 80)
         private String user;
 
-        @Column(name = "32watts_user_remarks", length = 200)
+        @Column(name = "wattsuser_remarks", length = 200)
         private String watts32UserRemarks;
 
-        @Column(name = "32watts_user", length = 80)
+        @Column(name = "watts_user", length = 80)
         private String watts32User;
 
         @Column(name = "file_path", length = 250)
