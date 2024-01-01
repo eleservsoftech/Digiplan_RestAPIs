@@ -4,6 +4,7 @@ import com.digiplan.entities.Notification;
 import com.digiplan.entities.NotificationRequest;
 import com.digiplan.services.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -116,6 +117,46 @@ public class NotificationController {
             return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    @GetMapping("/callNotificationList/{user_id}")
+    public ResponseEntity<Map<String, Object>> callDoctorNotification(@PathVariable String user_id) {
+        try {
+            List<Object[]> result = notificationService.callDoctorNotification(user_id);
+            Map<String, Object> response = new HashMap<>();
+            response.put("status", HttpStatus.OK.value());
+            response.put("message", "Success");
+            response.put("data", result);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            errorResponse.put("message", "Internal Server Error");
+            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/notificationupdateisread/{user_id}")
+    public ResponseEntity<Map<String, Object>> callnotificationupdateisread(@PathVariable String user_id) {
+        try {
+             notificationService.callNotificationupdateisread(user_id);
+            Map<String, Object> response = new HashMap<>();
+            response.put("status", HttpStatus.OK.value());
+            response.put("message", "Success");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            errorResponse.put("message", "Internal Server Error");
+            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
+
 }
 
 

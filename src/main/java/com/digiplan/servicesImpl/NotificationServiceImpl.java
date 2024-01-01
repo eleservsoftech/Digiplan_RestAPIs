@@ -60,4 +60,14 @@ public class NotificationServiceImpl implements NotificationService {
 public List<Object[]> callNotificationList(String fromDate, String toDate) {
     return notificationRepository.callNotificationList(fromDate, toDate);
 }
+
+    @Override
+    public List<Object[]> callDoctorNotification(String user_id) {
+        return notificationRepository.callDoctorNotification(user_id);
+    }
+
+    @Override
+    public void callNotificationupdateisread(String user_id) {
+        notificationRepository.callNotificationupdateisread(user_id);
+    }
 }
