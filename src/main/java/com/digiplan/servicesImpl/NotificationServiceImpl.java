@@ -70,4 +70,9 @@ public List<Object[]> callNotificationList(String fromDate, String toDate) {
     public void callNotificationupdateisread(String user_id) {
         notificationRepository.callNotificationupdateisread(user_id);
     }
+
+    @Override
+    public int noOfNotificationPending(String user_id) {
+        return notificationRepository.noOfNotificationPending(user_id);
+    }
 }

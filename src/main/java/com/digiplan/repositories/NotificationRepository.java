@@ -31,6 +31,8 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     void callNotificationupdateisread(@Param("user_id") String user_id);
 
 
+    @Query(value = "select Count(id) As total from notifications where user_id=:user_id and is_read=0", nativeQuery = true)
+    int noOfNotificationPending(@Param("user_id") String user_id );
 
 }
 

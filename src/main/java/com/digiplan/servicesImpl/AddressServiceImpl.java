@@ -6,6 +6,7 @@ import com.digiplan.services.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Column;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,10 +40,22 @@ public class AddressServiceImpl implements AddressService {
         Optional<Address> existingAddressOptional = addressRepository.findById(addressId);
 
         if (existingAddressOptional.isPresent()) {
+
             Address existingAddress = existingAddressOptional.get();
-            // Update the fields you want to update
+            if(updatedAddress.getClinicName()!=null)
             existingAddress.setClinicName(updatedAddress.getClinicName());
+            if(updatedAddress.getAddress()!=null)
             existingAddress.setAddress(updatedAddress.getAddress());
+            if(updatedAddress.getCity()!=null)
+            existingAddress.setCity(updatedAddress.getCity());
+            if(updatedAddress.getState()!=null)
+            existingAddress.setState(updatedAddress.getState());
+            if(updatedAddress.getPincode()!=null)
+            existingAddress.setPincode(updatedAddress.getPincode());
+            if(updatedAddress.getMobile()!=null)
+            existingAddress.setMobile(updatedAddress.getMobile());
+            if(updatedAddress.getEmail()!=null)
+            existingAddress.setEmail(updatedAddress.getEmail());
             return addressRepository.save(existingAddress);
         } else {
             // Handle address not found

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
+@CrossOrigin(origins = {"*"})
 @RequestMapping("/api/notifications")
 public class NotificationController {
 
@@ -144,6 +145,24 @@ public class NotificationController {
             Map<String, Object> response = new HashMap<>();
             response.put("status", HttpStatus.OK.value());
             response.put("message", "Success");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            errorResponse.put("message", "Internal Server Error");
+            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/noOfNotificationPending/{user_id}")
+    public ResponseEntity<Map<String, Object>> noOfNotificationPending(@PathVariable String user_id) {
+        try {
+            int result = notificationService.noOfNotificationPending(user_id);
+            Map<String, Object> response = new HashMap<>();
+            response.put("status", HttpStatus.OK.value());
+            response.put("message", "Success");
+            response.put("data", result);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
 

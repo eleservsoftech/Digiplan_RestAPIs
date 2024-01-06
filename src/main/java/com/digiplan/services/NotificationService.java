@@ -19,5 +19,7 @@ public interface NotificationService {
 
     void callNotificationupdateisread(String user_id);
 
+   int noOfNotificationPending (String user_id);
+
 
 }
