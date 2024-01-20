@@ -28,8 +28,7 @@ public class Cases {
     private String submittedOn = LocalDate.now().toString();
     private String treatmentLink;
     private String downloadLink;
-    @JsonIgnore
-    @JsonProperty(value = "formdata")
+    @Column(name = "formdata")
     private String formData;
     private String submittedBy;
     private String remarks;
