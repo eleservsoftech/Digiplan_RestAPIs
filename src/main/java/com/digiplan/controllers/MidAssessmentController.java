@@ -31,28 +31,36 @@ public class MidAssessmentController {
     @PostMapping(value = {"/addMidScanReg"}, consumes = {"multipart/form-data"})
     public ResponseEntity<Map> addMidScanReg(String caseId, String patientName, String doctorName,
                                                   @RequestParam(required = true) MultipartFile photo1 , @RequestParam(required = false) MultipartFile photo2 ,
-                                                  @RequestParam(required = false) MultipartFile photo3 , @RequestParam(required = false) MultipartFile photo4
-                                                  ,@RequestParam(required = false) String alignerNoU, @RequestParam(required = false) String alignerNoL,
+                                                  @RequestParam(required = false) MultipartFile photo3 , @RequestParam(required = false) MultipartFile photo4 ,
+                                                  @RequestParam(required = false) MultipartFile photo5 , @RequestParam(required = false) MultipartFile photo6 ,
+                                                  @RequestParam(required = false) MultipartFile photo7 , @RequestParam(required = false) MultipartFile photo8 ,
+                                                  @RequestParam(required = false) MultipartFile photo9 , @RequestParam(required = false) MultipartFile photo10 ,
+                                                  @RequestParam(required = false) String alignerNoU, @RequestParam(required = false) String alignerNoL,
                                                   @RequestParam(required = false) String fittingOfAligner, @RequestParam(required = false) String remarks,
                                                   @RequestParam(required = false) String user,
                                                   @RequestParam(required = false) String watts32UserRemarks, @RequestParam(required = false) String watts32User, @RequestParam(required = false) String folderName) //,@RequestParam(required = false)  String filePath
     {
         return this.midAssessmentService.creaetMidScanReq(caseId, patientName, doctorName, photo1, photo2,
-                photo3, photo4, alignerNoU, alignerNoL, fittingOfAligner, remarks, user, watts32UserRemarks,
+                photo3, photo4, photo5, photo6,
+                photo7, photo8,   photo9, photo10, alignerNoU, alignerNoL, fittingOfAligner, remarks, user, watts32UserRemarks,
                 watts32User,folderName);//,filePath
     }
 
     @PutMapping(value = {"/updateMidScan/{requestId}"}, consumes = {"multipart/form-data"})
     public ResponseEntity<Map<String, Object>> updateMidScanReg(Long requestId , String caseId, String patientName, String doctorName,
                                                                 @RequestParam(required = true) MultipartFile photo1 , @RequestParam(required = false) MultipartFile photo2 ,
-                                                                @RequestParam(required = false) MultipartFile photo3 , @RequestParam(required = false) MultipartFile photo4
-            , @RequestParam(required = false) String alignerNoU, @RequestParam(required = false) String alignerNoL,
+                                                                @RequestParam(required = false) MultipartFile photo3 , @RequestParam(required = false) MultipartFile photo4,
+                                                                @RequestParam(required = false) MultipartFile photo5 , @RequestParam(required = false) MultipartFile photo6 ,
+                                                                @RequestParam(required = false) MultipartFile photo7 , @RequestParam(required = false) MultipartFile photo8,
+                                                                @RequestParam(required = false) MultipartFile photo9, @RequestParam(required = false) MultipartFile photo10,
+             @RequestParam(required = false) String alignerNoU, @RequestParam(required = false) String alignerNoL,
                                                                 @RequestParam(required = false) String fittingOfAligner, @RequestParam(required = false) String remarks,
                                                                 @RequestParam(required = false) String user,
                                                                 @RequestParam(required = false) String watts32UserRemarks, @RequestParam(required = false) String watts32User, @RequestParam(required = false) String folderName) //,@RequestParam(required = false)  String filePath
     {
         return this.midAssessmentService.updateMidScanReq(requestId,caseId, patientName, doctorName, photo1, photo2,
-                photo3, photo4, alignerNoU, alignerNoL, fittingOfAligner, remarks, user, watts32UserRemarks,
+                photo3, photo4,photo5, photo6,
+                photo7, photo8,photo9, photo10, alignerNoU, alignerNoL, fittingOfAligner, remarks, user, watts32UserRemarks,
                 watts32User,folderName);
     }
 

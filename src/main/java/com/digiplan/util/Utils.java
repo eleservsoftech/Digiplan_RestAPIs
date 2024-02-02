@@ -258,7 +258,8 @@ public class Utils {
         }
     }*/
 
-    public void uploadMidScanPhotos(String folderName, MultipartFile photo1, MultipartFile photo2, MultipartFile photo3, MultipartFile photo4)
+    public void uploadMidScanPhotos(String folderName, MultipartFile photo1, MultipartFile photo2, MultipartFile photo3, MultipartFile photo4,
+                                    MultipartFile photo5,MultipartFile photo6, MultipartFile photo7, MultipartFile photo8, MultipartFile photo9,MultipartFile photo10)
     {
         File fileupload = null;
         try {
@@ -266,7 +267,7 @@ public class Utils {
 
             if (!file.exists()) {
                 file.mkdir();
-                List<MultipartFile> photos = Arrays.asList(photo1, photo2, photo3, photo4);
+                List<MultipartFile> photos = Arrays.asList(photo1, photo2, photo3, photo4,photo5, photo6, photo7, photo8,photo9,photo10);
                 System.out.println(photos.size());
                 for (MultipartFile uploadedFile : photos) {
                     System.out.println(uploadedFile.isEmpty());
@@ -276,7 +277,8 @@ public class Utils {
                     }
                 }
             }else{
-                List<MultipartFile> photos = Arrays.asList(photo1, photo2, photo3, photo4);
+                List<MultipartFile> photos = Arrays.asList(photo1, photo2, photo3, photo4,
+                        photo5, photo6, photo7, photo8,photo9,photo10);
                 for (MultipartFile uploadedFile : photos) {
                     if (!uploadedFile.isEmpty()) {
                         System.out.println("name1="+uploadedFile.getOriginalFilename());
@@ -289,4 +291,6 @@ public class Utils {
             log.info("message: uploadMidScanPhotos{0} " + e.getMessage());
         }
     }
+
+
 }

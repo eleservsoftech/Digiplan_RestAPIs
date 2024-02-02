@@ -49,6 +49,7 @@ MidAssessmentServiceImpl implements MidAssessmentService {
         public ResponseEntity<Map> creaetMidScanReq(
                 String caseId, String patientName, String doctorName,
                 MultipartFile photo1, MultipartFile photo2, MultipartFile photo3, MultipartFile photo4,
+                MultipartFile photo5, MultipartFile photo6, MultipartFile photo7, MultipartFile photo8,MultipartFile photo9,MultipartFile photo10,
                 String alignerNoU, String alignerNoL, String fittingOfAligner, String remarks, String user,
                 String watts32UserRemarks, String watts32User,String folderName){
             Map<Object, Object> map = new HashMap<>();
@@ -69,7 +70,7 @@ MidAssessmentServiceImpl implements MidAssessmentService {
                     midAssessmentEntity.setWatts32User(watts32User);
                     midAssessmentEntity.setWatts32UserRemarks(watts32UserRemarks);
                     midAssessmentEntity.setFolderName(folderName);
-                    utils.uploadMidScanPhotos(folderName,photo1,photo2,photo3,photo4);
+                    utils.uploadMidScanPhotos(folderName,photo1,photo2,photo3,photo4,photo5,photo6,photo7,photo8,photo9,photo10);
                     if(photo1!=null) {
                         midAssessmentEntity.setPhoto1(photo1.getOriginalFilename());
                     }if(photo2!=null)
@@ -78,6 +79,18 @@ MidAssessmentServiceImpl implements MidAssessmentService {
                         midAssessmentEntity.setPhoto3(photo3.getOriginalFilename());
                     if(photo4!=null)
                         midAssessmentEntity.setPhoto4(photo4.getOriginalFilename());
+                    if(photo5!=null)
+                        midAssessmentEntity.setPhoto5(photo5.getOriginalFilename());
+                    if(photo6!=null)
+                        midAssessmentEntity.setPhoto6(photo6.getOriginalFilename());
+                    if(photo7!=null)
+                        midAssessmentEntity.setPhoto7(photo7.getOriginalFilename());
+                    if(photo8!=null)
+                        midAssessmentEntity.setPhoto8(photo8.getOriginalFilename());
+                    if(photo9!=null)
+                        midAssessmentEntity.setPhoto9(photo9.getOriginalFilename());
+                    if(photo10!=null)
+                        midAssessmentEntity.setPhoto10(photo10.getOriginalFilename());
                     this.midRepo.saveAndFlush(midAssessmentEntity);
                     map.put("status_code", "200");
                     map.put("message", "Data saved successfully");
@@ -102,6 +115,7 @@ MidAssessmentServiceImpl implements MidAssessmentService {
                 Long requestId,
                 String caseId, String patientName, String doctorName,
                 MultipartFile photo1, MultipartFile photo2, MultipartFile photo3, MultipartFile photo4,
+                MultipartFile photo5, MultipartFile photo6, MultipartFile photo7, MultipartFile photo8, MultipartFile photo9,MultipartFile photo10,
                 String alignerNoU, String alignerNoL, String fittingOfAligner, String remarks, String user,
                 String watts32UserRemarks, String watts32User, String folderName) {
                 Map<String, Object> response = new HashMap<>();
@@ -127,7 +141,7 @@ MidAssessmentServiceImpl implements MidAssessmentService {
                         updateMidAssessment.setFolderName(folderName);
                     }
                     // Upload photos if provided
-                    utils.uploadMidScanPhotos(folderName,photo1,photo2,photo3,photo4);
+                    utils.uploadMidScanPhotos(folderName,photo1,photo2,photo3,photo4,photo5,photo6,photo7,photo8,photo9, photo10);
                     if (photo1 != null) {
                         updateMidAssessment.setPhoto1(photo1.getOriginalFilename());
                     }
@@ -139,6 +153,24 @@ MidAssessmentServiceImpl implements MidAssessmentService {
                     }
                     if (photo4 != null) {
                         updateMidAssessment.setPhoto4(photo4.getOriginalFilename());
+                    }
+                    if (photo5 != null) {
+                        updateMidAssessment.setPhoto5(photo5.getOriginalFilename());
+                    }
+                    if (photo6 != null) {
+                        updateMidAssessment.setPhoto6(photo6.getOriginalFilename());
+                    }
+                    if (photo7 != null) {
+                        updateMidAssessment.setPhoto7(photo7.getOriginalFilename());
+                    }
+                    if (photo8 != null) {
+                        updateMidAssessment.setPhoto8(photo8.getOriginalFilename());
+                    }
+                    if (photo9 != null) {
+                        updateMidAssessment.setPhoto9(photo9.getOriginalFilename());
+                    }
+                    if (photo10 != null) {
+                        updateMidAssessment.setPhoto10(photo10.getOriginalFilename());
                     }
                     midRepo.save(updateMidAssessment);
                     response.put("status_code", HttpStatus.OK.toString());
@@ -164,7 +196,8 @@ MidAssessmentServiceImpl implements MidAssessmentService {
 
             //
             MidAssessmentEntity midEntity = midRepo.findByImage(requestId);
-            String [] dynamicPhotoList = {midEntity.getPhoto1(), midEntity.getPhoto2(), midEntity.getPhoto3(), midEntity.getPhoto4() };
+            String [] dynamicPhotoList = {midEntity.getPhoto1(), midEntity.getPhoto2(), midEntity.getPhoto3(), midEntity.getPhoto4(),
+                    midEntity.getPhoto5(), midEntity.getPhoto6(), midEntity.getPhoto7(), midEntity.getPhoto8(), midEntity.getPhoto9(), midEntity.getPhoto10() };
 
             //
             if (optionalEntity.isPresent()) {

@@ -46,6 +46,24 @@ public class MidAssessmentEntity {
         @Column(name = "photo4", length = 100)
         private String photo4;
 
+        @Column(name = "photo5", length = 100)
+        private String photo5;
+
+        @Column(name = "photo6", length = 100)
+        private String photo6;
+
+        @Column(name = "photo7", length = 100)
+        private String photo7;
+
+
+        @Column(name = "photo8", length = 100)
+        private String photo8;
+
+        @Column(name = "photo9", length = 100)
+        private String photo9;
+        @Column(name = "photo10", length = 100)
+        private String photo10;
+
         @Column(name = "aligner_no_u")
         private String  alignerNoU;
 
