@@ -293,4 +293,41 @@ public class Utils {
     }
 
 
+    public void uploadRequestQuotationPhotos(String folderName, MultipartFile photo1, MultipartFile photo2, MultipartFile photo3, MultipartFile photo4,
+                                    MultipartFile photo5)
+    {
+        File fileupload = null;
+        try {
+            File file = new File(env.getProperty("file.requestQuotation.location") + folderName);
+
+            if (!file.exists()) {
+                file.mkdir();
+                List<MultipartFile> photos = Arrays.asList(photo1, photo2, photo3, photo4,photo5);
+                System.out.println(photos.size());
+                for (MultipartFile uploadedFile : photos) {
+                    System.out.println(uploadedFile.isEmpty());
+                    if (!uploadedFile.isEmpty()) {
+                        File mainUpload = new File(file.getAbsolutePath() + File.separator + uploadedFile.getOriginalFilename());
+                        uploadedFile.transferTo(mainUpload);
+                    }
+                }
+            }else{
+                List<MultipartFile> photos = Arrays.asList(photo1, photo2, photo3, photo4,
+                        photo5);
+                for (MultipartFile uploadedFile : photos) {
+                    if (!uploadedFile.isEmpty()) {
+                        System.out.println("name1="+uploadedFile.getOriginalFilename());
+                        File mainUpload = new File(file.getAbsolutePath() + File.separator + uploadedFile.getOriginalFilename());
+                        uploadedFile.transferTo(mainUpload);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            log.info("message: uploadMidScanPhotos{0} " + e.getMessage());
+        }
+    }
+
+
+
+
 }
