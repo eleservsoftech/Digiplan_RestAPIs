@@ -221,6 +221,7 @@ MidAssessmentServiceImpl implements MidAssessmentService {
                         map.put("status_code", HttpStatus.OK.toString());
                         map.put("message", "OK");
                         map.put("data", imageList);
+                        map.put("other_data",entity);
                         status = HttpStatus.OK;
                     } else {
                         map.put("status_code", HttpStatus.NOT_FOUND.toString());
