@@ -17,7 +17,8 @@ public interface RequestQuotationService {
                 MultipartFile photo1, MultipartFile photo2, MultipartFile photo3, MultipartFile photo4,
                 MultipartFile photo5,
                 String flag, String doctorName, String treatmentCost, String duration,
-                String crmStatus, String crmDecision, String crmBy, LocalDateTime crmDecesionAt);
+                String crmStatus, String crmDecision, String crmBy);
+
 
         public ResponseEntity<Map> updateRequestQuotationReq(
                 Long formId,
@@ -27,7 +28,7 @@ public interface RequestQuotationService {
                 MultipartFile photo1, MultipartFile photo2, MultipartFile photo3, MultipartFile photo4,
                 MultipartFile photo5,
                 String flag, String doctorName, String treatmentCost, String duration,
-                String crmStatus, String crmDecision, String crmBy, LocalDateTime crmDecesionAt,String folderName);
+                String crmStatus, String crmDecision, String crmBy, String folderName);
 
         public ResponseEntity<Map<String, Object>> getRequestQuotation(String formId);
 

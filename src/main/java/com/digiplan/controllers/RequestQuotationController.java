@@ -32,18 +32,19 @@ public class RequestQuotationController {
             @RequestParam(required = false) MultipartFile photo3,
             @RequestParam(required = false) MultipartFile photo4,
             @RequestParam(required = false) MultipartFile photo5,
-            @RequestParam String flag, @RequestParam String doctorName, @RequestParam String treatmentCost,
+            @RequestParam String flag, @RequestParam String doctorName, @RequestParam(required = false) String treatmentCost ,
             @RequestParam String duration, @RequestParam String crmStatus, @RequestParam String crmDecision,
-            @RequestParam String crmBy, @RequestParam String crmDecisionAt
+            @RequestParam String crmBy
     ) {
 
         return requestQuotationService.creaetRequestQuotationReq(orthodontistName, phone, city, submittedBy, remarks,
                 patientName, gender, dob, photo1, photo2, photo3, photo4, photo5, flag, doctorName, treatmentCost,
-                duration, crmStatus, crmDecision, crmBy,
-                LocalDateTime.parse(crmDecisionAt)
+                duration, crmStatus, crmDecision, crmBy
 
         );
     }
+
+
 
     @PutMapping(value = {"/updateRequestQuotation/{formId}"}, consumes = {"multipart/form-data"})
     public ResponseEntity<Map> updateRequestQuotation(@PathVariable Long formId, @RequestParam String orthodontistName, @RequestParam String phone, @RequestParam String city,
@@ -56,11 +57,11 @@ public class RequestQuotationController {
                                                       @RequestParam(required = false) MultipartFile photo5,
                                                       @RequestParam String flag, @RequestParam String doctorName, @RequestParam String treatmentCost,
                                                       @RequestParam String duration, @RequestParam String crmStatus, @RequestParam String crmDecision,
-                                                      @RequestParam String crmBy, @RequestParam String crmDecisionAt, @RequestParam(required = false) String folderName) {
+                                                      @RequestParam String crmBy, String folderName) {
 
         return this.requestQuotationService.updateRequestQuotationReq(formId, orthodontistName, phone, city, submittedBy, remarks,
                 patientName, gender, dob, photo1, photo2, photo3, photo4, photo5, flag, doctorName, treatmentCost,
-                duration, crmStatus, crmDecision, crmBy,  LocalDateTime.parse(crmDecisionAt), folderName);
+                duration, crmStatus, crmDecision, crmBy,  folderName);
     }
 
     @GetMapping("/getRequestQuotation/{formId}")

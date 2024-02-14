@@ -44,7 +44,7 @@ public class RequestQuotationServiceImpl implements RequestQuotationService {
                                                          MultipartFile photo4, MultipartFile photo5,
                                                          String flag, String doctorName, String treatmentCost, String duration,
                                                          String crmStatus, String crmDecision,
-                                                         String crmBy, LocalDateTime crmDecesionAt
+                                                         String crmBy
     ) {
 
         Map<Object, Object> map = new HashMap<>();
@@ -63,8 +63,8 @@ public class RequestQuotationServiceImpl implements RequestQuotationService {
                 requestQuotationEntity.setDob(LocalDate.parse(dob));
                 requestQuotationEntity.setPatientname(patientname);
                 requestQuotationEntity.setGender(gender);
-                requestQuotationEntity.setCrmDecesionAt(crmDecesionAt);
-
+                requestQuotationEntity.setCrmDecesionAt(new Date());
+                requestQuotationEntity.setFolderName(folderName);
                 utils.uploadRequestQuotationPhotos(folderName, photo1, photo2, photo3, photo4, photo5);
 
                 if (photo1 != null) {
@@ -90,7 +90,10 @@ public class RequestQuotationServiceImpl implements RequestQuotationService {
                 requestQuotationEntity.setCrmStatus(crmStatus);
                 requestQuotationEntity.setCrmDecision(crmDecision);
                 requestQuotationEntity.setCrmBy(crmBy);
-                requestQuotationEntity.setCrmDecesionAt(crmDecesionAt);
+                requestQuotationEntity.setCrmDecesionAt(new Date());
+                if(treatmentCost!=null)
+                    requestQuotationEntity.setTreatmentCost("0");
+                else requestQuotationEntity.setTreatmentCost(treatmentCost);
 
                 this.requestRepo.saveAndFlush(requestQuotationEntity);
 
@@ -113,13 +116,15 @@ public class RequestQuotationServiceImpl implements RequestQuotationService {
         return new ResponseEntity<>(map, status);
     }
 
+
+
     @Override
     public ResponseEntity<Map> updateRequestQuotationReq(Long formId, String orthodonstistName, String phone, String City,
                                                          String submittedby, String remarks, String patientname, String gender, String dob,
                                                          MultipartFile photo1, MultipartFile photo2,
                                                          MultipartFile photo3, MultipartFile photo4, MultipartFile photo5,
                                                          String flag, String doctorName, String treatmentCost, String duration,
-                                                         String crmStatus, String crmDecision, String crmBy, LocalDateTime crmDecesionAt, String folderName) {
+                                                         String crmStatus, String crmDecision, String crmBy, String folderName) {
         Map<String, Object> response = new HashMap<>();
         HttpStatus status = null;
         try {
@@ -137,8 +142,10 @@ public class RequestQuotationServiceImpl implements RequestQuotationService {
                 updateRequestQuotation.setDob(LocalDate.parse(dob));
                 updateRequestQuotation.setPatientname(patientname);
                 updateRequestQuotation.setGender(gender);
-                updateRequestQuotation.setCrmDecesionAt(crmDecesionAt);
-
+                updateRequestQuotation.setCrmDecesionAt(new Date());
+                if(treatmentCost!=null)
+                    updateRequestQuotation.setTreatmentCost("0");
+                else updateRequestQuotation.setTreatmentCost(treatmentCost);
                 if (folderName != null && !folderName.isEmpty()) {
                     updateRequestQuotation.setFolderName(folderName);
                 }
@@ -168,7 +175,7 @@ public class RequestQuotationServiceImpl implements RequestQuotationService {
                 updateRequestQuotation.setCrmStatus(crmStatus);
                 updateRequestQuotation.setCrmDecision(crmDecision);
                 updateRequestQuotation.setCrmBy(crmBy);
-                updateRequestQuotation.setCrmDecesionAt(crmDecesionAt);
+                updateRequestQuotation.setCrmDecesionAt(new Date());
 
                 requestRepo.save(updateRequestQuotation);
                 response.put("status_code", HttpStatus.OK.toString());
@@ -220,6 +227,7 @@ public class RequestQuotationServiceImpl implements RequestQuotationService {
                         map.put("status_code", HttpStatus.OK.toString());
                         map.put("message", "OK");
                         map.put("data", imageList);
+                        map.put("otherData",requestEntity);
                         status = HttpStatus.OK;
                     } else {
                         map.put("status_code", HttpStatus.NOT_FOUND.toString());

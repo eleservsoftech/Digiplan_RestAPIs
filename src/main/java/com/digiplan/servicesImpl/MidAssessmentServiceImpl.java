@@ -230,6 +230,7 @@ MidAssessmentServiceImpl implements MidAssessmentService {
                 } else {
                     map.put("status_code", HttpStatus.NOT_FOUND.toString());
                     map.put("message", "Folder is not present");
+
                     status = HttpStatus.NOT_FOUND;
                 }
             } else {

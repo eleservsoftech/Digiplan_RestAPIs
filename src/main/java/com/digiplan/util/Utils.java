@@ -299,7 +299,7 @@ public class Utils {
         File fileupload = null;
         try {
             File file = new File(env.getProperty("file.requestQuotation.location") + folderName);
-
+            System.out.println("file="+file.getPath());
             if (!file.exists()) {
                 file.mkdir();
                 List<MultipartFile> photos = Arrays.asList(photo1, photo2, photo3, photo4,photo5);

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Data
@@ -17,9 +18,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @DynamicInsert
 @DynamicUpdate
-@Component
 @Table(name = "request_quotation")
-
 public class RequestQuotationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -88,9 +87,8 @@ public class RequestQuotationEntity {
     private String crmBy ;
 
     @Column(name = "crm_decesion_at")
-    private LocalDateTime crmDecesionAt;
+    private Date crmDecesionAt;
 
     @Column(name = "folder_name", length = 250)
     private String folderName;
-
 }
