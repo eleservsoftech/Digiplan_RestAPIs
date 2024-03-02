@@ -134,14 +134,21 @@ public class RequestQuotationServiceImpl implements RequestQuotationService {
                 RequestQuotationEntity updateRequestQuotation = optionalEntity.get();
                 RequestQuotationEntity checkData = requestRepo.findByImage(String.valueOf(formId));
                 folderName = checkData.getFolderName();
-
-                updateRequestQuotation.setPhone(phone);
-                updateRequestQuotation.setCity(City);
+                if(phone!=null)
+                    updateRequestQuotation.setPhone(phone);
+                if(City!=null)
+                    updateRequestQuotation.setCity(City);
+                if(submittedby!=null)
                 updateRequestQuotation.setSubmittedby(submittedby);
-                updateRequestQuotation.setRemarks(remarks);
-                updateRequestQuotation.setDob(LocalDate.parse(dob));
+                if(remarks!=null)
+                    updateRequestQuotation.setRemarks(remarks);
+//                updateRequestQuotation.setDob(LocalDate.parse(dob));
+                if(patientname!=null)
                 updateRequestQuotation.setPatientname(patientname);
-                updateRequestQuotation.setGender(gender);
+
+                if(gender!=null)
+                    updateRequestQuotation.setGender(gender);
+
                 updateRequestQuotation.setCrmDecesionAt(new Date());
                 if(treatmentCost!=null)
                     updateRequestQuotation.setTreatmentCost("0");
@@ -167,15 +174,20 @@ public class RequestQuotationServiceImpl implements RequestQuotationService {
                 if (photo5 != null) {
                     updateRequestQuotation.setPhoto5(photo5.getOriginalFilename());
                 }
-
-                updateRequestQuotation.setFlag(flag);
-                updateRequestQuotation.setDoctorName(doctorName);
+                if (doctorName!=null)
+                    updateRequestQuotation.setDoctorName(doctorName);
+                if (treatmentCost!=null)
                 updateRequestQuotation.setTreatmentCost(treatmentCost);
+                if (duration!=null)
                 updateRequestQuotation.setDuration(duration);
+                if (crmStatus!=null)
                 updateRequestQuotation.setCrmStatus(crmStatus);
-                updateRequestQuotation.setCrmDecision(crmDecision);
+                if(crmDecision!=null) {
+                    updateRequestQuotation.setCrmDecision(crmDecision);
+                    updateRequestQuotation.setCrmDecesionAt(new Date());
+                }
                 updateRequestQuotation.setCrmBy(crmBy);
-                updateRequestQuotation.setCrmDecesionAt(new Date());
+
 
                 requestRepo.save(updateRequestQuotation);
                 response.put("status_code", HttpStatus.OK.toString());
