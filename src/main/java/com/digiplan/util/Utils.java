@@ -24,27 +24,28 @@ public class Utils {
     /*===========================================================================*/
     @Autowired
     private Environment env;
+
     //@Value( "${file.upload.location}" )
     //static String location;
-    public  void Directires(String case_id, MultipartFile main_Img, MultipartFile patient_properties, MultipartFile report_pdf,
-                            MultipartFile upper_ipr,MultipartFile lower_ipr,MultipartFile front_video,
-                            MultipartFile upper_video,MultipartFile lower_video,MultipartFile left_video,
-                            MultipartFile right_video) throws IOException {
+    public void Directires(String case_id, MultipartFile main_Img, MultipartFile patient_properties, MultipartFile report_pdf,
+                           MultipartFile upper_ipr, MultipartFile lower_ipr, MultipartFile front_video,
+                           MultipartFile upper_video, MultipartFile lower_video, MultipartFile left_video,
+                           MultipartFile right_video) throws IOException {
 
         String path = env.getProperty("file.upload.location");
 
-        System.out.println("Directires env:  "+path);
+        System.out.println("Directires env:  " + path);
 
         try {
             File file = new File(env.getProperty("file.upload.location") + String.valueOf(case_id));
 
-            System.out.println("file: "+file);
+            System.out.println("file: " + file);
 
             File file1 = new File(file.getPath() + File.separator + "IPR");
-            System.out.println("file1: "+file1);
+            System.out.println("file1: " + file1);
 
             File file2 = new File(file.getPath() + File.separator + "Videos");
-            System.out.println("file2: "+file2);
+            System.out.println("file2: " + file2);
 
             if (!file.exists())
                 file.mkdir();
@@ -87,18 +88,18 @@ public class Utils {
     }
 
 
-    public  void Directires1(String case_id, MultipartFile main_Img, MultipartFile patient_properties, MultipartFile report_pdf,MultipartFile upper_ipr,MultipartFile lower_ipr,MultipartFile front_video,MultipartFile upper_video,MultipartFile lower_video,MultipartFile left_video,MultipartFile right_video) throws IOException {
+    public void Directires1(String case_id, MultipartFile main_Img, MultipartFile patient_properties, MultipartFile report_pdf, MultipartFile upper_ipr, MultipartFile lower_ipr, MultipartFile front_video, MultipartFile upper_video, MultipartFile lower_video, MultipartFile left_video, MultipartFile right_video) throws IOException {
 
         try {
 
             File file = new File(env.getProperty("file.upload.location") + String.valueOf(case_id));
-            System.out.println("file: "+file);
+            System.out.println("file: " + file);
 
             File file1 = new File(file.getPath() + File.separator + "IPR");
-            System.out.println("file1: "+file1);
+            System.out.println("file1: " + file1);
 
             File file2 = new File(file.getPath() + File.separator + "Videos");
-            System.out.println("file2: "+file2);
+            System.out.println("file2: " + file2);
 
             if (!file.exists())
                 file.mkdir();
@@ -259,15 +260,14 @@ public class Utils {
     }*/
 
     public void uploadMidScanPhotos(String folderName, MultipartFile photo1, MultipartFile photo2, MultipartFile photo3, MultipartFile photo4,
-                                    MultipartFile photo5,MultipartFile photo6, MultipartFile photo7, MultipartFile photo8, MultipartFile photo9,MultipartFile photo10)
-    {
+                                    MultipartFile photo5, MultipartFile photo6, MultipartFile photo7, MultipartFile photo8, MultipartFile photo9, MultipartFile photo10) {
         File fileupload = null;
         try {
             File file = new File(env.getProperty("file.midscan.location") + folderName);
 
             if (!file.exists()) {
                 file.mkdir();
-                List<MultipartFile> photos = Arrays.asList(photo1, photo2, photo3, photo4,photo5, photo6, photo7, photo8,photo9,photo10);
+                List<MultipartFile> photos = Arrays.asList(photo1, photo2, photo3, photo4, photo5, photo6, photo7, photo8, photo9, photo10);
                 System.out.println(photos.size());
                 for (MultipartFile uploadedFile : photos) {
                     System.out.println(uploadedFile.isEmpty());
@@ -276,12 +276,12 @@ public class Utils {
                         uploadedFile.transferTo(mainUpload);
                     }
                 }
-            }else{
+            } else {
                 List<MultipartFile> photos = Arrays.asList(photo1, photo2, photo3, photo4,
-                        photo5, photo6, photo7, photo8,photo9,photo10);
+                        photo5, photo6, photo7, photo8, photo9, photo10);
                 for (MultipartFile uploadedFile : photos) {
                     if (!uploadedFile.isEmpty()) {
-                        System.out.println("name1="+uploadedFile.getOriginalFilename());
+                        System.out.println("name1=" + uploadedFile.getOriginalFilename());
                         File mainUpload = new File(file.getAbsolutePath() + File.separator + uploadedFile.getOriginalFilename());
                         uploadedFile.transferTo(mainUpload);
                     }
@@ -294,15 +294,14 @@ public class Utils {
 
 
     public void uploadRequestQuotationPhotos(String folderName, MultipartFile photo1, MultipartFile photo2, MultipartFile photo3, MultipartFile photo4,
-                                    MultipartFile photo5)
-    {
+                                             MultipartFile photo5) {
         File fileupload = null;
         try {
             File file = new File(env.getProperty("file.requestQuotation.location") + folderName);
-            System.out.println("file="+file.getPath());
+            System.out.println("file=" + file.getPath());
             if (!file.exists()) {
                 file.mkdir();
-                List<MultipartFile> photos = Arrays.asList(photo1, photo2, photo3, photo4,photo5);
+                List<MultipartFile> photos = Arrays.asList(photo1, photo2, photo3, photo4, photo5);
                 System.out.println(photos.size());
                 for (MultipartFile uploadedFile : photos) {
                     System.out.println(uploadedFile.isEmpty());
@@ -311,12 +310,12 @@ public class Utils {
                         uploadedFile.transferTo(mainUpload);
                     }
                 }
-            }else{
+            } else {
                 List<MultipartFile> photos = Arrays.asList(photo1, photo2, photo3, photo4,
                         photo5);
                 for (MultipartFile uploadedFile : photos) {
                     if (!uploadedFile.isEmpty()) {
-                        System.out.println("name1="+uploadedFile.getOriginalFilename());
+                        System.out.println("name1=" + uploadedFile.getOriginalFilename());
                         File mainUpload = new File(file.getAbsolutePath() + File.separator + uploadedFile.getOriginalFilename());
                         uploadedFile.transferTo(mainUpload);
                     }
@@ -328,6 +327,31 @@ public class Utils {
     }
 
 
+    public String uploadAdditionalInfoPhotos(String folderName, MultipartFile Image) {
+        try {
+            File file = new File(env.getProperty("file.additionalinfo.location") + folderName);
+            System.out.println("file=" + file.getPath());
+            if (!file.exists()) {
+                file.mkdir();
+            }
 
+            if (!Image.isEmpty()) {
+                File mainUpload = new File(file.getAbsolutePath() + File.separator + Image.getOriginalFilename());
+                Image.transferTo(mainUpload);
+                return Image.getOriginalFilename();
+            }
+        } catch (Exception e) {
+            log.error("Error occurred while uploading additional info photos: {}", e.getMessage());
+        }
+        return null; // Return null if an error occurred or the image is empty
+    }
 
 }
+
+
+
+
+
+
+
+
