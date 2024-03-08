@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -37,5 +38,15 @@ import java.util.Optional;
     public Chatter getChatterById(Long id) {
         Optional<Chatter> chatterOptional = chatterRepository.findById(id);
         return chatterOptional.orElse(null);
+    }
+
+    @Override
+    public List<Chatter> getChatForDoctorByFormId(Long formId) {
+        return chatterRepository.getChatForDoctor(formId);
+    }
+
+    @Override
+    public List<Chatter> getChatForSupportByFormId(Long formId) {
+        return chatterRepository.getChatForSupport(formId);
     }
 }

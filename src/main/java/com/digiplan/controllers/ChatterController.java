@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.List;
 
 @CrossOrigin(origins = {"*"})
 @RestController
@@ -41,6 +42,16 @@ public class ChatterController {
     public Chatter getChatterById(@PathVariable Long id) {
         return chatterService.getChatterById(id);
     }
+    @GetMapping("/getChatForDoctorByFormId/{id}")
+    public List<Chatter>  getChatForDoctorByFormId(@PathVariable Long id) {
+        return chatterService.getChatForDoctorByFormId(id);
+    }
+
+    @GetMapping("/getChatForSupportByFormId/{id}")
+    public List<Chatter>  getChatForSupportByFormId(@PathVariable Long id) {
+        return chatterService.getChatForSupportByFormId(id);
+    }
+
 
 
 }

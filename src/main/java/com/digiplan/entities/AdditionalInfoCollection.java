@@ -35,8 +35,7 @@ public class AdditionalInfoCollection {
     @Column(name = "image", length = 2500)
     private String Image;
 
-    @Column(name = "imagetype", length = 2500)
-    private String ImageType;
+
 
     @Column(name = "additional_info_remarks", length = 2500)
     private String AdditionalInfoRemarks;

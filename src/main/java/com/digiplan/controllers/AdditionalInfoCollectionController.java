@@ -30,17 +30,14 @@ public class AdditionalInfoCollectionController {
 
     @PostMapping(value = "/add", consumes = {"multipart/form-data"})
     public ResponseEntity<Map<String, Object>> createAdditionalInfoCollection(
-            @RequestParam String Id,
+
             @RequestParam String formId,
-            @RequestParam String folderName,
-            @RequestParam String imagePath,
             @RequestParam MultipartFile image,
-            @RequestParam String imageType,
-            @RequestParam String additionalInfoRemarks,
-            @RequestParam String createdAt
+            @RequestParam String additionalInfoRemarks
+
     ) {
         return this.additionalInfoCollectionService.creaetAdditionalInfoCollection(
-                Id, formId, folderName, imagePath, image, imageType, additionalInfoRemarks, createdAt);
+               formId,   image, additionalInfoRemarks);
     }
     @GetMapping("/{id}")
     public ResponseEntity<Map<String, Object>> getAdditionalInfoCollectionById(@PathVariable Long id) {

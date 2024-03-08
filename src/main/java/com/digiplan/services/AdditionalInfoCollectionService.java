@@ -8,8 +8,8 @@ import java.util.Map;
 
     public interface AdditionalInfoCollectionService {
         ResponseEntity<Map<String, Object>> creaetAdditionalInfoCollection(
-                String Id, String FormId, String folderName, String ImagePath, MultipartFile Image,
-                String ImageType, String AdditionalInfoRemarks, String CreatedAt
+                String FormId,   MultipartFile Image,
+                 String AdditionalInfoRemarks
         );
 
         ResponseEntity<Map<String, Object>> getAdditionalInfoCollectionById(Long id);

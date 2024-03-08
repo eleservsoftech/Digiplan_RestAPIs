@@ -32,28 +32,27 @@ public class AdditionalInfoCollectionServiceImpl implements AdditionalInfoCollec
     private Environment env;
 
     @Override
-    public ResponseEntity<Map<String, Object>> creaetAdditionalInfoCollection(
-            String Id, String FormId, String folderName, String ImagePath, MultipartFile Image,
-            String ImageType,
-            String AdditionalInfoRemarks, String CreatedAt
+    public ResponseEntity<Map<String, Object>> creaetAdditionalInfoCollection( String FormId,   MultipartFile Image,
+            String AdditionalInfoRemarks
     ) {
         Map<Object, Object> map = new HashMap<>();
         HttpStatus status = null;
         AdditionalInfoCollection additionalInfoCollection = new AdditionalInfoCollection();
-
+         String folderName = "";
         try {
-            if (!Id.isEmpty()) {
-
-                folderName = Id + "_" + (new SimpleDateFormat("dd_MM_yyyy_HH_mm_ss")).format(new Date());
+            if (!FormId.isEmpty()) {
+                folderName = FormId + "_" + (new SimpleDateFormat("dd_MM_yyyy_HH_mm_ss")).format(new Date());
                 additionalInfoCollection.setFormId(Long.parseLong(FormId));
 
-                additionalInfoCollection.setImagePath(ImagePath);
-                additionalInfoCollection.setImageType(ImageType);
+
+
                 additionalInfoCollection.setAdditionalInfoRemarks(AdditionalInfoRemarks);
 
                 additionalInfoCollection.setFolderName(folderName);
                 if (Image != null) {
+
                     String fileName = utils.uploadAdditionalInfoPhotos(folderName, Image);
+                    additionalInfoCollection.setImagePath(env.getProperty("file.additionalinfo.location") + folderName);
                     additionalInfoCollection.setImage(fileName);
                     this.additionalInfoCollectionRepo.saveAndFlush(additionalInfoCollection);
                     map.put("status_code", "200");
