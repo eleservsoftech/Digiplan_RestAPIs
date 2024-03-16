@@ -85,6 +85,7 @@ public class AdditionalInfoCollectionServiceImpl implements AdditionalInfoCollec
         Map<String, Object> map = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;;
 
+
         try {
             Optional<AdditionalInfoCollection> additionalInfoCollectionOptional = additionalInfoCollectionRepo.findById(id);
             if (additionalInfoCollectionOptional.isPresent()) {
