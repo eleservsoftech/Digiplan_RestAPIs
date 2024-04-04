@@ -44,6 +44,11 @@ public class Chatter {
 
     @Column(name = "modified_at")
     private Date ModifiedAt;
+    @Column(name = "folder_name")
+    private String folderName;
+
+    @Column(name = "image")
+    private String image;
 
 
 

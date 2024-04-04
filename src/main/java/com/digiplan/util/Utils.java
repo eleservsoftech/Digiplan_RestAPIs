@@ -13,6 +13,7 @@ import net.coobird.thumbnailator.geometry.Positions;
 import java.io.EOFException;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -259,38 +260,53 @@ public class Utils {
         }
     }*/
 
-    public void uploadMidScanPhotos(String folderName, MultipartFile photo1, MultipartFile photo2, MultipartFile photo3, MultipartFile photo4,
-                                    MultipartFile photo5, MultipartFile photo6, MultipartFile photo7, MultipartFile photo8, MultipartFile photo9, MultipartFile photo10) {
-        File fileupload = null;
+    public void uploadMidScanPhotos(String folderName, MultipartFile photo1, MultipartFile photo2, MultipartFile photo3,
+                                    MultipartFile photo4, MultipartFile photo5, MultipartFile photo6, MultipartFile photo7,
+                                    MultipartFile photo8, MultipartFile photo9, MultipartFile photo10) {
         try {
             File file = new File(env.getProperty("file.midscan.location") + folderName);
 
             if (!file.exists()) {
                 file.mkdir();
-                List<MultipartFile> photos = Arrays.asList(photo1, photo2, photo3, photo4, photo5, photo6, photo7, photo8, photo9, photo10);
-                System.out.println(photos.size());
-                for (MultipartFile uploadedFile : photos) {
-                    System.out.println(uploadedFile.isEmpty());
-                    if (!uploadedFile.isEmpty()) {
-                        File mainUpload = new File(file.getAbsolutePath() + File.separator + uploadedFile.getOriginalFilename());
-                        uploadedFile.transferTo(mainUpload);
-                    }
-                }
-            } else {
-                List<MultipartFile> photos = Arrays.asList(photo1, photo2, photo3, photo4,
-                        photo5, photo6, photo7, photo8, photo9, photo10);
-                for (MultipartFile uploadedFile : photos) {
-                    if (!uploadedFile.isEmpty()) {
-                        System.out.println("name1=" + uploadedFile.getOriginalFilename());
-                        File mainUpload = new File(file.getAbsolutePath() + File.separator + uploadedFile.getOriginalFilename());
-                        uploadedFile.transferTo(mainUpload);
-                    }
+            }
+
+            List<MultipartFile> photos = new ArrayList<>();
+            // Add mandatory photos
+            photos.add(photo1);
+            photos.add(photo2);
+            photos.add(photo3);
+            photos.add(photo6);
+            photos.add(photo7);
+            photos.add(photo8);
+
+            // Add optional photos
+            if (photo4 != null) {
+                photos.add(photo4);
+            }
+            if (photo5 != null) {
+                photos.add(photo5);
+            }
+            if (photo9 != null) {
+                photos.add(photo9);
+            }
+            if (photo10 != null) {
+                photos.add(photo10);
+            }
+
+            System.out.println(photos.size());
+            for (MultipartFile uploadedFile : photos) {
+                if (!uploadedFile.isEmpty()) {
+                    File mainUpload = new File(file.getAbsolutePath() + File.separator + uploadedFile.getOriginalFilename());
+                    uploadedFile.transferTo(mainUpload);
                 }
             }
         } catch (Exception e) {
             log.info("message: uploadMidScanPhotos{0} " + e.getMessage());
         }
     }
+
+
+
 
 
     public void uploadRequestQuotationPhotos(String folderName, MultipartFile photo1, MultipartFile photo2, MultipartFile photo3, MultipartFile photo4,
@@ -347,13 +363,3 @@ public class Utils {
     }
 
 }
-
-
-
-
-
-
-
-
-
-

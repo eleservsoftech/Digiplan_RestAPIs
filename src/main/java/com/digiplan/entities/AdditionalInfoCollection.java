@@ -24,7 +24,8 @@ public class AdditionalInfoCollection {
     @Column(name = "Id")
     private  Long Id;
     @Column(name = "form_id")
-    private Long FormId;
+    private Long formId;
+
 
     @Column(name = "folder", length = 250)
     private String folderName;

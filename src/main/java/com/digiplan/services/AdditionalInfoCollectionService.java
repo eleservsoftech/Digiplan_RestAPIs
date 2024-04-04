@@ -13,6 +13,8 @@ import java.util.Map;
         );
 
         ResponseEntity<Map<String, Object>> getAdditionalInfoCollectionById(Long id);
+
+        ResponseEntity<Map<String, Object>> getAdditionalInfoCollectionByFormId(Long formId);
     }
 
 

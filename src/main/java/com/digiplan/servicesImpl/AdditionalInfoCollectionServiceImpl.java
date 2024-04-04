@@ -12,11 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -32,18 +31,17 @@ public class AdditionalInfoCollectionServiceImpl implements AdditionalInfoCollec
     private Environment env;
 
     @Override
-    public ResponseEntity<Map<String, Object>> creaetAdditionalInfoCollection( String FormId,   MultipartFile Image,
-            String AdditionalInfoRemarks
+    public ResponseEntity<Map<String, Object>> creaetAdditionalInfoCollection(String FormId, MultipartFile Image,
+                                                                              String AdditionalInfoRemarks
     ) {
         Map<Object, Object> map = new HashMap<>();
         HttpStatus status = null;
         AdditionalInfoCollection additionalInfoCollection = new AdditionalInfoCollection();
-         String folderName = "";
+        String folderName = "";
         try {
             if (!FormId.isEmpty()) {
                 folderName = FormId + "_" + (new SimpleDateFormat("dd_MM_yyyy_HH_mm_ss")).format(new Date());
                 additionalInfoCollection.setFormId(Long.parseLong(FormId));
-
 
 
                 additionalInfoCollection.setAdditionalInfoRemarks(AdditionalInfoRemarks);
@@ -55,6 +53,8 @@ public class AdditionalInfoCollectionServiceImpl implements AdditionalInfoCollec
                     additionalInfoCollection.setImagePath(env.getProperty("file.additionalinfo.location") + folderName);
                     additionalInfoCollection.setImage(fileName);
                     this.additionalInfoCollectionRepo.saveAndFlush(additionalInfoCollection);
+                    map.put("folderName",folderName);
+                    map.put("image",Image.getOriginalFilename());
                     map.put("status_code", "200");
                     map.put("message", "Data saved successfully");
                     map.put("requestId", additionalInfoCollection.getId());
@@ -79,19 +79,26 @@ public class AdditionalInfoCollectionServiceImpl implements AdditionalInfoCollec
     }
 
 
-
     @Override
     public ResponseEntity<Map<String, Object>> getAdditionalInfoCollectionById(Long id) {
         Map<String, Object> map = new HashMap<>();
-        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;;
-
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
 
         try {
             Optional<AdditionalInfoCollection> additionalInfoCollectionOptional = additionalInfoCollectionRepo.findById(id);
             if (additionalInfoCollectionOptional.isPresent()) {
                 AdditionalInfoCollection additionalInfoCollection = additionalInfoCollectionOptional.get();
-                // Map the entity data to the response map
+
+                // Convert image file to byte array
+                File imageFile = new File(additionalInfoCollection.getImagePath() + File.separator + additionalInfoCollection.getImage());
+                byte[] imageBytes = Files.readAllBytes(imageFile.toPath());
+
+                // Add additional information to the response map
                 map.put("data", additionalInfoCollection);
+                map.put("image_bytes", imageBytes);
+                map.put("status_code", HttpStatus.OK.toString());
+                map.put("message", "OK");
+
                 status = HttpStatus.OK;
             } else {
                 map.put("status_code", "404");
@@ -107,5 +114,47 @@ public class AdditionalInfoCollectionServiceImpl implements AdditionalInfoCollec
 
         return new ResponseEntity<>(map, status);
     }
-}
 
+    @Override
+    public ResponseEntity<Map<String, Object>> getAdditionalInfoCollectionByFormId(Long formId) {
+        Map<String, Object> map = new HashMap<>();
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+
+        try {
+            List<AdditionalInfoCollection> additionalInfoCollections = additionalInfoCollectionRepo.findByFormId(formId);
+            if (!additionalInfoCollections.isEmpty()) {
+                List<Map<String, Object>> additionalInfoList = new ArrayList<>();
+                for (AdditionalInfoCollection additionalInfoCollection : additionalInfoCollections) {
+                    Map<String, Object> additionalInfoMap = new HashMap<>();
+                    additionalInfoMap.put("additional_info", additionalInfoCollection);
+
+                    // Convert image file to byte array
+                    File imageFile = new File(additionalInfoCollection.getImagePath() + File.separator + additionalInfoCollection.getImage());
+                    byte[] imageBytes = Files.readAllBytes(imageFile.toPath());
+                    additionalInfoMap.put("image_bytes", imageBytes);
+
+                    additionalInfoList.add(additionalInfoMap);
+                }
+
+                map.put("data", additionalInfoList);
+                map.put("status_code", HttpStatus.OK.toString());
+                map.put("message", "OK");
+                status = HttpStatus.OK;
+            } else {
+                map.put("status_code", "404");
+                map.put("message", "No additional info collections found for form ID " + formId);
+                status = HttpStatus.NOT_FOUND;
+            }
+        } catch (Exception e) {
+            map.put("status_code", "500");
+            map.put("message", e.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+            log.error("Exception @getAdditionalInfoCollectionByFormId: " + e.getMessage());
+        }
+
+        return new ResponseEntity<>(map, status);
+    }
+
+
+
+}

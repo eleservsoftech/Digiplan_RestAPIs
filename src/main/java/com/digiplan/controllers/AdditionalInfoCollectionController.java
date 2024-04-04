@@ -43,4 +43,10 @@ public class AdditionalInfoCollectionController {
     public ResponseEntity<Map<String, Object>> getAdditionalInfoCollectionById(@PathVariable Long id) {
         return additionalInfoCollectionService.getAdditionalInfoCollectionById(id);
     }
+
+    @GetMapping("/by-form/{formId}")
+    public ResponseEntity<Map<String, Object>> getAdditionalInfoCollectionByFormId(@PathVariable Long formId) {
+        return additionalInfoCollectionService.getAdditionalInfoCollectionByFormId(formId);
+    }
+
 }
