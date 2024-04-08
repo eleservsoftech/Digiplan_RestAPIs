@@ -75,4 +75,14 @@ public List<Object[]> callNotificationList(String fromDate, String toDate) {
     public int noOfNotificationPending(String user_id) {
         return notificationRepository.noOfNotificationPending(user_id);
     }
+
+    @Override
+    public List<Object[]> callNotificationListForSupport() {
+        return notificationRepository.callNotificationListForSupport();
+    }
+
+    @Override
+    public void updateSupportNotifications(String user_id, String id) {
+        notificationRepository.updateSupportNotifications(user_id, id);
+    }
 }

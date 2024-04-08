@@ -173,6 +173,41 @@ public class NotificationController {
         }
     }
 
+    @GetMapping("/notificationListForSupport")
+    public ResponseEntity<Map<String, Object>> notificationListForSupport() {
+        try {
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("status", HttpStatus.OK.value());
+            response.put("message", "Success");
+            response.put("data", notificationService.callNotificationListForSupport());
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            errorResponse.put("message", "Internal Server Error");
+            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/UpdateSupportNotification/{user_id}")
+    public ResponseEntity<Map<String, Object>> UpdateSupportNotification(@PathVariable String user_id, @RequestParam String id) {
+        try {
+            notificationService.updateSupportNotifications(user_id, id);
+            Map<String, Object> response = new HashMap<>();
+            response.put("status", HttpStatus.OK.value());
+            response.put("message", "Success");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            errorResponse.put("message", "Internal Server Error");
+            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 
 

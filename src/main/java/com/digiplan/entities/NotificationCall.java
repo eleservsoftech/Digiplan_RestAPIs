@@ -1,6 +1,6 @@
 package com.digiplan.entities;
 
-public interface NotificationCall {
+interface NotificationCall {
     String  getid();
     String  getuser_id();
     String  getmessage();

@@ -21,5 +21,8 @@ public interface NotificationService {
 
    int noOfNotificationPending (String user_id);
 
+    List<Object[]> callNotificationListForSupport();
+    void updateSupportNotifications( String user_id, String id);
+
 
 }

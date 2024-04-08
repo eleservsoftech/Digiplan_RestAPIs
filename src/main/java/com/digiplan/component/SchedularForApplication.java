@@ -14,5 +14,6 @@ public class SchedularForApplication {
         // Your scheduled task logic goes here
         System.out.println("Executing scheduled task at every minute.");
         notificationRepository.callNotification_list();
+        notificationRepository.callSupportNotificationList();
     }
 }
