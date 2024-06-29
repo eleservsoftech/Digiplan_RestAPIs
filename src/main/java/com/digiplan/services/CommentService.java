@@ -19,4 +19,9 @@ public interface CommentService {
     String deleteComment(Integer id);
 
     ResponseEntity<Map> getCommentTypes(String caseId, String typeOfUser);
+
+
+
+    List<Comment> getCommentsByStage(String stageName);
+
 }

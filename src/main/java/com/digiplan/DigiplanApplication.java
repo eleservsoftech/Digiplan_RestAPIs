@@ -23,3 +23,4 @@ public class DigiplanApplication extends SpringBootServletInitializer {
         SpringApplication.run(DigiplanApplication.class, args);
     }
 }
+

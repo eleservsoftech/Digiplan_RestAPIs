@@ -18,6 +18,8 @@ import java.util.*;
 @Service
 public class CommentServiceImpl implements CommentService {
 
+
+
     @Autowired
     private CommentRepository commentRepository;
 
@@ -101,25 +103,70 @@ public class CommentServiceImpl implements CommentService {
         return new ResponseEntity<>(map, status);
     }
 
+//    @Override
+//    public Comment updateComment(Integer id, Comment commentData) {
+//        Comment comment = null;
+//        try {
+//            Optional<Comment> check = commentRepository.findById(id);
+//            System.out.println("Reached here1");
+//            if (check.isPresent()) {
+//                System.out.println("Reached here");
+//                commentData.setId(id);
+//                comment = commentRepository.saveAndFlush(commentData);
+//                System.out.println("Reached here2");
+//            }
+//        } catch (Exception exception) {
+//            System.out.println("@updateComment Exception : " + exception);
+//            Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "updateComment", exception.getMessage(), exception.toString(), LocalDateTime.now());
+//            loggerRepository.saveAndFlush(logger);
+//        }
+//        return comment;
+//    }
+
     @Override
     public Comment updateComment(Integer id, Comment commentData) {
-        Comment comment = null;
+        Comment updatedComment = null;
         try {
-            Optional<Comment> check = commentRepository.findById(id);
-            System.out.println("Reached here1");
-            if (check.isPresent()) {
-                System.out.println("Reached here");
-                commentData.setId(id);
-                comment = commentRepository.saveAndFlush(commentData);
-                System.out.println("Reached here2");
+            Optional<Comment> existingCommentOpt = commentRepository.findById(id);
+            if (existingCommentOpt.isPresent()) {
+                Comment existingComment = existingCommentOpt.get();
+
+                // Update only the fields that are provided in commentData
+                if (commentData.getCaseId() != null) {
+                    existingComment.setCaseId(commentData.getCaseId());
+                }
+                if (commentData.getUsername() != null) {
+                    existingComment.setUsername(commentData.getUsername());
+                }
+                if (commentData.getStage() != null) {
+                    existingComment.setStage(commentData.getStage());
+                }
+                if (commentData.getComment() != null) {
+                    existingComment.setComment(commentData.getComment());
+                }
+                if (commentData.getPlanNo() != null) {
+                    existingComment.setPlanNo(commentData.getPlanNo());
+                }
+                if (commentData.getDate() != null) {
+                    existingComment.setDate(commentData.getDate());
+                }
+                if (commentData.isSupportAction()) {
+                    existingComment.setSupportAction(commentData.isSupportAction());
+                }
+
+                // Save the updated entity
+                updatedComment = commentRepository.saveAndFlush(existingComment);
             }
         } catch (Exception exception) {
             System.out.println("@updateComment Exception : " + exception);
             Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "updateComment", exception.getMessage(), exception.toString(), LocalDateTime.now());
             loggerRepository.saveAndFlush(logger);
         }
-        return comment;
+        return updatedComment;
     }
+
+
+
 
     @Override
     public String deleteComment(Integer id) {
@@ -191,6 +238,8 @@ public class CommentServiceImpl implements CommentService {
         return new ResponseEntity<>(map, status);
     }
 
+
+
     private Map<String, Object> addValueInMap(int id, String planStatus, boolean status) {
         Map<String, Object> map = new HashMap();
         map.put("id", id);
@@ -198,5 +247,37 @@ public class CommentServiceImpl implements CommentService {
         map.put("status", status);
         return map;
     }
+
+
+//    public List<Comment> findByStage(String stage) {
+//        return commentRepository.findByStage(stage);
+//    }
+
+
+    @Override
+    public List<Comment> getCommentsByStage(String stageName) {
+        List<Object[]> result = commentRepository.getCommentsByStage(stageName);
+        List<Comment> comments = new ArrayList<>();
+
+        for (Object[] obj : result) {
+            Comment comment = new Comment();
+            comment.setId((Integer) obj[0]);           // Assuming comment_id is returned as Integer
+            comment.setCaseId((String) obj[1]);
+            comment.setPatient_Name((String) obj[2]);
+            comment.setDoctor_Name((String) obj[3]);
+            comment.setStage((String) obj[4]);         // Ensure stage is set
+            comment.setUsername((String) obj[5]);
+            comment.setPlanNo((String) obj[6]);
+            comment.setComment((String) obj[7]);
+
+
+            comments.add(comment);
+        }
+
+        return comments;
+    }
+
+
+
 
 }

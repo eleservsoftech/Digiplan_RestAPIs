@@ -53,6 +53,7 @@ public class UserController {
         return map;
     }
 
+
     @PostMapping("/addUser")
     public ResponseEntity<Map> createUser(@RequestBody User userData) {
         return this.userService.addUser(userData);
@@ -75,7 +76,6 @@ public class UserController {
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
     @PostMapping("/login")
     public ResponseEntity<Map> login(@RequestBody User userData) {
         return this.userService.login(userData);

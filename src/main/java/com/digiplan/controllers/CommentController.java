@@ -2,6 +2,7 @@ package com.digiplan.controllers;
 
 import com.digiplan.entities.Comment;
 import com.digiplan.services.CommentService;
+import lombok.Generated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,15 +40,28 @@ public class CommentController {
         return this.commentService.addComment(commentData, commentType);
     }
 
+//    @PutMapping("/updateComment/{id}")
+//    public ResponseEntity<Comment> updateComment(@PathVariable Integer id, @RequestBody Comment commentData) {
+//        commentData.setId(id);
+//        Comment comment = this.commentService.updateComment(id, commentData);
+//        if (comment != null)
+//            return new ResponseEntity<Comment>(comment, HttpStatus.OK);
+//        else
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//    }
+
     @PutMapping("/updateComment/{id}")
     public ResponseEntity<Comment> updateComment(@PathVariable Integer id, @RequestBody Comment commentData) {
-        commentData.setId(id);
-        Comment comment = this.commentService.updateComment(id, commentData);
-        if (comment != null)
-            return new ResponseEntity<Comment>(comment, HttpStatus.OK);
-        else
+        // Ensure the ID from the path variable is used, not the ID from the request body
+        Comment updatedComment = commentService.updateComment(id, commentData);
+        if (updatedComment != null) {
+            return new ResponseEntity<>(updatedComment, HttpStatus.OK);
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
+
+
 
     @DeleteMapping("/deleteComment/{id}")
     public ResponseEntity<String> deleteComment(@PathVariable Integer id) {
@@ -62,5 +76,24 @@ public class CommentController {
     public ResponseEntity<Map> getCommentTypes(@RequestParam String caseId, @RequestParam String typeOfUser) {
         return commentService.getCommentTypes(caseId, typeOfUser);
     }
+
+//    @GetMapping("/comments")
+//    public List<Comment> getCommentsByStage(@RequestParam("stage") String stage) {
+//        List<Comment> comments = commentService.findByStage(stage);
+//        return comments;
+//    }
+
+    @GetMapping("/comments/{stageName}")
+    public List<Comment> getCommentsByStage(@PathVariable String stageName) {
+        return commentService.getCommentsByStage(stageName);
+    }
+
+
+
+
+
+
+
+
 
 }
